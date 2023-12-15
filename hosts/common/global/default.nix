@@ -5,5 +5,6 @@
       ./locale.nix
       ./nix.nix
       ./openssh.nix
+      ./sops.nix
     ];
 }

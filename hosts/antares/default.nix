@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs,config, ... }:
 
 {
   imports = [
@@ -18,6 +18,7 @@
     hostName = "antares";
     # useDHCP = true;
   };
+  environment.etc.testsops.text = config.sops.secrets.c3r5b8_pass.path;
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;

@@ -1,5 +1,4 @@
-{ inputs, lib, ... }:
-{
+{ inputs, lib, ... }: {
   nix = {
     settings = {
       trusted-users = [ "root" "@wheel" ];

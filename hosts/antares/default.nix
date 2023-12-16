@@ -1,11 +1,11 @@
-{ pkgs, inputs,config, ... }:
+{ pkgs, inputs, config, ... }:
 
 {
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
-
+    inputs.hardware.nixosModules.common-pc-laptop
 
     ./hardware-configuration.nix
 
@@ -25,6 +25,10 @@
     binfmt.emulatedSystems = [ "aarch64-linux" "i686-linux" ];
   };
 
+  # home-manager.useGlobalPkgs = true;
+  # home-manager.useUserPackages = true;
+  # home-manager.users.c3r5b8 = import ../../home/c3r5b8/antares.nix;
+
   services.gnome.gnome-keyring.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
@@ -36,7 +40,8 @@
       after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        ExecStart =
+          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;

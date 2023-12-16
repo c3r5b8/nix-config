@@ -1,5 +1,11 @@
-{ inputs, lib, pkgs, config, outputs, ... }: {
-
+{
+  inputs,
+  lib,
+  pkgs,
+  config,
+  outputs,
+  ...
+}: {
   imports = [
     # inputs.impermanence.nixosModules.home-manager.impermanence
     # inputs.nix-colors.homeManagerModule
@@ -12,14 +18,14 @@
     # overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
 
   nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      experimental-features = ["nix-command" "flakes" "repl-flake"];
       warn-dirty = false;
     };
   };

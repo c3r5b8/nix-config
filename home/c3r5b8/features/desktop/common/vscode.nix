@@ -47,7 +47,6 @@
       # usernamehw.errorlens
       # vadimcn.vscode-lldb
       # xaver.clang-format
-
     ];
 
     userSettings = {

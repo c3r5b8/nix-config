@@ -1,1 +1,5 @@
-{ outputs, lib, ... }: { programs.ssh = { enable = true; }; }
+{
+  outputs,
+  lib,
+  ...
+}: {programs.ssh = {enable = true;};}

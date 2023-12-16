@@ -22,41 +22,45 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      inherit (self) outputs;
-      lib = nixpkgs.lib // home-manager.lib;
-      systems = [ "x86_64-linux" ];
-      forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs systems (system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        });
-    in {
-      inherit lib;
-      formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
-      nixosConfigurations = {
-        antares = lib.nixosSystem {
-          modules = [
-            ./hosts/antares
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.c3r5b8 = import ./home/c3r5b8/antares.nix;
-            }
-          ];
-          specialArgs = { inherit inputs outputs; };
-        };
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    lib = nixpkgs.lib // home-manager.lib;
+    systems = ["x86_64-linux"];
+    forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+    pkgsFor = lib.genAttrs systems (system:
+      import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      });
+  in {
+    inherit lib;
+    formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
+    nixosConfigurations = {
+      antares = lib.nixosSystem {
+        modules = [
+          ./hosts/antares
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.c3r5b8 = import ./home/c3r5b8/antares.nix;
+          }
+        ];
+        specialArgs = {inherit inputs outputs;};
       };
-
-      # homeConfigurations = {
-      #   "c3r5b8@antares" = lib.homeManagerConfiguration {
-      #     modules = [ ./home/c3r5b8/antares.nix ];
-      #     pkgs = pkgsFor.x86_64-linux;
-      #     extraSpecialArgs = { inherit inputs outputs; };
-      #   };
-      # };
     };
+
+    # homeConfigurations = {
+    #   "c3r5b8@antares" = lib.homeManagerConfiguration {
+    #     modules = [ ./home/c3r5b8/antares.nix ];
+    #     pkgs = pkgsFor.x86_64-linux;
+    #     extraSpecialArgs = { inherit inputs outputs; };
+    #   };
+    # };
+  };
 }

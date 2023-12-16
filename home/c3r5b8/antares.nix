@@ -1,4 +1,8 @@
-{ inputs, outputs, ... }: {
+{
+  inputs,
+  outputs,
+  ...
+}: {
   imports = [
     ./global
     ./features/desktop/common
@@ -9,5 +13,4 @@
     # ./features/games/star-citizen.nix
     # ./features/music
   ];
-
 }

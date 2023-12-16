@@ -5,7 +5,7 @@
     # ./direnv.nix
     # ./fish.nix
     # ./gh.nix
-    # ./git.nix
+    ./git.nix
     # ./gpg.nix
     # ./jujutsu.nix
     # ./lyrics.nix
@@ -14,7 +14,7 @@
     # ./ranger.nix
     # ./screen.nix
     # ./shellcolor.nix
-    # ./ssh.nix
+    ./ssh.nix
     # ./starship.nix
     # ./xpo.nix
   ];

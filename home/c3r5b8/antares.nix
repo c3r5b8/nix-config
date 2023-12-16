@@ -1,7 +1,7 @@
 { inputs, outputs, ... }: {
   imports = [
     ./global
-    # ./features/desktop/hyprland
+    ./features/desktop/common
     # ./features/rgb
     # ./features/productivity
     # ./features/pass

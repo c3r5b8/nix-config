@@ -23,4 +23,5 @@
     # This lets nix2 commands still use <nixpkgs>
     # nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
   };
+  nixpkgs.config.allowUnfree = true;
 }

@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  rebuild = pkgs.writeShellScriptBin "rebuild" ''
+    #!/usr/bin/env bash
+    sudo nix-store --verify; pushd /home/c3r5b8/Downloads/nix-conf/ && sudo nixos-rebuild switch --flake .# --upgrade && notify-send \"Done\"; popd
+  '';
+in {
   imports = [
     # ./bash.nix
     # ./bat.nix
@@ -18,11 +23,14 @@
     # ./starship.nix
     # ./xpo.nix
   ];
+
   home.packages = with pkgs; [
     # comma # Install and run programs by sticking a , before them
     # distrobox # Nice escape hatch, integrates docker images with my environment
 
+    rebuild # Rebuild my system
     bc # Calculator
+    dunst # Notification daemon
     btop # System viewer
     ncdu # TUI disk usage
     eza # Better ls
@@ -30,6 +38,7 @@
     fd # Better find
     httpie # Better curl
     diffsitter # Better diff
+    tmux
     jq # JSON pretty printer and manipulator
     # trekscii # Cute startrek cli printer
     # timer # To help with my ADHD paralysis

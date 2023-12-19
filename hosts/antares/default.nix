@@ -34,7 +34,13 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.sudo.wheelNeedsPassword = false;
-
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";

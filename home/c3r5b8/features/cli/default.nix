@@ -31,6 +31,7 @@ in {
     rebuild # Rebuild my system
     bc # Calculator
     dunst # Notification daemon
+    libnotify # Notification library
     btop # System viewer
     ncdu # TUI disk usage
     eza # Better ls

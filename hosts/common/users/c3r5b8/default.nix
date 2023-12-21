@@ -23,6 +23,7 @@ in {
         "deluge"
       ];
     packages = [pkgs.home-manager pkgs.firefox pkgs.gnupg pkgs.fish pkgs.git];
+    password = "changeme";
   };
   services.geoclue2.enable = true;
 }

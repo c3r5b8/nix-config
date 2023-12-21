@@ -130,7 +130,7 @@ in {
         "${modifier}+Shift+Down" = "move down";
         "${modifier}+Shift+Up" = "move up";
         "${modifier}+Shift+Right" = "move right";
-        "${modifier}+Shift+c" = "exec sudo nix-store --verify; pushd ~/dev/nixos && sudo nixos-rebuild switch --flake .# --upgrade && notify-send \"Done\"; popd";
+        "${modifier}+Shift+c" = "exec tmux new-session -d -s rebuilding 'rebuild'";
         "${modifier}+Shift+e" = "exec swaymsg exit";
         "${modifier}+Control+Shift+Left" = "move workspace to output left";
         "${modifier}+Control+Shift+Right" = "move workspace to output right";

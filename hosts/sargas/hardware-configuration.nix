@@ -53,6 +53,12 @@
       neededForBoot = true;
     };
 
+    "/mnt/fat_ssd" = {
+      device = "/dev/nvme1n1p1";
+      fsType = "btrfs";
+      options = ["compress=zstd" "noatime" "ssd" "space_cache=v2"];
+    };
+
     ${config.boot.loader.efi.efiSysMountPoint} = {
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";

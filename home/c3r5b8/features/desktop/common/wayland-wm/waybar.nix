@@ -4,7 +4,7 @@
 
     settings = {
       mainBar = {
-        position = "left";
+        position = "top";
         exclusive = true;
         modules-left = [
           "sway/workspaces"
@@ -14,7 +14,6 @@
           "pulseaudio"
           "backlight"
           "battery"
-          "custom/separator"
           "clock"
         ];
         "sway/workspaces" = {
@@ -29,10 +28,7 @@
           };
         };
         "clock" = {
-          format = "{:%H\n%M}";
-        };
-        "custom/separator" = {
-          format = "────";
+          format = "{:%H:%M}";
         };
         "battery" = {
           states = {
@@ -152,22 +148,6 @@
         margin: 0 10px;
         margin-bottom: 5px;
         margin-top: 8px;
-
-      }
-
-      #custom-nix {
-        background-image: url("${snowflake}");
-        background-size: 65%;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #141b1e;
-        background-color: #313244;
-        font-size: 15px;
-        border-radius: 15px;
-        padding: 10 0px;
-        margin: 0 10px;
-        margin-bottom: 5px;
-        margin-top: 8px;
       }
 
       #battery,
@@ -176,6 +156,7 @@
       #network
       {
         font-size: 25px;
+        margin-right: 10px;
       }
     '';
   };

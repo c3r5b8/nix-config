@@ -12,6 +12,8 @@
     ./hardware-configuration.nix
     ../common/global
     ../common/users/c3r5b8
+    ../common/optional/podman
+    ../common/optional/jellyfin
   ];
 
   # Use the systemd-boot EFI boot loader.

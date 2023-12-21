@@ -21,7 +21,7 @@
     mutableExtensionsDir = true;
     package = pkgs.vscode;
     extensions = with pkgs.vscode-extensions; [
-      # jnoortheen.nix-ide
+      jnoortheen.nix-ide
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       # dbaeumer.vscode-eslint

@@ -156,7 +156,7 @@
       #network
       {
         font-size: 25px;
-        margin-right: 10px;
+        margin-right: 15px;
       }
     '';
   };

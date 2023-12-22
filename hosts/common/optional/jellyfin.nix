@@ -6,7 +6,7 @@
   virtualisation.oci-containers = {
     containers = {
       jellyfin = {
-        image = "jellyfin/jellyfin";
+        image = "docker.io/jellyfin/jellyfin:latest";
         autoStart = true;
         volumes = [
           "/mnt/fat_ssd/Media/TV:/data/tvshows"

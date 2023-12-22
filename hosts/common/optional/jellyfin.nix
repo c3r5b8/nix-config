@@ -13,6 +13,9 @@
           "/mnt/fat_ssd/Media/Movies:/data/movies"
           "/mnt/fat_ssd/jellyfin:/config"
         ];
+        ports = [
+          "8096:8096"
+        ];
         environment = {
           TZ = "Europe/Kyiv";
         };

@@ -15,6 +15,7 @@
     ../common/optional/podman.nix
     ../common/optional/jellyfin.nix
     ../common/optional/traefik.nix
+    ../common/optional/vaultwarden.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

@@ -14,6 +14,7 @@
     ../common/users/c3r5b8
     ../common/optional/podman.nix
     ../common/optional/jellyfin.nix
+    ../common/optional/traefik.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

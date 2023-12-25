@@ -1,0 +1,10 @@
+keys:
+  - &hosts:
+    - &antares age124ck5t6lsdxsae3496ayp85uka673s8qzf99nqgz4u0z3t5ls5qq3v5452
+    - &sargas age1m4vwlkxfrfsy90yfdj8ujquvjlujs2r7wsu4e560gg08q5fys5dqu6z54n
+creation_rules:
+  - path_regex: hosts/common/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *antares
+      - *sargas

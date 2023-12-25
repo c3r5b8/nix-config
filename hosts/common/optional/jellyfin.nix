@@ -16,6 +16,11 @@
         ports = [
           "8096:8096"
         ];
+        extraOptions = [
+          "-l=traefik.enable=true"
+          "-l=traefik.http.routers.jellyfin.rule=Host(`jellyfin.c3r5b8.dev`)"
+          "-l=traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+        ];
         environment = {
           TZ = "Europe/Kyiv";
         };

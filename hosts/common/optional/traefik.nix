@@ -14,7 +14,7 @@
           "--providers.docker.exposedbydefault=false"
           "--entrypoints.web.address=:80"
           "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
-          "--certificatesresolvers.letsencrypt.acme.delayBeforeCheck=300"
+          "--certificatesresolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=300"
           "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
           "--certificatesresolvers.letsencrypt.acme.email=olespid@gmail.com"
           # HTTP

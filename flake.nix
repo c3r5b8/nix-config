@@ -56,12 +56,12 @@
       sargas = lib.nixosSystem {
         modules = [
           ./hosts/sargas
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.c3r5b8 = import ./home/c3r5b8/sargas.nix;
-          # }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.c3r5b8 = import ./home/c3r5b8/sargas.nix;
+          }
         ];
         specialArgs = {inherit inputs outputs;};
       };

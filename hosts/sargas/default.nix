@@ -16,6 +16,7 @@
     ../common/optional/jellyfin.nix
     ../common/optional/traefik.nix
     ../common/optional/vaultwarden.nix
+    ../common/optional/ntfy.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

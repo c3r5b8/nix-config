@@ -13,8 +13,8 @@
         ];
         extraOptions = [
           "-l=traefik.enable=true"
-          "-l=traefik.http.routers.ntfy.rule=Host(`matrix.c3r5b8.dev`)"
-          "-l=traefik.http.services.ntfy.loadbalancer.server.port=8008"
+          "-l=traefik.http.routers.synapse.rule=Host(`matrix.c3r5b8.dev`)"
+          "-l=traefik.http.services.synapse.loadbalancer.server.port=8008"
         ];
         environment = {
           SYNAPSE_CONFIG_PATH = "/data/homeserver.yaml";

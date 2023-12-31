@@ -54,7 +54,7 @@
     };
 
     "/mnt/fat_ssd" = {
-      device = "/dev/nvme1n1p1";
+      device = "/dev/nvme0n1p1";
       fsType = "btrfs";
       options = ["compress=zstd" "noatime" "ssd" "space_cache=v2"];
     };

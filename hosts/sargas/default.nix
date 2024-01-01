@@ -17,7 +17,7 @@
     ../common/optional/traefik.nix
     ../common/optional/vaultwarden.nix
     ../common/optional/ntfy.nix
-    ../common/optional/synapse.nix
+    # ../common/optional/synapse.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

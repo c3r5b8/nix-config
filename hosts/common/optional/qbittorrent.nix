@@ -1,15 +1,13 @@
 {
   virtualisation.oci-containers = {
     containers = {
-      deluge = {
-        image = "linuxserver/deluge:latest";
+      qbittorrent = {
+        image = "lscr.io/linuxserver/qbittorrent:latest";
         autoStart = true;
         extraOptions = [
           "-l=traefik.enable=true"
-          "-l=traefik.http.routers.deluge.rule=Host(`deluge.c3r5b8.dev`)"
-          "-l=traefik.http.services.deluge.loadbalancer.server.port=8112"
-          "--dns=8.8.8.8"
-          "--dns=8.8.4.4"
+          "-l=traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.c3r5b8.dev`)"
+          "-l=traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
         ];
         ports = [
           "6881:6881"
@@ -20,6 +18,7 @@
           "/mnt/fat_ssd/deluge:/config"
         ];
         environment = {
+          WEBUI_PORT = 8080;
           TZ = "Europe/Kyiv";
         };
       };

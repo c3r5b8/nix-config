@@ -17,7 +17,7 @@
     ../common/optional/traefik.nix
     ../common/optional/vaultwarden.nix
     ../common/optional/ntfy.nix
-    ../common/optional/deluge.nix
+    ../common/optional/qbittorrent.nix
     # ../common/optional/synapse.nix
   ];
 

@@ -12,9 +12,7 @@
           "/mnt/fat_ssd/synapse/data:/data"
         ];
         extraOptions = [
-          "-l=traefik.enable=true"
-          "-l=traefik.http.routers.synapse.rule=Host(`matrix.c3r5b8.dev`)"
-          "-l=traefik.http.services.synapse.loadbalancer.server.port=8008"
+          "--network=container:postgres"
         ];
         environment = {
           SYNAPSE_CONFIG_PATH = "/data/homeserver.yaml";
@@ -26,6 +24,11 @@
         hostname = "postgres";
         volumes = [
           "/mnt/fat_ssd/synapse/db:/var/lib/postgresql/data"
+        ];
+        extraOptions = [
+          "-l=traefik.enable=true"
+          "-l=traefik.http.routers.synapse.rule=Host(`matrix.c3r5b8.dev`)"
+          "-l=traefik.http.services.synapse.loadbalancer.server.port=8008"
         ];
         environment = {
           # POSTGRES_PASSWORD = "postgres";

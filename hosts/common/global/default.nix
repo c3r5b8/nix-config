@@ -1,6 +1,7 @@
 {
   inputs,
   outputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -11,5 +12,8 @@
     ./nix.nix
     ./openssh.nix
     ./sops.nix
+  ];
+  environment.systemPackages = with pkgs; [
+    iputils
   ];
 }

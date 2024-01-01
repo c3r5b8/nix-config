@@ -18,7 +18,7 @@
           "/mnt/fat_ssd/deluge:/config"
         ];
         environment = {
-          WEBUI_PORT = 8080;
+          WEBUI_PORT = "8080";
           TZ = "Europe/Kyiv";
         };
       };

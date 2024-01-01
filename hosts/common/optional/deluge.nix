@@ -9,6 +9,10 @@
           "-l=traefik.http.routers.deluge.rule=Host(`deluge.c3r5b8.dev`)"
           "-l=traefik.http.services.deluge.loadbalancer.server.port=8112"
         ];
+        ports = [
+          "6881:6881"
+          "6881:6881/udp"
+        ];
         volumes = [
           "/mnt/fat_ssd/Media:/data/completed"
           "/mnt/fat_ssd/deluge:/config"

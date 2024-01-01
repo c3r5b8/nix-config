@@ -12,7 +12,7 @@
     ./hardware-configuration.nix
     ../common/global
     ../common/users/c3r5b8
-    ../common/optional/podman.nix
+    ../common/optional/docker.nix
     ../common/optional/jellyfin.nix
     ../common/optional/traefik.nix
     ../common/optional/vaultwarden.nix

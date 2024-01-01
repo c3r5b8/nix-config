@@ -88,6 +88,7 @@ in {
       # terminal = "${pkgs.foot}/bin/footclient";
       gaps.smartBorders = "on";
       seat = {"*" = {hide_cursor = "30000";};};
+      defaultWorkspace = "1";
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
       in {
@@ -147,6 +148,7 @@ in {
         # "Print" = "exec ${pkgs.wayshot}/bin/wayshot -f Screenshots/$(date +%d.%m.%y_%T_screenshot.png).png";
         # "Ctrl+Print" = "exec ${pkgs.wayshot}/bin/wayshot --stdout | ${pkgs.wl-clipboard}/bin/wl-copy";
       };
+      
       bars = [{command = "${pkgs.waybar}/bin/waybar";}];
       startup = [
         {command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";}
@@ -160,7 +162,11 @@ in {
         titlebar = false;
       };
     };
-    extraConfig = ''
+    extraConfig = let
+      mod = config.wayland.windowManager.sway.config.modifier;
+    in ''
+      bindsym --whole-window ${mod}+button4 workspace prev
+      bindsym --whole-window ${mod}+button5 workspace next
       bindgesture swipe:3:left workspace next
       bindgesture swipe:3:right workspace prev
       bindgesture swipe:3:up workspace next

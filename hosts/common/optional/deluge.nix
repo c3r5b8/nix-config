@@ -8,6 +8,8 @@
           "-l=traefik.enable=true"
           "-l=traefik.http.routers.deluge.rule=Host(`deluge.c3r5b8.dev`)"
           "-l=traefik.http.services.deluge.loadbalancer.server.port=8112"
+          "--dns=8.8.8.8"
+          "--dns=8.8.4.4"
         ];
         ports = [
           "6881:6881"

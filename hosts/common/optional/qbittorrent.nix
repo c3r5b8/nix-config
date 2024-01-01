@@ -18,6 +18,8 @@
           "/mnt/fat_ssd/deluge:/config"
         ];
         environment = {
+          PUID = "1000";
+          PGID = "1000";
           WEBUI_PORT = "8080";
           TZ = "Europe/Kyiv";
         };

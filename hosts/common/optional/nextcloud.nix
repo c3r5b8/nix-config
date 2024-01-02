@@ -33,7 +33,7 @@
         extraOptions = [
           "-l=traefik.enable=true"
           "-l=traefik.http.routers.nextcloud.rule=Host(`cloud.c3r5b8.dev`)"
-          "-l=traefik.http.services.nextcloud.loadbalancer.server.port=80"
+          "-l=traefik.http.services.nextcloud.loadbalancer.server.port=8080"
         ];
         environment = {
           # POSTGRES_PASSWORD = "postgres";

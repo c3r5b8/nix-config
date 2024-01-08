@@ -10,6 +10,7 @@ in {
   imports = [
     ./git.nix
     ./ssh.nix
+    ./tmux.nix
   ];
 
   home.packages = with pkgs; [

@@ -66,13 +66,5 @@
         specialArgs = {inherit inputs outputs;};
       };
     };
-
-    # homeConfigurations = {
-    #   "c3r5b8@antares" = lib.homeManagerConfiguration {
-    #     modules = [ ./home/c3r5b8/antares.nix ];
-    #     pkgs = pkgsFor.x86_64-linux;
-    #     extraSpecialArgs = { inherit inputs outputs; };
-    #   };
-    # };
   };
 }

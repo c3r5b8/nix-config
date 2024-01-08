@@ -13,6 +13,7 @@
     ./openssh.nix
     ./sops.nix
   ];
+  programs.adb.enable = true;
   environment.systemPackages = with pkgs; [
     iputils
   ];

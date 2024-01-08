@@ -28,14 +28,13 @@
 
     enableDefaultPackages = false;
 
-    # this fixes emoji stuff
     fontconfig = {
       defaultFonts = {
         monospace = [
           "FiraCode Nerd Font"
-          # "Iosevka Term"
-          # "Iosevka Term Nerd Font Complete Mono"
-          # "Iosevka Nerd Font"
+          "Iosevka Term"
+          "Iosevka Term Nerd Font Complete Mono"
+          "Iosevka Nerd Font"
           "Noto Color Emoji"
         ];
         sansSerif = ["Lexend" "Noto Color Emoji"];

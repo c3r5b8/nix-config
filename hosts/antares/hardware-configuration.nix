@@ -15,6 +15,7 @@
         efiSysMountPoint = "/boot";
       };
     };
+    supportedFilesystems = ["ntfs"];
 
     initrd = {
       availableKernelModules =

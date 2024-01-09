@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
     #!/usr/bin/env bash
     notify-send "Starting rebuild"

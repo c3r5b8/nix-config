@@ -49,6 +49,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.c3r5b8 = import ./home/c3r5b8/antares.nix;
+            home-manager.extraSpecialArgs = {inherit inputs outputs;};
           }
         ];
         specialArgs = {inherit inputs outputs;};
@@ -61,6 +62,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.c3r5b8 = import ./home/c3r5b8/sargas.nix;
+            home-manager.extraSpecialArgs = {inherit inputs outputs;};
           }
         ];
         specialArgs = {inherit inputs outputs;};

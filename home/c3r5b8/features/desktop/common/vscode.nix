@@ -22,7 +22,6 @@
       ms-vscode.cpptools
       naumovs.color-highlight
     ];
-
     userSettings = {
       breadcrumbs.enabled = false;
       emmet.useInlineCompletions = true;
@@ -56,36 +55,30 @@
         smoothScrolling = true;
         suggest.showStatusBar = true;
         suggestSelection = "first";
-
         bracketPairColorization = {
           enabled = true;
           independentColorPoolPerBracketType = true;
         };
-
         guides = {
           bracketPairs = true;
           indentation = true;
         };
       };
-
       explorer = {
         confirmDragAndDrop = false;
         confirmDelete = false;
       };
-
       files = {
         eol = "\n";
         insertFinalNewline = true;
         trimTrailingWhitespace = true;
         autoSave = "afterDelay";
       };
-
       git = {
         autofetch = true;
         confirmSync = false;
         enableSmartCommit = true;
       };
-
       terminal.integrated = {
         cursorBlinking = true;
         cursorStyle = "line";
@@ -94,7 +87,6 @@
         fontSize = 16;
         smoothScrolling = true;
       };
-
       window = {
         menuBarVisibility = "toggle";
         nativeTabs = false;

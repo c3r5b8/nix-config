@@ -1,8 +1,4 @@
 {
-  config,
-  pkgs,
-  ...
-}: {
   virtualisation.oci-containers = {
     containers = {
       ntfy = {

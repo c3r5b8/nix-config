@@ -1,8 +1,4 @@
-{
-  config,
-  vars,
-  ...
-}: {
+{config, ...}: {
   virtualisation.oci-containers = {
     containers = {
       traefik = {

@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   virtualisation.oci-containers = {
     containers = {
       vaultwarden = {

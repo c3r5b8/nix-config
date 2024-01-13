@@ -88,7 +88,7 @@
         smoothScrolling = true;
       };
       window = {
-        menuBarVisibility = "toggle";
+        titleBarStyle = "custom";
         nativeTabs = false;
       };
       workbench = {

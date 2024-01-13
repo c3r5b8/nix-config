@@ -16,6 +16,7 @@
     ../common/optional/vaultwarden.nix
     ../common/optional/ntfy.nix
     ../common/optional/qbittorrent.nix
+    ../common/optional/factorio.nix
   ];
 
   boot = {

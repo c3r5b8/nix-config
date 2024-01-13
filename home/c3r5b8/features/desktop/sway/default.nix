@@ -10,7 +10,9 @@ in {
     ../common
     ../common/wayland-wm
   ];
-
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
   wayland.windowManager.sway = {
     enable = true;
     config = {
@@ -148,7 +150,14 @@ in {
         # "Print" = "exec ${pkgs.wayshot}/bin/wayshot -f Screenshots/$(date +%d.%m.%y_%T_screenshot.png).png";
         # "Ctrl+Print" = "exec ${pkgs.wayshot}/bin/wayshot --stdout | ${pkgs.wl-clipboard}/bin/wl-copy";
       };
-      
+      window.commands = [
+        {
+          command = "move scratchpad";
+          criteria = {
+            class = "rebuilding";
+          };
+        }
+      ];
       bars = [{command = "${pkgs.waybar}/bin/waybar";}];
       startup = [
         {command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";}

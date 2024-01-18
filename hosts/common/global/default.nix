@@ -17,4 +17,5 @@
   environment.systemPackages = with pkgs; [
     iputils
   ];
+  services.fstrim.enable = true;
 }

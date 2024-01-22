@@ -75,17 +75,17 @@ in {
           tap = "enabled";
         };
       };
-      # output = {
-      #   "eDP-1" = {
-      #     pos = "0,0";
-      #     mode = "1920x1080@60Hz";
-      #   };
-      #   "HEADLESS-1" = {
-      #     pos = "0,0";
-      #     mode = "1920x1080@60Hz";
-      #     scale = "1.6";
-      #   };
-      # };
+      output = {
+        "eDP-1" = {
+          pos = "0,0";
+          mode = "1920x1080@120Hz";
+        };
+        "HEADLESS-1" = {
+          pos = "0,1080";
+          mode = "2560x1600@120Hz";
+          # scale = "1.6";
+        };
+      };
       # menu = "${pkgs.tofi}/bin/tofi-drun";
       # terminal = "${pkgs.foot}/bin/footclient";
       gaps.smartBorders = "on";

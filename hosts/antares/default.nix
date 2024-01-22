@@ -20,7 +20,10 @@
     ../common/optional/bluetooth.nix
     ../common/optional/pipewire.nix
     ../common/optional/wayland.nix
+    ../common/optional/sunshine.nix
   ];
+
+  services.xserver.videoDrivers = ["amdgpu"];
   networking = {
     hostName = "antares";
   };

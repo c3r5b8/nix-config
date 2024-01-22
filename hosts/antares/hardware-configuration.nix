@@ -21,7 +21,7 @@
       availableKernelModules =
         ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"]
         ++ config.boot.initrd.luks.cryptoModules;
-      kernelModules = ["dm-snapshot"];
+      kernelModules = ["dm-snapshot" "amdgpu"];
       luks.devices.luksroot = {
         device = "/dev/disk/by-label/cryptroot";
         preLVM = true;

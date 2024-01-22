@@ -74,11 +74,6 @@
         trimTrailingWhitespace = true;
         autoSave = "afterDelay";
       };
-      git = {
-        autofetch = true;
-        confirmSync = false;
-        enableSmartCommit = true;
-      };
       terminal.integrated = {
         cursorBlinking = true;
         cursorStyle = "line";
@@ -93,15 +88,10 @@
       };
       workbench = {
         colorTheme = "Catppuccin Mocha";
-        editor = {
-          tabCloseButton = "right";
-          tabActionLocation = "right";
-        };
         list.smoothScrolling = true;
         panel.defaultLocation = "right";
         smoothScrolling = true;
       };
-      workbench.iconTheme = "catppuccin-mocha";
     };
   };
   home.packages = with pkgs; [

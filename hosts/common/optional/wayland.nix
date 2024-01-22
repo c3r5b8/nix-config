@@ -23,11 +23,6 @@
       SDL_VIDEODRIVER = "wayland";
       CLUTTER_BACKEND = "wayland";
     };
-    loginShellInit = ''
-      dbus-update-activation-environment --systemd DISPLAY
-      eval $(gnome-keyring-daemon --start --components=ssh,secrets)
-      eval $(ssh-agent)
-    '';
   };
 
   hardware = {

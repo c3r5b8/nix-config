@@ -94,7 +94,7 @@ in {
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
       in {
-        "${modifier}+space" = "exec ${pkgs.foot}/bin/foot";
+        "${modifier}+space" = "exec ${pkgs.kitty}/bin/kitty";
         "${modifier}+f" = "exec ${pkgs.firefox}/bin/firefox";
         "${modifier}+c" = "exec ${pkgs.vscode}/bin/code";
         # "${modifier}+e" = "exec nautilus";

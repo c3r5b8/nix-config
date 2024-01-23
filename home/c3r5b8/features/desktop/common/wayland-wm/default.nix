@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   imports = [
-    ./foot.nix
+    ./kitty.nix
     ./waybar.nix
   ];
   home.packages = with pkgs; [

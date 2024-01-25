@@ -40,6 +40,7 @@
   in {
     inherit lib;
     formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
+    overlays = import ./overlays {inherit inputs outputs;};
     nixosConfigurations = {
       antares = lib.nixosSystem {
         modules = [

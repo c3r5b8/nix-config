@@ -1,5 +1,6 @@
 {
   inputs,
+  outputs,
   lib,
   ...
 }: {
@@ -17,5 +18,8 @@
       options = "--delete-older-than +3";
     };
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+  config.allowUnfree = true;
+  overlays = builtins.attrValues outputs.overlays;
+  };
 }

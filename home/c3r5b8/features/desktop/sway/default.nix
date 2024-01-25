@@ -86,7 +86,7 @@ in {
           # scale = "1.6";
         };
       };
-      # menu = "${pkgs.tofi}/bin/tofi-drun";
+      menu = "${pkgs.fuzzel}/bin/fuzzel";
       # terminal = "${pkgs.foot}/bin/footclient";
       gaps.smartBorders = "on";
       seat = {"*" = {hide_cursor = "30000";};};
@@ -98,7 +98,7 @@ in {
         "${modifier}+f" = "exec ${pkgs.firefox}/bin/firefox";
         "${modifier}+c" = "exec ${pkgs.vscode}/bin/code";
         # "${modifier}+e" = "exec nautilus";
-        # "${modifier}+d" = "exec ${pkgs.tofi}/bin/tofi-drun | xargs swaymsg exec --";
+        "${modifier}+d" = "exec ${pkgs.fuzzel}/bin/fuzzel";
         # "${modifier}+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.tofi}/bin/tofi | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "${modifier}+Left" = "focus left";
         "${modifier}+Down" = "focus down";

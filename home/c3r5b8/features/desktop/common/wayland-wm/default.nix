@@ -9,5 +9,14 @@
     gnome.gnome-keyring
     libsecret
     anytype
+
+    # audio
+    amberol
+
+    # images
+    loupe
+
+    # videos
+    celluloid
   ];
 }

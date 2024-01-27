@@ -16,6 +16,8 @@ in {
     ./ssh.nix
     ./tmux.nix
     ./bottom.nix
+    ./yazi.nix
+    ./xdg.nix
   ];
 
   home.packages = with pkgs; [

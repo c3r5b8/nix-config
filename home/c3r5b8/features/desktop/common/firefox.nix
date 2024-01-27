@@ -22,6 +22,9 @@
       ];
       id = 0;
       name = "c3r5b8";
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+      };
       search = {
         default = "Brave";
         force = true;
@@ -60,7 +63,7 @@
             definedAliases = ["@nw"];
           };
           "Brave" = {
-            urls = [{template = "https://search.brave.com/search?q={searchTerms}";}];
+            urls = [{template = "https://search.brave.com/search?q={searchTerms}";} {template = "https://search.brave.com/api/suggest?q={searchTerms}"; type = "application/x-suggestions+json";}];
             iconUpdateURL = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-search-icon.rCBTNmje.svg";
             definedAliases = ["@b"];
           };

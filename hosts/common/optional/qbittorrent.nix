@@ -22,6 +22,7 @@
           PGID = "1000";
           WEBUI_PORT = "8080";
           TZ = "Europe/Kyiv";
+          DOCKER_MODS="arafatamim/linuxserver-io-mod-vuetorrent";
         };
       };
     };

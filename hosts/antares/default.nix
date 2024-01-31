@@ -20,6 +20,7 @@
     ../common/optional/pipewire.nix
     ../common/optional/wayland.nix
     ../common/optional/sunshine.nix
+    ../common/optional/docker.nix
   ];
 
   services.xserver.videoDrivers = ["amdgpu"];

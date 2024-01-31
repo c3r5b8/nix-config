@@ -10,14 +10,12 @@ in {
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups =
-      ["wheel" "video" "audio"]
+      ["wheel" "video" "audio" "docker"]
       ++ ifTheyExist [
         "network"
         "wireshark"
         "i2c"
         "mysql"
-        "docker"
-        "podman"
         "git"
         "libvirtd"
         "deluge"

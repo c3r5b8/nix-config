@@ -21,7 +21,7 @@
           "--entrypoints.websecure.http.tls=true"
           "--entrypoints.websecure.http.tls.certResolver=letsencrypt"
           "--entrypoints.websecure.http.tls.domains[0].main=c3r5b8.dev"
-          "--entrypoints.websecure.http.tls.domains[0].sans=*.c3r5b8.dev,*.*.c3r5b8.dev"
+          "--entrypoints.websecure.http.tls.domains[0].sans=*.c3r5b8.dev"
         ];
         extraOptions = [
           # Proxying Traefik itslef

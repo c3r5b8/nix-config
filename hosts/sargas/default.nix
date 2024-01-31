@@ -17,6 +17,7 @@
     ../common/optional/ntfy.nix
     ../common/optional/qbittorrent.nix
     ../common/optional/factorio.nix
+    ../common/optional/home-assistant.nix
   ];
 
   boot = {

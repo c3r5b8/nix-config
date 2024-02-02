@@ -11,11 +11,21 @@
         ];
         extraOptions = [
           "-l=traefik.enable=true"
-          "-l=traefik.http.routers.homeassistant.rule=Host(`ha.c3r5b8.dev`)"
+          "-l=traefik.http.routers.homeassistant.rule=Host(`home.c3r5b8.dev`)"
           "-l=traefik.http.services.homeassistant.loadbalancer.server.port=8123"
-          "--network host"
+	  "-l=traefik.http.services.homeassistant.loadbalancer.server.url=192.168.1.2"
+          "--network=host"
         ];
       };
     };
   };
+networking.firewall = {
+  enable = true;
+  allowedTCPPorts = [ 80 443 8123];
+#  allowedUDPPortRanges = [
+ #   { from = 4000; to = 4007; }
+  #  { from = 8000; to = 8010; }
+ # ];
+};
+
 }

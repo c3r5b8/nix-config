@@ -18,6 +18,7 @@
     ../common/optional/qbittorrent.nix
     ../common/optional/factorio.nix
     ../common/optional/home-assistant.nix
+    ../common/optional/memos.nix
   ];
 
   boot = {

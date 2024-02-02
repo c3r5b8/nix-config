@@ -19,6 +19,7 @@
     ../common/optional/factorio.nix
     ../common/optional/home-assistant.nix
     ../common/optional/memos.nix
+    ../common/optional/homepage.nix
   ];
 
   boot = {

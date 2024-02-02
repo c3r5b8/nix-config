@@ -6,6 +6,7 @@
         autoStart = true;
         volumes = [
           "/mnt/fat_ssd/homepage:/app/config"
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
         ];
         extraOptions = [
           "-l=traefik.enable=true"

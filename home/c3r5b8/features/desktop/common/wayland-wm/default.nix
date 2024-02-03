@@ -9,6 +9,7 @@
     gnome.gnome-keyring
     libsecret
     anytype
+    solaar
 
     # audio
     amberol

@@ -65,7 +65,7 @@ in {
       };
     };
   };
-
+  xdg.configFile."mimeapps.list".force = true;
   home.packages = [
     # used by `gio open` and xdp-gtk
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''

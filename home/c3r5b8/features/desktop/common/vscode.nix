@@ -7,31 +7,31 @@
     enable = true;
     mutableExtensionsDir = true;
     package = pkgs.vscode;
-    extensions = with pkgs.vscode-extensions;
-      [
-        jnoortheen.nix-ide
-        catppuccin.catppuccin-vsc
-        catppuccin.catppuccin-vsc-icons
-        eamodio.gitlens
-        github.copilot
-        github.copilot-chat
-        golang.go
-        ms-python.vscode-pylance
-        ms-pyright.pyright
-        kamadorueda.alejandra
-        ms-python.vscode-pylance
-        ms-vscode.cpptools
-        naumovs.color-highlight
-        # liamhammett.inline-parameters
-      ];
-      # ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      #   {
-      #     name = "inline-parameters";
-      #     publisher = "liamhammett";
-      #     version = "0.2.1";
-      #     sha256 = "sha256-6BaUP0Mm6/9lXbSdTnASdKe0gKmmfYSqTOdqaa8h2wk=";
-      #   }
-      # ];
+    extensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
+      eamodio.gitlens
+      github.copilot
+      github.copilot-chat
+      golang.go
+      ms-python.vscode-pylance
+      ms-pyright.pyright
+      kamadorueda.alejandra
+      ms-python.vscode-pylance
+      ms-vscode.cpptools
+      naumovs.color-highlight
+      github.codespaces
+      # liamhammett.inline-parameters
+    ];
+    # ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    #   {
+    #     name = "inline-parameters";
+    #     publisher = "liamhammett";
+    #     version = "0.2.1";
+    #     sha256 = "sha256-6BaUP0Mm6/9lXbSdTnASdKe0gKmmfYSqTOdqaa8h2wk=";
+    #   }
+    # ];
     userSettings = {
       breadcrumbs.enabled = false;
       emmet.useInlineCompletions = true;

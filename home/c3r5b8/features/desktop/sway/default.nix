@@ -13,6 +13,53 @@ in {
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
+
+  home.packages = let
+    volume = let
+      pamixer = "${pkgs.pamixer}/bin/pamixer";
+      notify-send = pkgs.libnotify + "/bin/notify-send";
+    in
+      pkgs.writeShellScriptBin "volume" ''
+        #!/bin/sh
+
+        ${pamixer} "$@"
+
+        volume="$(${pamixer} --get-volume-human)"
+
+        if [ "$volume" = "muted" ]; then
+            ${notify-send} -r 69 \
+                -a "Volume" \
+                "Muted" \
+                -i ${./mute.svg} \
+                -t 888 \
+                -u low
+        else
+            ${notify-send} -r 69 \
+                -a "Volume" "Currently at $volume" \
+                -h int:value:"$volume" \
+                -i ${./volume.svg} \
+                -t 888 \
+                -u low
+        fi
+      '';
+    brightness = let
+      brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+      light = "${pkgs.light}/bin/light";
+      notify-send = pkgs.libnotify + "/bin/notify-send";
+    in
+      pkgs.writeShellScriptBin "brightness" ''
+        #!/bin/sh
+        ${brightnessctl} "$@"
+        brightness="$(${light})"
+        ${notify-send} -r 69 \
+            -a "Brightness" "Currently at $brightness" \
+            -h int:value:"$brightness" \
+            -i ${./sun.svg} \
+            -t 888 \
+            -u low
+      '';
+  in [volume brightness pkgs.libnotify];
+
   wayland.windowManager.sway = {
     enable = true;
     config = {
@@ -139,11 +186,11 @@ in {
         "${modifier}+Control+Shift+Right" = "move workspace to output right";
         "${modifier}+Control+Shift+Up" = "move workspace to output up";
         "${modifier}+Control+Shift+Down" = "move workspace to output down";
-        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s 5%-";
-        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s 5%+";
-        # "XF86AudioRaiseVolume" = "exec volume -i 5";
-        # "XF86AudioLowerVolume" = "exec volume -d 5";
-        # "XF86AudioMute" = "exec volume -t";
+        "XF86MonBrightnessDown" = "exec brightness s 5%-";
+        "XF86MonBrightnessUp" = "exec brightness s 5%+";
+        "XF86AudioRaiseVolume" = "exec volume -i 5";
+        "XF86AudioLowerVolume" = "exec volume -d 5";
+        "XF86AudioMute" = "exec volume -t";
         "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
         "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
         "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";

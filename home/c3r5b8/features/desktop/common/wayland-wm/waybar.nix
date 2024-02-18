@@ -1,4 +1,30 @@
-{...}: {
+{pkgs, ...}: {
+  home.packages = let
+    wireguard = pkgs.writeShellScriptBin "wireguard" ''
+      #!/run/current-system/sw/bin/bash
+      service_status=$(systemctl status wg-quick-wg0.service | awk '/Active:/ {print $2}')
+      if [[ $1 == "status" ]]; then
+        if [[ $service_status == "active" ]]; then
+          echo "󰌾"
+        else
+          echo "󰿆"
+        fi
+      fi
+
+      if [[ $1 == "toggle" ]]; then
+        case $service_status in
+        active)
+          sudo systemctl stop wg-quick-wg0.service
+          ;;
+        inactive)
+          sudo systemctl start wg-quick-wg0.service
+          ;;
+        esac
+        exit 0
+      fi
+    '';
+  in [wireguard];
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -9,6 +35,7 @@
           "sway/workspaces"
         ];
         modules-right = [
+          "custom/wireguard"
           "network"
           "pulseaudio"
           "backlight"
@@ -35,7 +62,7 @@
             critical = 15;
           };
           format = "{icon}";
-          tooltip-format = "{timeTo}, {capacity}%";
+          tooltip-format = "{timeTo}, {capacity}% {power}";
           format-charging = "󰂄";
           format-plugged = "󰚥";
           format-icons = [
@@ -54,7 +81,7 @@
         };
         "backlight" = {
           format = "{icon}";
-          tooltip = true;
+          tooltip = false;
           format-icons = [
             "󰋙"
             "󰫃"
@@ -88,6 +115,14 @@
           on-click = "volume -t";
           on-scroll-up = "volume -i 1";
           on-scroll-down = "volume -d 1";
+        };
+        "custom/wireguard" = {
+          format = "{}";
+          on-click = "wireguard toggle";
+          exec = "wireguard status";
+          tooltip = false;
+          interval = 2;
+          class = "wireguard";
         };
       };
     };
@@ -152,7 +187,8 @@
       #battery,
       #backlight,
       #pulseaudio,
-      #network
+      #network,
+      #custom-wireguard
       {
         font-size: 25px;
         margin-right: 15px;

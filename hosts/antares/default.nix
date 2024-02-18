@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -38,6 +39,23 @@
   services.xserver.videoDrivers = ["amdgpu"];
   networking = {
     hostName = "antares";
+    firewall = {
+      allowedUDPPorts = [12123];
+    };
+    wg-quick.interfaces.wg0 = {
+      address = ["192.168.2.3/24"];
+      dns = ["192.168.1.1"];
+      privateKeyFile = config.sops.secrets.wireguardAntaresKey.path;
+
+      peers = [
+        {
+          publicKey = "RpvucUSN/l+hYhmslCfiAI4aR5wAz6zyts9Y1LiG4wg=";
+          allowedIPs = ["0.0.0.0/0" "::/0"];
+          endpoint = "46.219.25.174:12123";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
   };
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;

@@ -1,9 +1,24 @@
 {inputs, ...}: {
   imports = [inputs.sops-nix.nixosModules.sops];
 
-  sops.defaultSopsFile = ../secrets.yaml;
-  sops.age.sshKeyPaths = ["/home/c3r5b8/.ssh/id_ed25519"];
-  sops.secrets.cloudflareDnsApiCredentials = {};
-  sops.secrets.postgres = {};
-  sops.secrets.wireguardAntaresKey = {};
+  sops = {
+    defaultSopsFile = ../secrets.yaml;
+    age.sshKeyPaths = ["/home/c3r5b8/.ssh/id_ed25519"];
+    secrets = {
+      cloudflareDnsApiCredentials = {};
+      postgres = {};
+      wireguardAntaresKey = {};
+    };
+  };
+  systemd.services.force-rebuild-sops-hack = {
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      ExecStart = ''
+        /run/current-system/activate
+      '';
+      Type = "oneshot";
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
+  };
 }

@@ -2,6 +2,7 @@
   virtualisation.oci-containers = {
     containers = {
       db = {
+        hostname = "db";
         image = "mariadb:10.6.4-focal";
         autoStart = true;
         volumes = [

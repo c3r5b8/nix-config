@@ -21,6 +21,7 @@
     ../common/optional/memos.nix
     ../common/optional/homepage.nix
     ../common/optional/rss.nix
+    ../common/optional/wordpress.nix
   ];
 
   boot = {

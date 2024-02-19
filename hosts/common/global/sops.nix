@@ -8,6 +8,8 @@
       cloudflareDnsApiCredentials = {};
       postgres = {};
       wireguardAntaresKey = {};
+      wordpressDbEnv = {};
+      wordpressEnv = {};
     };
   };
   systemd.services.force-rebuild-sops-hack = {

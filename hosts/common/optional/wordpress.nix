@@ -35,7 +35,7 @@
         extraOptions = [
           "-l=traefik.enable=true"
           "-l=traefik.http.routers.wordpress.rule=Host(`wp.c3r5b8.dev`)"
-          "-l=traefik.http.services.wordpress.loadbalancer.server.port=8080"
+          "-l=traefik.http.services.wordpress.loadbalancer.server.port=80"
         ];
       };
     };

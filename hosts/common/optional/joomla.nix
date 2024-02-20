@@ -14,11 +14,11 @@
         image = "terrychu/joomla-without-database:3.8.1";
         # links:
         #   - db:db
-        labels = [
-          "traefik.enable=true"
-          "traefik.http.routers.joomla.rule=Host(`web.c3r5b8.dev`)"
-          "traefik.http.services.joomla.loadbalancer.server.port=80"
-        ];
+        labels = {
+          "traefik.enable" = "true";
+          "traefik.http.routers.joomla.rule" = "Host(`web.c3r5b8.dev`)";
+          "traefik.http.services.joomla.loadbalancer.server.port" = "80";
+        };
         environment = {
           DB_HOST = "db";
           DB_USER = "joomla";

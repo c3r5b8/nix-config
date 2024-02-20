@@ -10,6 +10,8 @@
       wireguardAntaresKey = {};
       wordpressDbEnv = {};
       wordpressEnv = {};
+      mySqlEnv = {};
+      joomlaEnv = {};
     };
   };
   systemd.services.force-rebuild-sops-hack = {

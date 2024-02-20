@@ -21,9 +21,6 @@
         volumes = [
           "/mnt/fat_ssd/wordpress/data:/var/www/html"
         ];
-        # ports:
-        #   - 80:80
-        # restart: always
         environment = {
           WORDPRESS_DB_HOST = "db";
           WORDPRESS_DB_USER = "wordpress";

@@ -11,7 +11,7 @@
         };
       };
       web = {
-        image = "terrychu/joomla-without-database:3.8.1";
+        image = "joomla";
         # links:
         #   - db:db
         labels = {

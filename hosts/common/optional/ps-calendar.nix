@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   virtualisation.oci-containers = {
     containers = {
       calendar = {
@@ -13,12 +13,15 @@
           "-l=traefik.http.services.calendar.loadbalancer.server.port=3000"
         ];
         environment = {
-          SQLITE_DB="/data/calendar/test.db";
-          PORT="3000";
-          URL="http://localhost:3000";
-          PS_ROZKLAD_API_URL="https://dekanat.zu.edu.ua/";
+          SQLITE_DB = "/data/calendar/test.db";
+          PORT = "3000";
+          URL = "http://localhost:3000";
+          PS_ROZKLAD_API_URL = "https://dekanat.zu.edu.ua/";
           # TZ = "Europe/Kyiv";
         };
+        environmentFiles = [
+          config.sops.secrets.psCalendar.path
+        ];
       };
     };
   };

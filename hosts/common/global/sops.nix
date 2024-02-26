@@ -12,7 +12,8 @@
       wordpressEnv = {};
       mySqlEnv = {};
       joomlaEnv = {};
-      psCalendar = {};
+      googleClientId = {};
+      googleClientSecret = {};
     };
   };
   systemd.services.force-rebuild-sops-hack = {

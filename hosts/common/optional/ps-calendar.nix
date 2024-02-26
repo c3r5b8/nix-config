@@ -20,7 +20,9 @@
           # TZ = "Europe/Kyiv";
         };
         environmentFiles = [
-          config.sops.secrets.psCalendar.path
+          config.sops.secrets.googleClientId.path
+          config.sops.secrets.googleClientSecret.path
+          # config.sops.secrets.psCalendar.path
         ];
       };
     };

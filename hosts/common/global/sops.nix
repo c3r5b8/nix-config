@@ -12,6 +12,7 @@
       wordpressEnv = {};
       mySqlEnv = {};
       joomlaEnv = {};
+      psCalendar = {};
     };
   };
   systemd.services.force-rebuild-sops-hack = {

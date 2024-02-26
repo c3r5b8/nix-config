@@ -15,7 +15,7 @@
         environment = {
           SQLITE_DB = "/data/calendar/test.db";
           PORT = "3000";
-          URL = "http://localhost:3000";
+          URL = "https://calendar.c3r5b8.dev";
           PS_ROZKLAD_API_URL = "https://dekanat.zu.edu.ua/";
           # TZ = "Europe/Kyiv";
         };

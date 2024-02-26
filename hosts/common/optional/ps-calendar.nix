@@ -17,7 +17,7 @@
           PORT = "3000";
           URL = "https://calendar.c3r5b8.dev";
           PS_ROZKLAD_API_URL = "https://dekanat.zu.edu.ua/";
-          # TZ = "Europe/Kyiv";
+          TZ = "Europe/Kyiv";
         };
         environmentFiles = [
           config.sops.secrets.googleClientId.path

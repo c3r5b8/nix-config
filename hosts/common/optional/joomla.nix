@@ -20,9 +20,9 @@
           "traefik.http.services.joomla.loadbalancer.server.port" = "80";
         };
         environment = {
-          DB_HOST = "db";
+          JOOMLA_DB_HOST = "db";
           DB_USER = "joomla";
-          DB_PASSWORD = "joomla";
+          JOOMLA_DB_PASSWORD = "admin";
           DB_NAME = "joomla";
         };
         extraOptions = [

@@ -14,7 +14,7 @@
         ];
       };
       web = {
-        image = "joomla";
+        image = "joomla:5-php8.1-apache";
         # links:
         #   - db:db
         labels = {

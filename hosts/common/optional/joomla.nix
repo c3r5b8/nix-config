@@ -2,7 +2,7 @@
   virtualisation.oci-containers = {
     containers = {
       db = {
-        image = "mariadb:10.2";
+        image = "mariadb:latest";
         environment = {
           MYSQL_ROOT_PASSWORD = "admin";
           MYSQL_USER = "joomla";

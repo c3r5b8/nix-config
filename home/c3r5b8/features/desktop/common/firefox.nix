@@ -7,7 +7,6 @@
         clearurls
         darkreader
         enhanced-github
-        fastforwardteam
         i-dont-care-about-cookies
         one-click-wayback
         refined-github
@@ -19,6 +18,7 @@
         user-agent-string-switcher
         vimium
         widegithub
+        firefox-color
       ];
       id = 0;
       name = "c3r5b8";
@@ -63,7 +63,13 @@
             definedAliases = ["@nw"];
           };
           "Brave" = {
-            urls = [{template = "https://search.brave.com/search?q={searchTerms}";} {template = "https://search.brave.com/api/suggest?q={searchTerms}"; type = "application/x-suggestions+json";}];
+            urls = [
+              {template = "https://search.brave.com/search?q={searchTerms}";}
+              {
+                template = "https://search.brave.com/api/suggest?q={searchTerms}";
+                type = "application/x-suggestions+json";
+              }
+            ];
             iconUpdateURL = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-search-icon.rCBTNmje.svg";
             definedAliases = ["@b"];
           };

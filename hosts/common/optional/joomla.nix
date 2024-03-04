@@ -9,6 +9,9 @@
           MYSQL_PASSWORD = "joomla";
           MYSQL_DATABASE = "joomla";
         };
+        volumes = [
+          "/mnt/fat_ssd/joomla/db:/var/lib/mysql"
+        ];
       };
       web = {
         image = "joomla";
@@ -25,6 +28,9 @@
           JOOMLA_DB_PASSWORD = "admin";
           DB_NAME = "joomla";
         };
+        volumes = [
+          "/mnt/fat_ssd/joomla/code:/var/www/html"
+        ];
         extraOptions = [
           "--link=db:db"
         ];

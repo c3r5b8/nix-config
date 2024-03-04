@@ -58,7 +58,7 @@ in {
             -t 888 \
             -u low
       '';
-  in [volume brightness pkgs.libnotify];
+  in [volume brightness pkgs.libnotify pkgs.cliphist pkgs.wl-clipboard];
 
   wayland.windowManager.sway = {
     enable = true;
@@ -124,11 +124,11 @@ in {
       };
       output = {
         "eDP-1" = {
-          pos = "0,0";
+          pos = "2560,0";
           mode = "1920x1080@120Hz";
         };
         "HEADLESS-1" = {
-          pos = "0,1080";
+          pos = "0,0";
           mode = "2560x1600@120Hz";
           # scale = "1.6";
         };
@@ -146,7 +146,7 @@ in {
         "${modifier}+c" = "exec ${pkgs.vscode}/bin/code";
         # "${modifier}+e" = "exec nautilus";
         "${modifier}+d" = "exec ${pkgs.fuzzel}/bin/fuzzel";
-        # "${modifier}+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.tofi}/bin/tofi | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.fuzzel}/bin/fuzzel -d | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "${modifier}+Left" = "focus left";
         "${modifier}+Down" = "focus down";
         "${modifier}+Up" = "focus up";
@@ -194,8 +194,8 @@ in {
         "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
         "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
         "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-        # "Print" = "exec ${pkgs.wayshot}/bin/wayshot -f Screenshots/$(date +%d.%m.%y_%T_screenshot.png).png";
-        # "Ctrl+Print" = "exec ${pkgs.wayshot}/bin/wayshot --stdout | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "Print" = "exec ${pkgs.wayshot}/bin/wayshot -f Screenshots/$(date +%d.%m.%y_%T_screenshot.png).png";
+        "Ctrl+Print" = "exec ${pkgs.wayshot}/bin/wayshot --stdout | ${pkgs.wl-clipboard}/bin/wl-copy";
       };
       window.commands = [
         {
@@ -209,7 +209,7 @@ in {
       startup = [
         {command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";}
         {command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";}
-        # {command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";}
+        {command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";}
         {command = "${pkgs.autotiling}/bin/autotiling";}
         # {command = "cd .startpage/dist && python -m http.server 9999";}
       ];

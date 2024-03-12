@@ -23,7 +23,7 @@
     ../common/optional/rss.nix
     ../common/optional/ps-calendar.nix
     # ../common/optional/wordpress.nix
-    ../common/optional/joomla.nix
+    # ../common/optional/joomla.nix
   ];
 
   boot = {

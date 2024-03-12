@@ -1,4 +1,4 @@
-{pgs,...}:{
+{pkgs,...}:{
   virtualisation = {
     podman = {
       enable = true;

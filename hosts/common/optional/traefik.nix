@@ -41,7 +41,7 @@
           config.sops.secrets.cloudflareDnsApiCredentials.path
         ];
         volumes = [
-          "/var/run/docker.sock:/var/run/docker.sock:ro"
+          "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
           "/mnt/fat_ssd/traefik/acme.json:/acme.json"
         ];
       };

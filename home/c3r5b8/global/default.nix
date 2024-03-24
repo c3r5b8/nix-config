@@ -1,5 +1,5 @@
 {
-  inputs,
+  # inputs,
   lib,
   pkgs,
   config,
@@ -10,7 +10,7 @@
     # inputs.impermanence.nixosModules.home-manager.impermanence
     # inputs.nix-colors.homeManagerModule
     ../features/cli
-    inputs.nixvim.homeManagerModules.nixvim
+    # inputs.nixvim.homeManagerModules.nixvim
     # ../features/nvim
   ];
   #  ++ (builtins.attrValues outputs.homeManagerModules);

@@ -18,7 +18,7 @@ in {
     ./bottom.nix
     ./yazi.nix
     ./xdg.nix
-    ./nvim.nix
+    # ./nvim.nix
   ];
 
   home.packages = with pkgs; [

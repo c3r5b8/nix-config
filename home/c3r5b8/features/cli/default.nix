@@ -7,7 +7,7 @@
     #!/usr/bin/env bash
     notify-send "Starting rebuild"
     sudo nix-store --verify
-    pushd /home/c3r5b8/nix-config/ && sudo nixos-rebuild switch --flake .# --upgrade && notify-send "Done"
+    pushd /home/c3r5b8/dev/nix-config/ && sudo nixos-rebuild switch --flake .# --upgrade && notify-send "Done"
     popd
   '';
 in {
@@ -18,7 +18,6 @@ in {
     ./bottom.nix
     ./yazi.nix
     ./xdg.nix
-    # ./nvim.nix
   ];
 
   home.packages = with pkgs; [

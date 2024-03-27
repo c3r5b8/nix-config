@@ -22,19 +22,8 @@
     ../common/optional/wayland.nix
     ../common/optional/sunshine.nix
     ../common/optional/docker.nix
+    ../common/optional/powersave.nix
   ];
-
-  services.auto-cpufreq.enable = true;
-  services.auto-cpufreq.settings = {
-    battery = {
-      governor = "powersave";
-      turbo = "never";
-    };
-    charger = {
-      governor = "performance";
-      turbo = "auto";
-    };
-  };
 
   services.xserver.videoDrivers = ["amdgpu"];
   networking = {

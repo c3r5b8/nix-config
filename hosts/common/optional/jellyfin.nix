@@ -14,7 +14,7 @@
           "-l=traefik.http.routers.jellyfin.rule=Host(`jellyfin.c3r5b8.dev`)"
           "-l=traefik.http.services.jellyfin.loadbalancer.server.port=8096"
           "--group-add=303"
-          "--device /dev/dri/renderD128:/dev/dri/renderD128"
+          "--device=/dev/dri/renderD128:/dev/dri/renderD128"
         ];
         environment = {
           TZ = "Europe/Kyiv";

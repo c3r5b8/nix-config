@@ -1,6 +1,6 @@
 keys:
   - &hosts:
-    - &antares age1aath4p9he2a925ut3mcl98ttjmrc8tm2vnuq4r7s2wxj7tjf45as8pwur2
+    - &antares age1t27dp24z8suvgewhkmkd3wtlx0xefah6z3zpqh8zpyk5usvqccfsu8c7uh
     - &sargas age1m4vwlkxfrfsy90yfdj8ujquvjlujs2r7wsu4e560gg08q5fys5dqu6z54n
 creation_rules:
   - path_regex: hosts/common/secrets.ya?ml$

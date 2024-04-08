@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    superfile = {
+      url = "github:c3r5b8/superfile";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # nixvim = {
     #   url = "github:nix-community/nixvim";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +60,13 @@
             home-manager.users.c3r5b8 = import ./home/c3r5b8/antares.nix;
             home-manager.extraSpecialArgs = {inherit inputs outputs;};
           }
+          # {
+          #   environment.systemPackages = let
+          #     system = "x86_64-linux";
+          #   in [
+          #     inputs.superfile.packages.${system}.default
+          #   ];
+          # }
         ];
         specialArgs = {inherit inputs outputs;};
       };

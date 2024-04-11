@@ -29,7 +29,7 @@
   networking = {
     hostName = "antares";
     firewall = {
-      allowedUDPPorts = [12123];
+      allowedUDPPorts = [12123 22000 21027];
     };
     wg-quick.interfaces.wg0 = {
       address = ["192.168.2.3/24"];
@@ -54,6 +54,16 @@
   security.sudo.wheelNeedsPassword = false;
   security.rtkit.enable = true;
 
+  services = {
+    syncthing = {
+      enable = true;
+      user = "c3r5b8";
+      dataDir = "/home/c3r5b8/Documents"; # Default folder for new synced folders
+      configDir = "/home/c3r5b8/Documents/.config/syncthing"; # Folder for Syncthing's settings and keys
+    };
+  };
+  networking.firewall.allowedTCPPorts = [8384 22000];
+  # networking.firewall.allowedUDPPorts = [];
   networking.networkmanager.enable = true;
   console = {
     font = "Lat2-Terminus16";

@@ -22,6 +22,7 @@
     ../common/optional/homepage.nix
     ../common/optional/rss.nix
     ../common/optional/ps-calendar.nix
+    ../common/optional/ols.nix
     # ../common/optional/wordpress.nix
     # ../common/optional/joomla.nix
   ];

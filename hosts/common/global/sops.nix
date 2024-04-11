@@ -14,6 +14,7 @@
       joomlaEnv = {};
       googleClientId = {};
       googleClientSecret = {};
+      obsidianLiveSync = {};
     };
   };
   systemd.services.force-rebuild-sops-hack = {

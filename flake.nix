@@ -21,6 +21,7 @@
 
     superfile = {
       url = "github:c3r5b8/superfile";
+      # url = "path:/home/c3r5b8/dev/superfile";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

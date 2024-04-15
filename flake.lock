@@ -206,14 +206,17 @@
         ]
       },
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-1Kh/4iPa0wmOHipLXcbrPrpaY4Ic4Y35JXsRmgLLoOE=",
-        "path": "/home/c3r5b8/dev/superfile",
-        "type": "path"
+        "lastModified": 1712567126,
+        "narHash": "sha256-NKtoYgk0N1fsnktiRZ7qM6YBuuECMTCYy4o8IHUmbgs=",
+        "owner": "c3r5b8",
+        "repo": "superfile",
+        "rev": "e6511db7bc7bc25d913e3f51573697e7522fcba7",
+        "type": "github"
       },
       "original": {
-        "path": "/home/c3r5b8/dev/superfile",
-        "type": "path"
+        "owner": "c3r5b8",
+        "repo": "superfile",
+        "type": "github"
       }
     },
     "systems": {

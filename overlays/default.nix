@@ -1,7 +1,4 @@
-{
-  outputs,
-  inputs,
-}: {
+{inputs}: {
   flake-inputs = final: _: {
     inputs =
       builtins.mapAttrs

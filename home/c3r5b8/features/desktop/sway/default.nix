@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }: let
   accent = "#a6e3a1";
@@ -62,6 +61,8 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
+    package = pkgs.swayfx;
+    checkConfig = false;
     config = {
       bindkeysToCode = true;
       modifier = "Mod4";
@@ -135,7 +136,6 @@ in {
       };
       menu = "${pkgs.fuzzel}/bin/fuzzel";
       # terminal = "${pkgs.foot}/bin/footclient";
-      gaps.smartBorders = "on";
       seat = {"*" = {hide_cursor = "30000";};};
       defaultWorkspace = "1";
       keybindings = let
@@ -217,10 +217,29 @@ in {
         border = 2;
         titlebar = false;
       };
+      gaps = {
+        smartBorders = "on";
+        smartGaps = true;
+        inner = 10;
+        outer = 10;
+      };
     };
     extraConfig = let
       mod = config.wayland.windowManager.sway.config.modifier;
     in ''
+      corner_radius 10
+      blur on
+      blur_xray on
+      blur_passes 2
+      blur_radius 5
+
+      shadows off
+      shadows_on_csd off
+      shadow_blur_radius 20
+      shadow_color #0000007F
+
+
+
       bindsym --whole-window ${mod}+button4 workspace prev
       bindsym --whole-window ${mod}+button5 workspace next
       bindgesture swipe:3:left workspace next

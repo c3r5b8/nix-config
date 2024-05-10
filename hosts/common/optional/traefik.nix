@@ -5,7 +5,7 @@
         image = "traefik";
         autoStart = true;
         cmd = [
-	  "--log.level=DEBUG"
+	        "--log.level=DEBUG"
           "--api.insecure=true"
           "--providers.docker=true"
           "--providers.docker.exposedbydefault=false"
@@ -29,7 +29,7 @@
           "-l=traefik.enable=true"
           "-l=traefik.http.routers.traefik.rule=Host(`proxy.c3r5b8.dev`)"
           "-l=traefik.http.services.traefik.loadbalancer.server.port=8080"
-	  "--add-host=host.docker.internal:host-gateway"
+	        "--add-host=host.docker.internal:host-gateway"
 #	  "--add-host=host.docker.internal:172.17.0.1"
 #	  "--network=host"
         ];

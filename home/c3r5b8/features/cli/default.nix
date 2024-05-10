@@ -20,25 +20,25 @@ in {
     ./xdg.nix
   ];
 
-  home.packages = with pkgs;
+  home.packages =
     [
       rebuild
-      bc
-      dunst
-      libnotify
-      btop
-      ncdu
-      eza
-      ripgrep
-      fd
-      httpie
-      diffsitter
-      tmux
-      jq
-      nixd
-      nixfmt
+      pkgs.bc
+      pkgs.dunst
+      pkgs.libnotify
+      pkgs.btop
+      pkgs.ncdu
+      pkgs.eza
+      pkgs.ripgrep
+      pkgs.fd
+      pkgs.httpie
+      pkgs.diffsitter
+      pkgs.tmux
+      pkgs.jq
+      pkgs.nixd
+      pkgs.nixfmt
     ]
     ++ [
-      inputs.superfile.packages.${system}.default
+      inputs.superfile.packages.${pkgs.system}.default
     ];
 }

@@ -24,8 +24,8 @@
         # WEBPASSWORD: 'set a secure password here or it will be random'
         # Volumes store your data between container upgrades
         volumes = [
-          "mkdir -p /mnt/fat_ssd/pihole/etc-pihole/:/etc/pihole/"
-          "mkdir -p /mnt/fat_ssd/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+          "/mnt/fat_ssd/pihole/etc-pihole:/etc/pihole/"
+          "/mnt/fat_ssd/pihole/etc-dnsmasq.d:/etc/dnsmasq.d/"
         ];
         environmentFiles = [
           config.sops.secrets.piHole.path

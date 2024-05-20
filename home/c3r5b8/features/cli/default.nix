@@ -1,8 +1,8 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{ pkgs
+, inputs
+, ...
+}:
+let
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
     #!/usr/bin/env bash
     notify-send "Starting rebuild"
@@ -10,7 +10,8 @@
     pushd /home/c3r5b8/dev/nix-config/ && sudo nixos-rebuild switch --flake .# --upgrade && notify-send "Done"
     popd
   '';
-in {
+in
+{
   imports = [
     ./git.nix
     ./ssh.nix
@@ -37,8 +38,5 @@ in {
       pkgs.jq
       pkgs.nixd
       pkgs.nixfmt
-    ]
-    ++ [
-      inputs.superfile.packages.${pkgs.system}.default
     ];
 }

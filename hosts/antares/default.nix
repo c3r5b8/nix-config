@@ -1,8 +1,7 @@
-{
-  pkgs,
-  inputs,
-  config,
-  ...
+{ pkgs
+, inputs
+, config
+, ...
 }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
@@ -25,21 +24,22 @@
     ../common/optional/powersave.nix
   ];
 
-  services.xserver.videoDrivers = ["amdgpu"];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   networking = {
     hostName = "antares";
     firewall = {
-      allowedUDPPorts = [12123 22000 21027];
+      allowedUDPPorts = [ 53 67 12123 22000 21027 ];
+      allowedTCPPorts = [ 53 8384 22000 ];
     };
     wg-quick.interfaces.wg0 = {
-      address = ["192.168.2.3/24"];
-      dns = ["192.168.1.1"];
+      address = [ "192.168.2.3/24" ];
+      dns = [ "192.168.1.1" ];
       privateKeyFile = config.sops.secrets.wireguardAntaresKey.path;
 
       peers = [
         {
           publicKey = "RpvucUSN/l+hYhmslCfiAI4aR5wAz6zyts9Y1LiG4wg=";
-          allowedIPs = ["0.0.0.0/0" "::/0"];
+          allowedIPs = [ "0.0.0.0/0" "::/0" ];
           endpoint = "46.219.25.174:12123";
           persistentKeepalive = 25;
         }
@@ -48,7 +48,7 @@
   };
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    binfmt.emulatedSystems = ["aarch64-linux" "i686-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" "i686-linux" ];
   };
   services.gnome.gnome-keyring.enable = true;
   security.sudo.wheelNeedsPassword = false;
@@ -62,8 +62,6 @@
       configDir = "/home/c3r5b8/Documents/.config/syncthing"; # Folder for Syncthing's settings and keys
     };
   };
-  networking.firewall.allowedTCPPorts = [8384 22000];
-  # networking.firewall.allowedUDPPorts = [];
   networking.networkmanager.enable = true;
   console = {
     font = "Lat2-Terminus16";

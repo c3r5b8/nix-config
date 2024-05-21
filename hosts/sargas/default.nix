@@ -19,7 +19,7 @@
     ../common/optional/ols.nix
     ../common/optional/pi-hole.nix
     # ../common/optional/wordpress.nix
-    # ../common/optional/joomla.nix
+    ../common/optional/joomla.nix
   ];
 
   boot = {

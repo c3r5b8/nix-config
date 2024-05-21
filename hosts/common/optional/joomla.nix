@@ -12,6 +12,10 @@
         volumes = [
           "/mnt/fat_ssd/joomla/db:/var/lib/mysql"
         ];
+        extraOptions = [
+          "--pod=joomla"
+        ];
+
       };
       web = {
         image = "joomla:5-php8.1-apache";
@@ -32,7 +36,7 @@
           "/mnt/fat_ssd/joomla/code:/var/www/html"
         ];
         extraOptions = [
-          "--link=db:db"
+          "--pod=joomla"
         ];
       };
     };

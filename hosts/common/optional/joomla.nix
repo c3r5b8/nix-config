@@ -31,9 +31,9 @@
         volumes = [
           "/mnt/fat_ssd/joomla/code:/var/www/html"
         ];
-#        extraOptions = [
-#          "--link=db:db"
-#        ];
+        extraOptions = [
+          "--link=db:db"
+        ];
       };
     };
   };

@@ -1,8 +1,4 @@
-{ pkgs
-, inputs
-, ...
-}:
-let
+{pkgs, ...}: let
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
     #!/usr/bin/env bash
     notify-send "Starting rebuild"
@@ -10,8 +6,7 @@ let
     pushd /home/c3r5b8/dev/nix-config/ && sudo nixos-rebuild switch --flake .# --upgrade && notify-send "Done"
     popd
   '';
-in
-{
+in {
   imports = [
     ./git.nix
     ./ssh.nix
@@ -21,22 +16,21 @@ in
     ./xdg.nix
   ];
 
-  home.packages =
-    [
-      rebuild
-      pkgs.bc
-      pkgs.dunst
-      pkgs.libnotify
-      pkgs.btop
-      pkgs.ncdu
-      pkgs.eza
-      pkgs.ripgrep
-      pkgs.fd
-      pkgs.httpie
-      pkgs.diffsitter
-      pkgs.tmux
-      pkgs.jq
-      pkgs.nixd
-      pkgs.nixfmt
-    ];
+  home.packages = [
+    rebuild
+    pkgs.bc
+    pkgs.dunst
+    pkgs.libnotify
+    pkgs.btop
+    pkgs.ncdu
+    pkgs.eza
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.httpie
+    pkgs.diffsitter
+    pkgs.tmux
+    pkgs.jq
+    pkgs.nixd
+    pkgs.nixpkgs-fmt
+  ];
 }

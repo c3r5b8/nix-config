@@ -1,7 +1,4 @@
 {pkgs, ...}: {
-  environment.etc."greetd/environments".text = ''
-    sway
-  '';
 
   environment = {
     variables = {
@@ -94,7 +91,7 @@
     };
     logind = {
       lidSwitch = "suspend-then-hibernate";
-      lidSwitchExternalPower = "lock";
+      # lidSwitchExternalPower = "lock";
       extraConfig = ''
         HandlePowerKey=suspend
         HibernateDelaySec=3600

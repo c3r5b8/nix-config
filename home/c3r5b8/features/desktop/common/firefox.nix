@@ -29,6 +29,7 @@
         default = "Brave";
         force = true;
         order = [
+          "DuckDuckGo"
           "Brave"
           "Nix Packages"
           "NixOS Wiki"

@@ -1,7 +1,4 @@
-{
-  device ? throw "Set this to your disk device, e.g. /dev/sda",
-  ...
-}: {
+{device ? throw "Set this to your disk device, e.g. /dev/sda", ...}: {
   disko.devices = {
     disk.main = {
       inherit device;
@@ -22,18 +19,18 @@
           root = {
             name = "root";
             size = "100%";
-	    content = {
-	      type = "luks";
+            content = {
+              type = "luks";
               name = "crypted";
-              extraOpenArgs = [ ];
+              extraOpenArgs = [];
               settings = {
                 allowDiscards = true;
               };
-	      content = {
+              content = {
                 type = "lvm_pv";
                 vg = "root_vg";
               };
-	    };
+            };
           };
         };
       };
@@ -42,13 +39,13 @@
       root_vg = {
         type = "lvm_vg";
         lvs = {
-	  swap = {
-	    size = "32G";
-	    content = {
+          swap = {
+            size = "32G";
+            content = {
               type = "swap";
               resumeDevice = true;
             };
-  	  };
+          };
           root = {
             size = "100%FREE";
             content = {

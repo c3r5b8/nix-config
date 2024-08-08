@@ -1,7 +1,8 @@
-{ pkgs
-, inputs
-, config
-, ...
+{
+  pkgs,
+  inputs,
+  # config,
+  ...
 }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
@@ -10,7 +11,7 @@
     inputs.hardware.nixosModules.common-pc-laptop
 
     ./hardware-configuration.nix
-    (import ./dev.nix {device = "/dev/nvme0n1";}) 
+    (import ./disko.nix {device = "/dev/nvme0n1";})
 
     ../common/global
     ../common/users/c3r5b8
@@ -25,31 +26,31 @@
     ../common/optional/powersave.nix
   ];
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = ["amdgpu"];
   networking = {
     hostName = "antares";
     firewall = {
-      allowedUDPPorts = [ 53 67 12123 22000 21027 ];
-      allowedTCPPorts = [ 53 8384 22000 ];
+      allowedUDPPorts = [53 67 12123 22000 21027];
+      allowedTCPPorts = [53 8384 22000];
     };
-    wg-quick.interfaces.wg0 = {
-      address = [ "192.168.2.3/24" ];
-      dns = [ "192.168.1.1" ];
-      privateKeyFile = config.sops.secrets.wireguardAntaresKey.path;
+    # wg-quick.interfaces.wg0 = {
+    #   address = [ "192.168.2.3/24" ];
+    #   dns = [ "192.168.1.1" ];
+    #   privateKeyFile = config.sops.secrets.wireguardAntaresKey.path;
 
-      peers = [
-        {
-          publicKey = "RpvucUSN/l+hYhmslCfiAI4aR5wAz6zyts9Y1LiG4wg=";
-          allowedIPs = [ "0.0.0.0/0" "::/0" ];
-          endpoint = "46.219.25.174:12123";
-          persistentKeepalive = 25;
-        }
-      ];
-    };
+    #   peers = [
+    #     {
+    #       publicKey = "RpvucUSN/l+hYhmslCfiAI4aR5wAz6zyts9Y1LiG4wg=";
+    #       allowedIPs = [ "0.0.0.0/0" "::/0" ];
+    #       endpoint = "46.219.25.174:12123";
+    #       persistentKeepalive = 25;
+    #     }
+    #   ];
+    # };
   };
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    binfmt.emulatedSystems = [ "aarch64-linux" "i686-linux" ];
+    binfmt.emulatedSystems = ["aarch64-linux" "i686-linux"];
   };
   services.gnome.gnome-keyring.enable = true;
   security.sudo.wheelNeedsPassword = false;

@@ -10,6 +10,7 @@
     inputs.hardware.nixosModules.common-pc-laptop
 
     ./hardware-configuration.nix
+    (import ./dev.nix {device = "/dev/nvme0n1";}) 
 
     ../common/global
     ../common/users/c3r5b8

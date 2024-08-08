@@ -8,7 +8,7 @@
   home.packages = with pkgs; [
     gnome.gnome-keyring
     libsecret
-    anytype
+    # anytype
     solaar
 
     # audio

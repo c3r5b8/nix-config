@@ -14,8 +14,8 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = ["dm-snapshot"];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.kernelModules = ["kvm-intel" "acpi_call"];
+  boot.extraModulePackages = [config.boot.kernelPackages.acpi_call];
 
   hardware = {
     graphics = {

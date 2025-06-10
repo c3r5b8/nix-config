@@ -4,7 +4,7 @@
     enableFishIntegration = true;
     shellWrapperName = "y";
     theme = {
-      manager = {
+      mgr = {
         cwd = {fg = "#179299";};
         hovered = {
           fg = "#eff1f5";

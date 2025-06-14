@@ -50,7 +50,7 @@
       up = "k";
       right = "l";
       defaultWorkspace = "workspace number 1";
-      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal = "${pkgs.foot}/bin/foot";
       menu = "${pkgs.tofi}/bin/tofi/tofi-drun --drun-launch=true";
 
       startup = [
@@ -134,7 +134,7 @@
         up = config.wayland.windowManager.sway.config.up;
         right = config.wayland.windowManager.sway.config.right;
       in {
-        "${modifier}+space" = "exec ${pkgs.kitty}/bin/kitty";
+        "${modifier}+space" = "exec ${pkgs.foot}/bin/foot";
         "${modifier}+Shift+q" = "kill";
         "${modifier}+d" = "exec ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
         "${modifier}+Shift+c" = "reload";

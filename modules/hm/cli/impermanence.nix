@@ -17,6 +17,8 @@
       ".local/share/TelegramDesktop/tdata"
       ".local/share/fish"
       ".config/sunshine"
+      ".config/unity3d"
+      ".factorio"
     ];
     files = [
       ".mozilla/firefox/profiles.ini"

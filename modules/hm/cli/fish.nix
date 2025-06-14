@@ -6,6 +6,16 @@
         set fish_greeting
 
         alias cat="bat"
+        alias ll='ls -lah'
+        alias gs='git status'
+        alias gco='git checkout'
+        alias vim='nvim'
+        alias top='btop'
+        alias cat='bat'
+
+        abbr gcm 'git commit -m'
+        abbr .. 'cd ..'
+        abbr ... 'cd ../..'
       '';
       plugins = [
         {

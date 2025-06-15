@@ -11,6 +11,7 @@ in {
       "i2c"
       "network"
       "adbusers"
+      "libvirtd"
       "plugdev"
       "video"
       "wheel"

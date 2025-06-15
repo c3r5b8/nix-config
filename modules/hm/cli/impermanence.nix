@@ -18,6 +18,7 @@
       ".local/share/fish"
       ".config/sunshine"
       ".config/unity3d"
+      ".config/obsidian"
       ".factorio"
     ];
     files = [

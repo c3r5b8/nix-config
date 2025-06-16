@@ -14,6 +14,7 @@
     lua-language-server
     stylua
     gnumake
+    sops
     nixd
     alejandra
     go

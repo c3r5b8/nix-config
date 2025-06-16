@@ -14,5 +14,6 @@
   home.packages = [
     pkgs.transmission_4-gtk
     pkgs.obsidian
+    pkgs.element-desktop
   ];
 }

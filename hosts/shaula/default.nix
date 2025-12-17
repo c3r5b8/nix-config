@@ -23,26 +23,26 @@
     };
   };
   environment.etc."modprobe.d/amd_sfh.conf".text = ''
-  options amd_sfh sensor_mask=1
-'';
+    options amd_sfh sensor_mask=1
+  '';
   networking.hostName = "shaula";
-    services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
-    hardware.sensor.iio.enable = true;
-#  hardware = {
-#    bluetooth = {
-#      enable = true;
-#      powerOnBoot = true;
-#    };
-#  };
-boot.blacklistedKernelModules = [ "hid_sensor_custom" ];
-boot.kernelParams = [
+  hardware.sensor.iio.enable = true;
+  #  hardware = {
+  #    bluetooth = {
+  #      enable = true;
+  #      powerOnBoot = true;
+  #    };
+  #  };
+  boot.blacklistedKernelModules = ["hid_sensor_custom"];
+  boot.kernelParams = [
     "hid_sensor_hub.force_generic_accel_usage_id=1"
   ];
   services = {
     blueman.enable = true;
   };
- # environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";}; # Optionally, set the environment variable
+  # environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";}; # Optionally, set the environment variable
 
   nixpkgs.config.allowUnfree = true;
 

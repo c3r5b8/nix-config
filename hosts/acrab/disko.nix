@@ -15,7 +15,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "defaults" ];
+                mountOptions = ["defaults"];
               };
             };
 
@@ -25,7 +25,7 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ]; # remove this in real use unless you really want to force
+                extraArgs = ["-f"]; # remove this in real use unless you really want to force
                 subvolumes = {
                   "@" = {
                     mountpoint = "/";

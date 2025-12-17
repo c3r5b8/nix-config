@@ -11,14 +11,14 @@
     ../../system
     # ../../system/locale
     # ../../system/boot
-#     ../../system/theming
+    #     ../../system/theming
     ../../system/users
     # ../../system/impermanence
     # ../../system/network
     # ../../system/security
-#     ../../system/sway
+    #     ../../system/sway
   ];
-#   theme.variant = "light";
+  #   theme.variant = "light";
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;

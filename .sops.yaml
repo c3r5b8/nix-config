@@ -1,7 +1,11 @@
 keys:
   - &antares age1nnedvxpqyqkrhezz299qsw9kezxu7n6rz3kzpwz3hkfrvy63muqqvp0c29
+  - &acrab age1q4u6p3nvxzhzyfcws994539zzyr6yrxjmlz7hnyy6axr2k588vuqhe7aly
+  - &shaula age17syctueep2jsk3k28z73frl699d20w2hayysxyaz00sy76z7qgfspqucfk
 creation_rules:
   - path_regex: secrets.yaml
     key_groups:
       - age:
         - *antares
+        - *acrab
+        - *shaula

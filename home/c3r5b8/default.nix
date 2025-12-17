@@ -4,6 +4,7 @@
     ./gnome
     ./fish
     ./git
+    ./xdg
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
   home.username = "c3r5b8";

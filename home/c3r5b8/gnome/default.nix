@@ -66,7 +66,52 @@ with lib.hm.gvariant; {
 
     "org/gnome/shell" = {
       favorite-apps = ["firefox.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop"];
+      disable-extension-version-validation = true;
+      enabled-extensions = ["AlphabeticalAppGrid@stuarthayhurst" "blur-my-shell@aunetx" "gsconnect@andyholmes.github.io" "panel-corners@aunetx" "rounded-window-corners@fxgn" "unblank@sun.wxg@gmail.com"];
       welcome-dialog-last-shown-version = "4999";
+    };
+    "org/gnome/shell/extensions/blur-my-shell" = {
+      settings-version = 2;
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
+      brightness = 0.6;
+      sigma = 30;
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/lockscreen" = {
+      pipeline = "pipeline_default";
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/overview" = {
+      pipeline = "pipeline_default";
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/panel" = {
+      blur = false;
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/screenshot" = {
+      pipeline = "pipeline_default";
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/window-list" = {
+      brightness = 0.6;
+      sigma = 30;
+    };
+
+    "org/gnome/shell/extensions/gsconnect" = {
+      missing-openssl = false;
+      name = "acrab";
+    };
+
+    "org/gnome/shell/extensions/rounded-window-corners-reborn" = {
+      settings-version = mkUint32 7;
+    };
+
+    "org/gnome/shell/extensions/unblank" = {
+      power = false;
+      time = 30;
     };
 
     "org/gnome/tweaks" = {

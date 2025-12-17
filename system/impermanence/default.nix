@@ -57,7 +57,6 @@
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/timers"
       "/var/lib/udisks2"
-      "/var/lib/gnome-remote-desktop"
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
       "/var/log"

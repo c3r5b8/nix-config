@@ -5,6 +5,7 @@
   services.gnome.core-developer-tools.enable = false;
   services.gnome.games.enable = false;
   environment.gnome.excludePackages = with pkgs; [
+    epiphany
     gnome-tour
     yelp
     orca

@@ -46,9 +46,6 @@
   };
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
-  services = {
-    blueman.enable = true;
-  };
   environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";}; # Optionally, set the environment variable
 
   nixpkgs.config.allowUnfree = true;

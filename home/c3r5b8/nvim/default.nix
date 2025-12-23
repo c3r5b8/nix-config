@@ -7,6 +7,7 @@
     cargo
     gopls
     lua-language-server
+    markdownlint-cli
     stylua
     gnumake
     sops

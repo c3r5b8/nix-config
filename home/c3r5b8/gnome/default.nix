@@ -9,6 +9,10 @@ with lib.hm.gvariant; {
       play-sound = true;
     };
 
+    "org/gnome/settings-daemon/plugins/housekeeping" = {
+      donation-reminder-last-shown = mkInt64 1766520096523585;
+    };
+
     "org/gnome/desktop/datetime" = {
       automatic-timezone = true;
     };

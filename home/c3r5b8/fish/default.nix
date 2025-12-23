@@ -12,6 +12,8 @@
         alias vim='nvim'
         alias top='btop'
 
+        bind ctrl-h backward-kill-word
+
         abbr rr 'sudo nixos-rebuild switch'
         abbr gcm 'git commit -m'
         abbr .. 'cd ..'

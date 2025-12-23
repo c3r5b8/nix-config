@@ -9,5 +9,7 @@
     ./security
     ./gnome
     ./sops
+    ./ssh
+    ./zram
   ];
 }

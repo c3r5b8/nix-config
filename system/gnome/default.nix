@@ -21,5 +21,6 @@
     gsconnect
     alphabetical-app-grid
     rounded-window-corners-reborn
+    forge
   ];
 }

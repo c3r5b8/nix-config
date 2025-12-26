@@ -57,6 +57,7 @@
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/backlight"
       "/var/lib/systemd/timers"
+      "/var/lib/bluetooth"
       "/var/lib/udisks2"
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"

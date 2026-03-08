@@ -1,8 +1,11 @@
 {
   imports = [
     ./firefox
-    ./nvim
+    ./fish
     ./git
+    ./nvim
+    ./sway
+    ./yazi
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
   home.username = "c3r5b8";

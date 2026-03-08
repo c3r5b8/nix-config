@@ -1,0 +1,256 @@
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  workspaceSwitch = pkgs.writeShellApplication {
+    name = "sway-workspace-switch";
+    runtimeInputs = with pkgs; [sway jq];
+    text = ''
+      #!/usr/bin/env bash
+      if [[ -z "$1" ]]; then
+        echo "Usage: $0 <number> [move]" >&2
+        exit 1
+      fi
+
+      current_output=$(swaymsg -t get_outputs -r | jq -r '.[] | select(.focused) | .name')
+
+      declare -A baseMap
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (out: base: "baseMap[${out}]=${toString base}") config.custom.sway.outputToBase)}
+
+      base="''${baseMap[$current_output]:-}"
+      if [[ -z "$base" ]]; then
+        echo "Unknown output: $current_output" >&2
+        echo "Add it to custom.sway.outputToBase in your Nix config" >&2
+        exit 1
+      fi
+
+      workspace_number=$((base + $1))
+
+      set +u
+      if [[ "$2" == "move" ]]; then
+        swaymsg move container to workspace number "$workspace_number"
+      else
+        swaymsg workspace number "$workspace_number"
+      fi
+      set -u
+    '';
+  };
+  volumeHelper = pkgs.writeShellApplication {
+    name = "volume-helper";
+    text = ''
+        #!/bin/sh
+
+      if ! command -v pactl >/dev/null; then
+          exit 0;
+      fi
+
+      # pactl output depends on the current locale
+      export LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+      DEFAULT_STEP=5
+      LIMIT=$\{LIMIT:-100\}
+      SINK="@DEFAULT_SINK@"
+
+      clamp() {
+          if [ "$1" -lt 0 ]; then
+              echo "0"
+          elif [ "$1" -gt "$LIMIT" ]; then
+              echo "$LIMIT"
+          else
+              echo "$1"
+          fi
+      }
+
+      get_sink_volume() { # sink
+          ret=$(pactl get-sink-volume "$1")
+          # get first percent value
+          ret=$\{ret%%%*\}
+          ret=$\{ret##* \}
+          echo "$ret"
+          unset ret
+      }
+
+      CHANGE=0
+      VOLUME=-1
+
+      while true; do
+          case $1 in
+              --sink)
+                  SINK=$\{2:-$SINK\}
+                  shift;;
+              -l|--limit)
+                  LIMIT=$(($\{2:-$LIMIT\}))
+                  shift;;
+              --set-volume)
+                  VOLUME=$(($2))
+                  shift;;
+              -i|--increase)
+                  CHANGE=$(($\{2:-$DEFAULT_STEP\}))
+                  shift;;
+              -d|--decrease)
+                  CHANGE=$((-$\{2:-$DEFAULT_STEP\}))
+                  shift;;
+              *)
+                  break
+                  ;;
+          esac
+          shift
+      done
+
+      if [ "$CHANGE" -ne 0 ]; then
+          VOLUME=$(get_sink_volume "$SINK")
+          VOLUME=$(( VOLUME + CHANGE ))
+          pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+      elif [ "$VOLUME" -ge 0 ]; then
+          pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+      fi
+
+      # Display desktop notification
+
+      if ! command -v notify-send >/dev/null; then
+          exit 0;
+      fi
+
+      VOLUME=$(get_sink_volume "$SINK")
+      TEXT="Volume: $\{VOLUME\}%"
+      case $(pactl get-sink-mute "$SINK") in
+          *yes)
+              TEXT="Volume: muted"
+              VOLUME=0
+              ;;
+      esac
+
+      notify-send \
+          --app-name sway \
+          --expire-time 800 \
+          --hint string:x-canonical-private-synchronous:volume \
+          --hint "int:value:$VOLUME" \
+          --transient \
+          "$\{TEXT\}"
+    '';
+  };
+in {
+  options.custom.sway.outputToBase = lib.mkOption {
+    type = lib.types.attrsOf lib.types.int;
+    default = {
+      "eDP-1" = 0;
+      "HDMI-A-1" = 10;
+      "HEADLESS-1" = 20;
+    };
+  };
+  config.wayland.windowManager.sway = {
+    enable = true;
+    config = {
+      input = {
+        "type:touchpad" = {
+          accel_profile = "adaptive";
+          drag = "enabled";
+          dwt = "enabled";
+          drag_lock = "disabled";
+          natural_scroll = "enabled";
+          scroll_method = "two_finger";
+          tap = "enabled";
+        };
+        "type:keyboard" = {
+          xkb_layout = "us,ua";
+          xkb_options = "grp:alt_shift_toggle,caps:escape";
+          xkb_capslock = "disabled";
+        };
+      };
+
+      seat = {
+        "*" = {
+          hide_cursor = "30000";
+          xcursor_theme = "Bibata-Original-Ice 24";
+        };
+      };
+
+      floating.modifier = "Mod4";
+
+      workspaceOutputAssign = lib.flatten (lib.mapAttrsToList (
+          output: base:
+            map (i: {
+              workspace = toString (base + i);
+              output = output;
+            }) (lib.range 1 10)
+        )
+        config.custom.sway.outputToBase);
+
+      keybindings =
+        {
+          "Mod4+space" = "exec ${lib.getExe pkgs.foot}";
+          "Mod4+Shift+q" = "kill";
+          "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel}";
+          "Mod4+Shift+c" = "reload";
+          "Mod4+Shift+e" = "exec swaymsg exit";
+          # "$mod+Shift+t" = "exec ~/.local/bin/switch_theme.sh toggle";
+          # "$mod+Escape" = "exec gtklock -d";
+          "Mod4+f" = "fullscreen";
+          "Mod4+Shift+space" = "floating toggle";
+
+          "Mod4+h" = "focus left";
+          "Mod4+j" = "focus down";
+          "Mod4+k" = "focus up";
+          "Mod4+l" = "focus right";
+
+          "Mod4+Shift+h" = "move left";
+          "Mod4+Shift+j" = "move down";
+          "Mod4+Shift+k" = "move up";
+          "Mod4+Shift+l" = "move right";
+
+          "XF86AudioPlay" = "exec ${lib.getExe pkgs.playerctl} play-pause";
+          "XF86AudioStop" = "exec ${lib.getExe pkgs.playerctl} stop";
+
+          "XF86AudioNext" = "exec ${lib.getExe pkgs.playerctl} next";
+          "XF86AudioPause" = "exec ${lib.getExe pkgs.playerctl} pause";
+          "XF86AudioPrev" = "exec ${lib.getExe pkgs.playerctl} previous";
+
+          "Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} copy anything";
+          "Ctrl+Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} savecopy anything";
+        }
+        // (let
+          keys = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
+        in
+          lib.listToAttrs (lib.concatLists (lib.imap0 (i: key: let
+              n = i + 1;
+            in [
+              {
+                name = "Mod4+${key}";
+                value = "exec ${lib.getExe workspaceSwitch} ${toString n}";
+              }
+              {
+                name = "Mod4+Shift+${key}";
+                value = "exec ${lib.getExe workspaceSwitch} ${toString n} move";
+              }
+            ])
+            keys)));
+
+      bindkeysToCode = true;
+      gaps.smartBorders = "on";
+      window = {
+        border = 4;
+        titlebar = false;
+      };
+      bars = [{command = "${lib.getExe pkgs.waybar}";}];
+      # TODO: colors in theme to switch using specialisation
+      defaultWorkspace = "workspace number 1";
+      modes = {};
+    };
+    extraConfig = ''
+      bindgesture swipe:3:left workspace next
+      bindgesture swipe:3:right workspace prev
+      bindgesture swipe:3:up workspace next
+      bindgesture swipe:3:down workspace prev
+
+
+      set $brightness_notification_cmd  VALUE=$(${lib.getExe pkgs.brightnessctl} --percentage get) && \
+              ${lib.getExe pkgs.libnotify} -e -h string:x-canonical-private-synchronous:brightness \
+                  -h "int:value:$VALUE" -t 800 "Brightness: $\{VALUE\}%"
+
+      bindsym --locked XF86MonBrightnessDown exec ${lib.getExe pkgs.brightnessctl} -q set 5%- -n && $brightness_notification_cmd
+      bindsym --locked XF86MonBrightnessUp exec ${lib.getExe pkgs.brightnessctl} -q set +5% && $brightness_notification_cmd
+    '';
+  };
+}

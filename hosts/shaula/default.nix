@@ -22,7 +22,10 @@
     };
   };
 
-  networking.hostName = "shaula";
+  networking = {
+    hostName = "shaula";
+    networkmanager.wifi.powersave = false;
+  };
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -40,7 +43,7 @@
   programs.sway.enable = true;
   # programs.firefox.enable = true;
   # programs.neovim.enable = true;
-  environment.systemPackages = [pkgs.foot pkgs.yazi];
+  environment.systemPackages = [pkgs.foot pkgs.yazi pkgs.thunar];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "25.05";

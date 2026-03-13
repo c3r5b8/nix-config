@@ -40,17 +40,16 @@
   volumeHelper = pkgs.writeShellApplication {
     name = "volume-helper";
     text = ''
-        #!/bin/sh
-
+      #!/bin/sh
       if ! command -v pactl >/dev/null; then
-          exit 0;
+          exit 0
       fi
 
       # pactl output depends on the current locale
       export LANG=C.UTF-8 LC_ALL=C.UTF-8
 
       DEFAULT_STEP=5
-      LIMIT=$\{LIMIT:-100\}
+      LIMIT=''${LIMIT:-100}
       SINK="@DEFAULT_SINK@"
 
       clamp() {
@@ -63,72 +62,69 @@
           fi
       }
 
-      get_sink_volume() { # sink
+      get_sink_volume() {
           ret=$(pactl get-sink-volume "$1")
-          # get first percent value
-          ret=$\{ret%%%*\}
-          ret=$\{ret##* \}
+          ret=''${ret%%%*}
+          ret=''${ret##* }
           echo "$ret"
-          unset ret
       }
 
       CHANGE=0
       VOLUME=-1
 
-      while true; do
-          case $1 in
+      # Safer argument parsing (fixes "$1: unbound variable" under `set -u`)
+      while [ $# -gt 0 ]; do
+          case "$1" in
               --sink)
-                  SINK=$\{2:-$SINK\}
-                  shift;;
+                  SINK=''${2:-$SINK}
+                  shift 2 ;;
               -l|--limit)
-                  LIMIT=$(($\{2:-$LIMIT\}))
-                  shift;;
+                  LIMIT=''${2:-$LIMIT}
+                  shift 2 ;;
               --set-volume)
-                  VOLUME=$(($2))
-                  shift;;
+                  VOLUME=''${2:-$VOLUME}
+                  shift 2 ;;
               -i|--increase)
-                  CHANGE=$(($\{2:-$DEFAULT_STEP\}))
-                  shift;;
+                  CHANGE=''${2:-$DEFAULT_STEP}
+                  shift 2 ;;
               -d|--decrease)
-                  CHANGE=$((-$\{2:-$DEFAULT_STEP\}))
-                  shift;;
+                  CHANGE="-''${2:-$DEFAULT_STEP}"
+                  shift 2 ;;
               *)
-                  break
-                  ;;
+                  break ;;
           esac
-          shift
       done
 
       if [ "$CHANGE" -ne 0 ]; then
           VOLUME=$(get_sink_volume "$SINK")
-          VOLUME=$(( VOLUME + CHANGE ))
+          VOLUME=$((VOLUME + CHANGE))
           pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
       elif [ "$VOLUME" -ge 0 ]; then
           pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
       fi
 
       # Display desktop notification
-
-      if ! command -v notify-send >/dev/null; then
-          exit 0;
+      if ! command -v ${lib.getExe pkgs.libnotify} >/dev/null; then
+          exit 0
       fi
 
       VOLUME=$(get_sink_volume "$SINK")
-      TEXT="Volume: $\{VOLUME\}%"
+      TEXT="Volume: ''${VOLUME}%"
+
       case $(pactl get-sink-mute "$SINK") in
-          *yes)
+          *yes*)
               TEXT="Volume: muted"
               VOLUME=0
               ;;
       esac
 
-      notify-send \
+      ${lib.getExe pkgs.libnotify} \
           --app-name sway \
           --expire-time 800 \
           --hint string:x-canonical-private-synchronous:volume \
           --hint "int:value:$VOLUME" \
           --transient \
-          "$\{TEXT\}"
+          "$TEXT"
     '';
   };
 in {
@@ -143,6 +139,9 @@ in {
   config.wayland.windowManager.sway = {
     enable = true;
     config = {
+      startup = [
+        {command = "${lib.getExe pkgs.dunst}";}
+      ];
       input = {
         "type:touchpad" = {
           accel_profile = "adaptive";
@@ -180,7 +179,7 @@ in {
 
       keybindings =
         {
-          "Mod4+space" = "exec ${lib.getExe pkgs.foot}";
+          "Mod4+space" = "exec ${lib.getExe' pkgs.foot "footclient"}";
           "Mod4+Shift+q" = "kill";
           "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel}";
           "Mod4+Shift+c" = "reload";
@@ -209,6 +208,11 @@ in {
 
           "Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} copy anything";
           "Ctrl+Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} savecopy anything";
+
+          "XF86AudioRaiseVolume" = "exec ${lib.getExe volumeHelper} --increase 5";
+          "XF86AudioLowerVolume" = "exec ${lib.getExe volumeHelper} --decrease 5";
+          "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ${lib.getExe volumeHelper}";
+          "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
         }
         // (let
           keys = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
@@ -245,9 +249,9 @@ in {
       bindgesture swipe:3:down workspace prev
 
 
-      set $brightness_notification_cmd  VALUE=$(${lib.getExe pkgs.brightnessctl} --percentage get) && \
+      set $brightness_notification_cmd  VALUE=$(${lib.getExe pkgs.brightnessctl} i | grep -i current | awk '{print $4}' | sed 's/(//' | sed 's/)//') && \
               ${lib.getExe pkgs.libnotify} -e -h string:x-canonical-private-synchronous:brightness \
-                  -h "int:value:$VALUE" -t 800 "Brightness: $\{VALUE\}%"
+                  -h "int:value:$VALUE" -t 800 "Brightness: ''${VALUE}"
 
       bindsym --locked XF86MonBrightnessDown exec ${lib.getExe pkgs.brightnessctl} -q set 5%- -n && $brightness_notification_cmd
       bindsym --locked XF86MonBrightnessUp exec ${lib.getExe pkgs.brightnessctl} -q set +5% && $brightness_notification_cmd

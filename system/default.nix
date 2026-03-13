@@ -1,6 +1,7 @@
 {
   imports = [
     ./boot
+    ./fonts
     ./greetd
     ./impermanence
     ./locale

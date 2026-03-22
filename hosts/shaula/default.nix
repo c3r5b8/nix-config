@@ -17,11 +17,20 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
+    sharedModules = [inputs.plasma-manager.homeModules.plasma-manager];
     users = {
       c3r5b8 = import ./home.nix;
     };
   };
-
+  nixpkgs.overlays = [
+    (final: prev: {
+      linux-firmware = prev.linux-firmware.overrideAttrs (old: {
+        postInstall = ''
+          cp ${./ish_lnlm.bin} $out/lib/firmware/intel/ish/ish_lnlm.bin
+        '';
+      });
+    })
+  ];
   networking = {
     hostName = "shaula";
     networkmanager.wifi.powersave = false;
@@ -37,14 +46,26 @@
       enable = true;
       powerOnBoot = true;
     };
+    sensor.iio.enable = true;
+  };
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 5d --keep 5";
+    flake = "/home/c3r5b8/dev/nix-config/";
+  };
+  services.howdy = {
+    enable = true;
+    control = "sufficient";
   };
 
+  services.linux-enable-ir-emitter.enable = true;
+
   nixpkgs.config.allowUnfree = true;
-  programs.sway.enable = true;
-  # programs.firefox.enable = true;
-  # programs.neovim.enable = true;
-  environment.systemPackages = [pkgs.foot pkgs.yazi pkgs.thunar];
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.plasma-login-manager.enable = true;
+  environment.systemPackages = [pkgs.kdePackages.plasma-keyboard];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 }

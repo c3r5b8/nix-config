@@ -52,6 +52,7 @@
     directories = [
       "/root/.cache/nix"
       "/var/lib/nixos"
+      "/var/lib/howdy"
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/backlight"
       "/var/lib/systemd/timers"
@@ -87,6 +88,10 @@
       "/home/c3r5b8/.local/share/nvim"
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
+      "/home/c3r5b8/.local/share/kactivitymanagerd"
+    ];
+    files = [
+      "/home/c3r5b8/.local/share/krunnerstaterc"
     ];
   };
   system.activationScripts.bootstrapPersistHome.text = ''

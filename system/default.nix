@@ -2,9 +2,10 @@
   imports = [
     ./boot
     ./fonts
-    ./greetd
+    ./gc
     ./impermanence
     ./locale
+    ./man
     ./network
     ./pipewire
     ./security

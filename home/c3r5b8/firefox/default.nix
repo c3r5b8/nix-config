@@ -1,4 +1,8 @@
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   programs.firefox = {
     enable = true;
     policies = {
@@ -33,11 +37,24 @@
         SkipOnboarding = true;
         MoreFromMozilla = false;
       };
+      DisableTelemetry = true;
+      DisplayBookmarksToolbar = "never";
       Extensions.Install = map (
         ex: "https://addons.mozilla.org/firefox/downloads/latest/${ex}/latest.xpi"
       ) ["ublock-origin" "bitwarden-password-manager"];
     };
     profiles.c3r5b8 = {
+      id = 0;
+      isDefault = true;
+      name = "default";
+      extensions = {
+        packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+          ublock-origin
+          bitwarden
+          vimium
+          sponsorblock
+        ];
+      };
       search = {
         force = true;
         default = "ddg";

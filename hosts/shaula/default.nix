@@ -60,11 +60,17 @@
   };
 
   services.linux-enable-ir-emitter.enable = true;
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
 
+    extraPortals = [pkgs.kdePackages.xdg-desktop-portal-kde];
+  };
+  environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
   nixpkgs.config.allowUnfree = true;
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager.enable = true;
-  environment.systemPackages = [pkgs.kdePackages.plasma-keyboard];
+  environment.systemPackages = [pkgs.kdePackages.plasma-keyboard pkgs.jellyfin-desktop];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "26.05";

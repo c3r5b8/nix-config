@@ -6,7 +6,8 @@
   xdg.dataFile."color-schemes/Light.colors".source = ./Light.colors;
   home.file."pictures/wallpaper.jpg".source = ./wallpaper.jpg;
   gtk = {
-    gtk2.configLocation = "${config.home.homeDirectory}/.config/.gtkrc-2.0";
+    # gtk2.configLocation = "${config.home.homeDirectory}/.config/.gtkrc-2.0";
+    gtk2.enable = false;
     enable = true;
     cursorTheme = {
       name = "Bibata-Original-Ice";
@@ -29,8 +30,97 @@
     };
   in [
     krohnkite
+    pkgs.kdePackages.krfb
   ];
+  xdg.dataFile."konsole/default.keytab".source = ./default.keytab;
+  programs.konsole = {
+    enable = true;
+    customColorSchemes = {
+      "Breeze Light" = pkgs.writeText "Breeze-Light.colorscheme" ''
+        [Background]
+        Color=250,250,250
+        [BackgroundFaint]
+        Color=230,230,230
+        [BackgroundIntense]
+        Color=255,255,255
+        [Color0]
+        Color=56,58,66
+        [Color0Faint]
+        Color=68,66,76
+        [Color0Intense]
+        Color=28,26,36
+        [Color1]
+        Color=228,86,74
+        [Color1Faint]
+        Color=198,96,94
+        [Color1Intense]
+        Color=248,54,54
+        [Color2]
+        Color=80,160,80
+        [Color2Faint]
+        Color=100,140,100
+        [Color2Intense]
+        Color=80,200,80
+        [Color3]
+        Color=194,132,2
+        [Color3Faint]
+        Color=174,152,2
+        [Color3Intense]
+        Color=222,102,2
+        [Color4]
+        Color=0,112,212
+        [Color4Faint]
+        Color=20,132,192
+        [Color4Intense]
+        Color=0,92,232
+        [Color5]
+        Color=166,38,164
+        [Color5Faint]
+        Color=136,84,136
+        [Color5Intense]
+        Color=186,14,184
+        [Color6]
+        Color=10,150,180
+        [Color6Faint]
+        Color=30,170,160
+        [Color6Intense]
+        Color=0,170,200
+        [Color7]
+        Color=250,250,250
+        [Color7Faint]
+        Color=230,230,230
+        [Color7Intense]
+        Color=255,255,255
+        [Foreground]
+        Color=56,58,66
+        [ForegroundFaint]
+        Color=68,66,76
+        [ForegroundIntense]
+        Color=28,26,36
+        [General]
+        Blur=false
+        Description=Breeze Light
+        Opacity=1
+        Wallpaper=
+      '';
+    };
 
+    defaultProfile = "Light";
+    profiles = {
+      Light = {
+        colorScheme = "Breeze Light";
+        font = {
+          name = "FiraCode Nerd Font";
+          size = 10;
+        };
+        extraConfig = {
+          Scrolling = {
+            HistorySize = 10000;
+          };
+        };
+      };
+    };
+  };
   programs.plasma = {
     enable = true;
     fonts = {
@@ -530,12 +620,22 @@
       kwinrc = {
         Effect-overview.TouchBorderActivate = 4;
         TouchEdges.Top = "ApplicationLauncher";
+        Windows = {
+          AutoRaise = true;
+          AutoRaiseInterval = 100;
+          BorderlessMaximizedWindows = false;
+          DelayFocusInterval = 50;
+          FocusPolicy = "FocusFollowsMouse";
+          NextFocusPrefersMouse = true;
+        };
         Wayland.InputMethod = "/run/current-system/sw/share/applications/org.kde.plasma.keyboard.desktop";
         Plugins = {
           virtualdesktopsonlyonprimaryEnabled = true;
           krohnkiteEnabled = true;
         };
         Script-krohnkite = {
+          focusNormalDisableVDesktops = true;
+          focusMetaDisableVDesktops = true;
           focusNormal = 6;
           movePointerOnFocus = true;
           soleWindowNoBorders = true;

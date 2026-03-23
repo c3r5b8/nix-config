@@ -2,6 +2,7 @@
   services.tailscale = {
     enable = true;
     openFirewall = true;
+    authKeyFile = config.sops.secrets.tailscaleKey.path;
   };
 
   networking.firewall = {

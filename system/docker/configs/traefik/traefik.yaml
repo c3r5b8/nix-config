@@ -1,0 +1,40 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    http3: 
+      advertisedPort: 443
+    http:
+      tls:
+        certResolver: cloudflare
+        domains:
+          - main: "c3r5b8.dev"
+            sans:
+              - "*.c3r5b8.dev"
+
+providers:
+  file:
+    directory: "/etc/traefik/dynamic_conf"
+    watch: true
+  docker:
+    exposedByDefault: false
+
+
+api:
+  insecure: true
+
+log:
+  level: "DEBUG"
+
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: olespid@gmail.com
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"

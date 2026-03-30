@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  config,
   ...
 }: {
   imports = [
@@ -8,16 +9,17 @@
     ./disko.nix
 
     ../../system
+    ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
   ];
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
+      theme = config.custom.theme;
     };
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    sharedModules = [inputs.plasma-manager.homeModules.plasma-manager];
     users = {
       c3r5b8 = import ./home.nix;
     };
@@ -60,17 +62,8 @@
   };
 
   services.linux-enable-ir-emitter.enable = true;
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-
-    extraPortals = [pkgs.kdePackages.xdg-desktop-portal-kde];
-  };
-  environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
+  programs.sway.enable = true;
   nixpkgs.config.allowUnfree = true;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.plasma-login-manager.enable = true;
-  environment.systemPackages = [pkgs.kdePackages.plasma-keyboard pkgs.jellyfin-desktop];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "26.05";

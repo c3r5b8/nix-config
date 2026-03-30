@@ -64,6 +64,10 @@
     ];
     files = [
       "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
     ];
   };
   environment.persistence."/persist/c3r5b8" = {
@@ -88,10 +92,6 @@
       "/home/c3r5b8/.local/share/nvim"
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
-      "/home/c3r5b8/.local/share/kactivitymanagerd"
-    ];
-    files = [
-      "/home/c3r5b8/.local/share/krunnerstaterc"
     ];
   };
   system.activationScripts.bootstrapPersistHome.text = ''

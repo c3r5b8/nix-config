@@ -1,18 +1,21 @@
 {
   imports = [
     ./boot
-    ./fonts
+    # ./fonts
     ./impermanence
+    # ./greetd
     ./locale
     ./man
     ./network
     ./nh
-    ./pipewire
+    # ./pipewire
     ./security
     ./sops
     ./ssh
-    ./sunshine
+    #     ./sunshine
     ./tailscale
+    # ./theme
+    # ./thunar
     ./zram
   ];
 }

@@ -1,0 +1,16 @@
+http:
+  routers:
+    http-catchall-redirect:
+      rule: "PathPrefix(`/`)"
+      entryPoints:
+        - "web"
+      middlewares:
+        - "redirect-to-https"
+      priority: 200
+      service: "noop@internal"
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: "https"
+        permanent: true
+

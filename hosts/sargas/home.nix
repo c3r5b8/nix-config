@@ -1,6 +1,5 @@
 {
   imports = [
     ../../home/c3r5b8
-    ../../home/c3r5b8/desktop.nix
   ];
 }

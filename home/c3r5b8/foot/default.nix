@@ -6,7 +6,7 @@
       main = {
         font = "FiraCode Nerd Font:size=12";
       };
-      colors = {
+      colors-dark = {
         "cursor" = "eff1f5 dc8a78";
         "foreground" = "4c4f69";
         "background" = "eff1f5";
@@ -35,7 +35,7 @@
         "jump-labels" = "dce0e8 fe640b";
         "urls" = "1e66f5";
       };
-      colors2 = {
+      colors-light = {
         "cursor" = "11111b f5e0dc";
         "foreground" = "cdd6f4";
         "background" = "1e1e2e";

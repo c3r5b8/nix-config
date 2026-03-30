@@ -19,11 +19,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +48,7 @@
   in {
     nixosConfigurations = {
       shaula = mkHost {hostname = "shaula";};
+      sargas = mkHost {hostname = "sargas";};
     };
   };
 }

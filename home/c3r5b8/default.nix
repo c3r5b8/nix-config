@@ -1,13 +1,10 @@
 {pkgs, ...}: {
   imports = [
-    ./firefox
     ./fish
     ./git
     ./nvim
-    ./plasma
     ./ssh
     ./starship
-    ./theme
     ./yazi
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -15,20 +12,13 @@
   home.homeDirectory = "/home/c3r5b8";
   home.stateVersion = "26.05";
   programs.home-manager.enable = true;
-  home.packages = [pkgs.telegram-desktop pkgs.home-manager];
-  xdg = {
-    enable = true;
-    autostart.enable = true;
-    portal = {
-      enable = true;
-      extraPortals = [pkgs.kdePackages.xdg-desktop-portal-kde];
-      config = {
-        common = {
-          default = [
-            "kde"
-          ];
-        };
-      };
-    };
-  };
+  home.packages = with pkgs; [
+    zip
+    unzip
+    p7zip
+    unrar
+    gzip
+    bzip2
+    xz
+  ];
 }

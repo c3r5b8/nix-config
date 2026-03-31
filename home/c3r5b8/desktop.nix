@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./dunst
     ./firefox
     ./foot
     ./hypridle

@@ -223,12 +223,31 @@ in {
       "HEADLESS-1" = 20;
     };
   };
+  options.custom.sway.startup = lib.mkOption {
+    type = lib.types.listOf (lib.types.submodule {
+      options = {
+        command = lib.mkOption {
+          type = lib.types.str;
+          description = "Command that will be executed on startup.";
+        };
+
+        always = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether to run command on each sway restart.";
+        };
+      };
+    });
+    default = [];
+  };
   config.wayland.windowManager.sway = {
     enable = true;
     config = {
-      startup = [
-        {command = "${lib.getExe pkgs.dunst}";}
-      ];
+      startup =
+        [
+          {command = "${lib.getExe pkgs.dunst}";}
+        ]
+        ++ config.custom.sway.startup;
       input = {
         "type:touchpad" = {
           accel_profile = "adaptive";

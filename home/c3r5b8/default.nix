@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./bat
     ./fish
     ./git
     ./nvim

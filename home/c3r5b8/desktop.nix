@@ -3,6 +3,7 @@
     ./dunst
     ./firefox
     ./foot
+    ./fuzzel
     ./hypridle
     ./sway
     ./theme

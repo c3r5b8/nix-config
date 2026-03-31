@@ -247,6 +247,13 @@ in {
         [
           {command = "${lib.getExe pkgs.dunst}";}
           {command = "${lib.getExe pkgs.hypridle}";}
+          {
+            command =
+              if theme == "dark"
+              then "pkill -12 foot"
+              else "pkill -10 foot";
+            always = true;
+          }
         ]
         ++ config.custom.sway.startup;
       input = {

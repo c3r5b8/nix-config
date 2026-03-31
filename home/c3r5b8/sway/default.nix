@@ -246,6 +246,7 @@ in {
       startup =
         [
           {command = "${lib.getExe pkgs.dunst}";}
+          {command = "${lib.getExe pkgs.hypridle}";}
         ]
         ++ config.custom.sway.startup;
       input = {

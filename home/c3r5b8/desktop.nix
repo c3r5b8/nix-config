@@ -2,6 +2,7 @@
   imports = [
     ./firefox
     ./foot
+    ./hypridle
     ./sway
     ./theme
     ./waybar

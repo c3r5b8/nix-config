@@ -37,8 +37,12 @@
 
       '';
     };
+    lisgd = pkgs.lisgd.override {
+      conf = ./lisgd_conf.h;
+    };
   in [
     {command = "${lib.getExe rotate_screen}";}
+    {command = "${lib.getExe lisgd}";}
   ];
   programs.waybar.settings.mainBar = let
     toggle_wvkbd = let

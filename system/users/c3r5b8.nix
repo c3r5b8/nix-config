@@ -14,6 +14,7 @@ in {
     extraGroups = ifTheyExist [
       "audio"
       "i2c"
+      "input"
       "networkmanager"
       "adbusers"
       "libvirtd"

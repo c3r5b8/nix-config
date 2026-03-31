@@ -248,6 +248,10 @@ in {
           {command = "${lib.getExe pkgs.dunst}";}
           {command = "${lib.getExe pkgs.hypridle}";}
           {
+            command = "pkill -12 btop";
+            always = true;
+          }
+          {
             command =
               if theme == "dark"
               then "pkill -12 foot"

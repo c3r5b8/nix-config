@@ -6,5 +6,6 @@
     #     ./sunshine
     ./theme
     ./thunar
+    ./gtklock
   ];
 }

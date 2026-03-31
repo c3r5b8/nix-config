@@ -1,4 +1,8 @@
-{theme, ...}: {
+{
+  theme,
+  lib,
+  ...
+}: {
   programs.waybar = {
     enable = true;
     settings = {
@@ -6,9 +10,7 @@
         position = "bottom";
         height = 30;
         spacing = 0;
-        modules-left = [
-          "custom/launcher"
-          "custom/keyboard"
+        modules-left = lib.mkDefault [
           "clock"
           "idle_inhibitor"
           "custom/label_bt"
@@ -19,7 +21,7 @@
         modules-center = [
           "sway/workspaces"
         ];
-        modules-right = [
+        modules-right = lib.mkDefault [
           "custom/label_language"
           "sway/language"
           "custom/label_pulseaudio"
@@ -28,7 +30,6 @@
           "battery"
           "custom/label_backlight"
           "backlight"
-          "custom/close"
         ];
         "sway/workspaces" = {
           persistent-workspaces = {
@@ -93,21 +94,6 @@
               "HEADLESS-1"
             ];
           };
-        };
-        "custom/launcher" = {
-          format = " 󰊠 ";
-          tooltip = false;
-          on-click = "fuzzel";
-        };
-        "custom/keyboard" = {
-          format = "  󰌌  ";
-          tooltip = false;
-          on-click = "bash ~/.local/bin/toggle_wvkbd.sh";
-        };
-        "custom/close" = {
-          format = " 󰅙 ";
-          tooltip = false;
-          on-click = "swaymsg kill";
         };
         "network#net2" = {
           tooltip = false;

@@ -47,6 +47,11 @@ in {
       };
     };
   };
+  dconf.settings."org/gnome/desktop/interface".color-scheme =
+    if theme == "light"
+    then "prefer-light"
+    else "prefer-dark";
+
   home.pointerCursor = {
     enable = true;
     package = pkgs.bibata-cursors;

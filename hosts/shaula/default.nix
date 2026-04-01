@@ -18,13 +18,13 @@
       theme = config.custom.theme;
     };
     useGlobalPkgs = true;
-    useUserPackages = true;
     backupFileExtension = "backup";
     users = {
       c3r5b8 = import ./home.nix;
     };
   };
   nixpkgs.overlays = [
+    inputs.nur.overlays.default
     (final: prev: {
       linux-firmware = prev.linux-firmware.overrideAttrs (old: {
         postInstall = ''
@@ -63,7 +63,12 @@
 
   services.linux-enable-ir-emitter.enable = true;
   programs.sway.enable = true;
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
+  };
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "26.05";

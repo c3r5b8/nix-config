@@ -2,94 +2,92 @@
   pkgs,
   config,
   lib,
-  theme,
   ...
 }: let
-  dark = {
-    focused = {
-      border = "#a6e3a1";
-      background = "#1e1e2e";
-      text = "#cdd6f4";
-      indicator = "#a6e3a1";
-      childBorder = "#a6e3a1";
-    };
+  themeSwitch = pkgs.writeShellApplication {
+    name = "switch-theme";
+    runtimeInputs = with pkgs; [sway coreutils procps];
+    text = ''
+      #!/usr/bin/env bash
 
-    focusedInactive = {
-      border = "#6c7086";
-      background = "#1e1e2e";
-      text = "#cdd6f4";
-      indicator = "#6c7086";
-      childBorder = "#6c7086";
-    };
+      CONFIG_DIR="$HOME/.config"
+      THEME_FILE="$HOME/.config/current_theme/theme"
 
-    unfocused = {
-      border = "#6c7086";
-      background = "#1e1e2e";
-      text = "#cdd6f4";
-      indicator = "#6c7086";
-      childBorder = "#6c7086";
-    };
+      set_theme() {
+      	local theme=$1
 
-    urgent = {
-      border = "#fab387";
-      background = "#1e1e2e";
-      text = "#fab387";
-      indicator = "#6c7086";
-      childBorder = "#fab387";
-    };
+      	# btop
+      	ln -sf "$CONFIG_DIR/btop/themes/$theme.theme" "$CONFIG_DIR/btop/themes/theme.theme"
+      	pkill -12 btop || true
 
-    placeholder = {
-      border = "#6c7086";
-      background = "#1e1e2e";
-      text = "#cdd6f4";
-      indicator = "#6c7086";
-      childBorder = "#6c7086";
-    };
+      	# dunst
+      	ln -sf "$CONFIG_DIR/dunst/$theme" "$CONFIG_DIR/dunst/dunstrc"
+      	pkill dunst || true
 
-    background = "#1e1e2e";
-  };
-  light = {
-    focused = {
-      border = "#40a02b";
-      background = "#eff1f5";
-      text = "#4c4f69";
-      indicator = "#40a02b";
-      childBorder = "#40a02b";
-    };
+      	# fuzzel
+      	ln -sf "$CONFIG_DIR/fuzzel/$theme" "$CONFIG_DIR/fuzzel/theme.ini"
 
-    focusedInactive = {
-      border = "#9ca0b0";
-      background = "#eff1f5";
-      text = "#4c4f69";
-      indicator = "#9ca0b0";
-      childBorder = "#9ca0b0";
-    };
+      	# waybar
+      	ln -sf "$CONFIG_DIR/waybar/$theme" "$CONFIG_DIR/waybar/theme.css"
 
-    unfocused = {
-      border = "#9ca0b0";
-      background = "#eff1f5";
-      text = "#4c4f69";
-      indicator = "#9ca0b0";
-      childBorder = "#9ca0b0";
-    };
+      	# sway
+      	ln -sf "$CONFIG_DIR/sway/$theme" "$CONFIG_DIR/sway/theme"
+      	swaymsg reload
 
-    urgent = {
-      border = "#fe640b";
-      background = "#eff1f5";
-      text = "#fe640b";
-      indicator = "#9ca0b0";
-      childBorder = "#fe640b";
-    };
+      	# foot signal
+      	if [[ $theme == "light" ]]; then
+      		pkill -10 foot || true
+      	elif [[ $theme == "dark" ]]; then
+      		pkill -12 foot || true
+      	fi
 
-    placeholder = {
-      border = "#9ca0b0";
-      background = "#eff1f5";
-      text = "#4c4f69";
-      indicator = "#9ca0b0";
-      childBorder = "#9ca0b0";
-    };
+      	# Write current theme to file
+      	echo "$theme" >"$THEME_FILE"
 
-    background = "#eff1f5";
+      	echo "Switched to $theme theme."
+      }
+
+      if [ $# -ne 1 ]; then
+      	echo "Usage: $0 [dark|light|toggle|load]"
+      	exit 1
+      fi
+
+      action=$1
+
+      case $action in
+      dark)
+      	set_theme "dark"
+      	;;
+      light)
+      	set_theme "light"
+      	;;
+      toggle)
+      	if [ -f "$THEME_FILE" ]; then
+      		current=$(cat "$THEME_FILE")
+      		if [ "$current" == "dark" ]; then
+      			set_theme "light"
+      		else
+      			set_theme "dark"
+      		fi
+      	else
+      		set_theme "light"
+      	fi
+      	;;
+      load)
+      	if [ -f "$THEME_FILE" ]; then
+      		current=$(cat "$THEME_FILE")
+      		set_theme "$current"
+      	else
+      		set_theme "light"
+      	fi
+      	;;
+      *)
+      	echo "Invalid argument: $action. Use dark, light, toggle, or load."
+      	exit 1
+      	;;
+      esac
+
+    '';
   };
   workspaceSwitch = pkgs.writeShellApplication {
     name = "sway-workspace-switch";
@@ -215,6 +213,13 @@
     '';
   };
 in {
+  config.home.packages = [themeSwitch];
+  config.xdg.configFile."sway/light".source = ./theme_light;
+  config.xdg.configFile."sway/dark".source = ./theme_dark;
+
+  config.xdg.configFile."sway/light.jpg".source = ./light.jpg;
+  config.xdg.configFile."sway/dark.png".source = ./dark.png;
+
   options.custom.sway.outputToBase = lib.mkOption {
     type = lib.types.attrsOf lib.types.int;
     default = {
@@ -246,16 +251,11 @@ in {
       startup =
         [
           {command = "${lib.getExe pkgs.dunst}";}
+          {command = "${lib.getExe pkgs.gtklock} -d";}
           {command = "${lib.getExe pkgs.hypridle}";}
+          {command = "${lib.getExe themeSwitch} load";}
           {
             command = "pkill -12 btop";
-            always = true;
-          }
-          {
-            command =
-              if theme == "dark"
-              then "pkill -12 foot"
-              else "pkill -10 foot";
             always = true;
           }
         ]
@@ -302,8 +302,8 @@ in {
           "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel}";
           "Mod4+Shift+c" = "reload";
           "Mod4+Shift+e" = "exec swaymsg exit";
-          # "$mod+Shift+t" = "exec ~/.local/bin/switch_theme.sh toggle";
-          # "$mod+Escape" = "exec gtklock -d";
+          "Mod4+Shift+t" = "exec ${lib.getExe themeSwitch} toggle";
+          "Mod4+Escape" = "exec ${lib.getExe pkgs.gtklock} -d";
           "Mod4+f" = "fullscreen";
           "Mod4+Shift+space" = "floating toggle";
 
@@ -355,23 +355,13 @@ in {
         border = 4;
         titlebar = false;
       };
-      output = {
-        "*" = {
-          bg =
-            if theme == "light"
-            then "${./light.jpg} fill"
-            else "${./dark.png} fill";
-        };
-      };
       bars = [{command = "${lib.getExe pkgs.waybar}";}];
-      colors =
-        if theme == "light"
-        then light
-        else dark;
       defaultWorkspace = "workspace number 1";
       modes = {};
     };
     extraConfig = ''
+      include theme
+
       bindgesture swipe:3:left workspace next
       bindgesture swipe:3:right workspace prev
       bindgesture swipe:3:up workspace next

@@ -1,8 +1,6 @@
-{
-  theme,
-  lib,
-  ...
-}: {
+{lib, ...}: {
+  xdg.configFile."waybar/light".source = ./light.css;
+  xdg.configFile."waybar/dark".source = ./dark.css;
   programs.waybar = {
     enable = true;
     settings = {
@@ -208,174 +206,114 @@
         # };
       };
     };
-    style =
-      (
-        if theme == "light"
-        then ''
-          @define-color rosewater #dc8a78;
-          @define-color flamingo #dd7878;
-          @define-color pink #ea76cb;
-          @define-color mauve #8839ef;
-          @define-color red #d20f39;
-          @define-color maroon #e64553;
-          @define-color peach #fe640b;
-          @define-color yellow #df8e1d;
-          @define-color green #40a02b;
-          @define-color teal #179299;
-          @define-color sky #04a5e5;
-          @define-color sapphire #209fb5;
-          @define-color blue #1e66f5;
-          @define-color lavender #7287fd;
-          @define-color text #4c4f69;
-          @define-color subtext1 #5c5f77;
-          @define-color subtext0 #6c6f85;
-          @define-color overlay2 #7c7f93;
-          @define-color overlay1 #8c8fa1;
-          @define-color overlay0 #9ca0b0;
-          @define-color surface2 #acb0be;
-          @define-color surface1 #bcc0cc;
-          @define-color surface0 #ccd0da;
-          @define-color base #eff1f5;
-          @define-color mantle #e6e9ef;
-          @define-color crust #dce0e8;
-        ''
-        else ''
-          @define-color rosewater #f5e0dc;
-          @define-color flamingo #f2cdcd;
-          @define-color pink #f5c2e7;
-          @define-color mauve #cba6f7;
-          @define-color red #f38ba8;
-          @define-color maroon #eba0ac;
-          @define-color peach #fab387;
-          @define-color yellow #f9e2af;
-          @define-color green #a6e3a1;
-          @define-color teal #94e2d5;
-          @define-color sky #89dceb;
-          @define-color sapphire #74c7ec;
-          @define-color blue #89b4fa;
-          @define-color lavender #b4befe;
-          @define-color text #cdd6f4;
-          @define-color subtext1 #bac2de;
-          @define-color subtext0 #a6adc8;
-          @define-color overlay2 #9399b2;
-          @define-color overlay1 #7f849c;
-          @define-color overlay0 #6c7086;
-          @define-color surface2 #585b70;
-          @define-color surface1 #45475a;
-          @define-color surface0 #313244;
-          @define-color base #1e1e2e;
-          @define-color mantle #181825;
-          @define-color crust #11111b;
-        ''
-      )
-      + ''
-        * {
-          all: unset;
-          min-height: 0;
-          font-size: 20px;
-        }
+    style = ''
+      @import "theme.css";
+      * {
+        all: unset;
+        min-height: 0;
+        font-size: 20px;
+      }
 
-        window#waybar {
-          background-color: @base;
-        }
+      window#waybar {
+        background-color: @base;
+      }
 
-        #language,
-        #pulseaudio,
-        #battery,
-        #backlight,
-        #custom-launcher,
-        #custom-label_bt,
-        #custom-label_language,
-        #custom-label_pulseaudio,
-        #custom-label_backlight,
-        #custom-label_backlight2,
-        #custom-brightness,
-        #custom-brightness2,
-        #custom-keyboard,
-        #custom-close,
-        #clock,
-        #power-profiles-daemon,
-        #network,
-        #bluetooth,
-        #idle_inhibitor,
-        #workspaces {
-          font-family: "FiraCode Nerd Font";
-          font-weight: 900;
-          color: @text;
-        }
+      #language,
+      #pulseaudio,
+      #battery,
+      #backlight,
+      #custom-launcher,
+      #custom-label_bt,
+      #custom-label_language,
+      #custom-label_pulseaudio,
+      #custom-label_backlight,
+      #custom-label_backlight2,
+      #custom-brightness,
+      #custom-brightness2,
+      #custom-keyboard,
+      #custom-close,
+      #clock,
+      #power-profiles-daemon,
+      #network,
+      #bluetooth,
+      #idle_inhibitor,
+      #workspaces {
+        font-family: "FiraCode Nerd Font";
+        font-weight: 900;
+        color: @text;
+      }
 
-        #pulseaudio.muted {
-          color: @peach;
-        }
+      #pulseaudio.muted {
+        color: @peach;
+      }
 
-        #custom-label_pulseaudio {
-          color: @sky;
-        }
-        #custom-label_bt {
-          color: @blue;
-        }
-        #network.net2 {
-          color: @sapphire;
-        }
-        #network.net2.disconnected {
-          color: @red;
-        }
-        #custom-label_backlight,
-        #custom-label_backlight2 {
-          color: @yellow;
-        }
-        #custom-label_language {
-          color: @mauve;
-        }
-        #custom-launcher {
-          color: @green;
-        }
-        #custom-keyboard {
-          color: @blue;
-        }
-        #idle_inhibitor.activated {
-          color: @red;
-        }
-        #battery.bat2.warning {
-          color: @peach;
-        }
-        #battery.bat2.critical {
-          color: @red;
-        }
-        #battery.bat2 {
-          color: @blue;
-        }
+      #custom-label_pulseaudio {
+        color: @sky;
+      }
+      #custom-label_bt {
+        color: @blue;
+      }
+      #network.net2 {
+        color: @sapphire;
+      }
+      #network.net2.disconnected {
+        color: @red;
+      }
+      #custom-label_backlight,
+      #custom-label_backlight2 {
+        color: @yellow;
+      }
+      #custom-label_language {
+        color: @mauve;
+      }
+      #custom-launcher {
+        color: @green;
+      }
+      #custom-keyboard {
+        color: @blue;
+      }
+      #idle_inhibitor.activated {
+        color: @red;
+      }
+      #battery.bat2.warning {
+        color: @peach;
+      }
+      #battery.bat2.critical {
+        color: @red;
+      }
+      #battery.bat2 {
+        color: @blue;
+      }
 
-        #custom-close {
-          color: @red;
-        }
-        #workspaces button {
-          padding: 0px 12px 0px 12px;
-          color: @text;
-        }
+      #custom-close {
+        color: @red;
+      }
+      #workspaces button {
+        padding: 0px 12px 0px 12px;
+        color: @text;
+      }
 
-        #workspaces button:hover {
-          background: none;
-          border: none;
-          color: @teal;
-          border-color: transparent;
-          transition: none;
-        }
+      #workspaces button:hover {
+        background: none;
+        border: none;
+        color: @teal;
+        border-color: transparent;
+        transition: none;
+      }
 
-        #workspaces button.empty {
-          color: @overlay0;
-        }
+      #workspaces button.empty {
+        color: @overlay0;
+      }
 
-        #workspaces button.empty:hover {
-          color: @teal;
-        }
+      #workspaces button.empty:hover {
+        color: @teal;
+      }
 
-        #workspaces button.focused {
-          border-radius: 0;
-          color: @green;
-          font-weight: bold;
-        }
-
-      '';
+      #workspaces button.focused {
+        border-radius: 0;
+        color: @green;
+        font-weight: bold;
+      }
+    '';
   };
 }

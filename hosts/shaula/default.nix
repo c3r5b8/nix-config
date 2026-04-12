@@ -60,7 +60,7 @@
     enable = true;
     control = "sufficient";
   };
-
+  services.logind.settings.Login.HandlePowerKey = "suspend";
   services.linux-enable-ir-emitter.enable = true;
   programs.sway.enable = true;
   nixpkgs = {

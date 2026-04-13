@@ -6,7 +6,7 @@
         enable = true;
         configurationLimit = 20;
       };
-      timeout = 1;
+      timeout = 0;
       efi = {
         canTouchEfiVariables = true;
       };

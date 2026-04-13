@@ -10,16 +10,13 @@
 
     inputs.iio-sway.homeManagerModules.default
   ];
-  programs.iio-sway = {
-    enable = true;
-    display = "eDP-1";
-  };
   custom.sway.startup = let
     lisgd = pkgs.lisgd.override {
       conf = ./lisgd_conf.h;
     };
   in [
     {command = "${lib.getExe lisgd}";}
+    {command = "${inputs.iio-sway.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/iio-sway";}
   ];
   programs.waybar.settings.mainBar = let
     toggle_wvkbd = let

@@ -213,7 +213,7 @@
     '';
   };
 in {
-  config.home.packages = [themeSwitch];
+  config.home.packages = [themeSwitch pkgs.pavucontrol pkgs.wl-clipboard];
   config.xdg.configFile."sway/light".source = ./theme_light;
   config.xdg.configFile."sway/dark".source = ./theme_dark;
 
@@ -251,9 +251,11 @@ in {
       startup =
         [
           {command = "${lib.getExe pkgs.dunst}";}
+          {command = "${lib.getExe pkgs.autotiling}";}
           {command = "${lib.getExe pkgs.gtklock} -d";}
           {command = "${lib.getExe pkgs.hypridle}";}
           {command = "${lib.getExe themeSwitch} load";}
+          {command = "${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1";}
           {
             command = "pkill -12 btop";
             always = true;

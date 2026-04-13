@@ -11,6 +11,8 @@
     ../../system
     ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
+
+    ../../system/bluetooth
   ];
   home-manager = {
     extraSpecialArgs = {
@@ -43,13 +45,7 @@
       intel-media-driver
     ];
   };
-  hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
-    sensor.iio.enable = true;
-  };
+  hardware.sensor.iio.enable = true;
   programs.nh = {
     enable = true;
     clean.enable = true;

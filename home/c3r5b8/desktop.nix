@@ -4,8 +4,8 @@
     ./firefox
     ./foot
     ./fuzzel
-    ./hypridle
     ./sway
+    ./swayidle
     ./theme
     ./waybar
     ./xdg

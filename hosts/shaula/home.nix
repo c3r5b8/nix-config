@@ -1,47 +1,24 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
     ../../home/c3r5b8
     ../../home/c3r5b8/desktop.nix
+
+    inputs.iio-sway.homeManagerModules.default
   ];
+  programs.iio-sway = {
+    enable = true;
+    display = "eDP-1";
+  };
   custom.sway.startup = let
-    rotate_screen = pkgs.writeShellApplication {
-      name = "rotate_screen";
-      text = ''
-        #!/usr/bin/env bash
-
-        set -euo pipefail
-
-        monitor-sensor |
-        	${lib.getExe pkgs.mawk} -W interactive \
-        		'/Accelerometer orientation changed:/ {print $NF; fflush();}' |
-        	while read -r line; do
-        		case "$line" in
-        		normal)
-        			swaymsg output eDP-1 transform 0
-        			;;
-        		bottom-up)
-        			swaymsg output eDP-1 transform 180
-        			;;
-        		right-up)
-        			swaymsg output eDP-1 transform 90
-        			;;
-        		left-up)
-        			swaymsg output eDP-1 transform 270
-        			;;
-        		esac
-        	done
-
-      '';
-    };
     lisgd = pkgs.lisgd.override {
       conf = ./lisgd_conf.h;
     };
   in [
-    {command = "${lib.getExe rotate_screen}";}
     {command = "${lib.getExe lisgd}";}
   ];
   programs.waybar.settings.mainBar = let

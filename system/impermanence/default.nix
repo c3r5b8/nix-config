@@ -3,46 +3,80 @@
   lib,
   ...
 }: {
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    mkdir /btrfs_tmp
-    mount -o noatime,compress-force=zstd:1,discard=async,space_cache=v2 /dev/disk/by-partlabel/disk-nvme0-root /btrfs_tmp
+  boot.initrd.systemd = {
+    services.impermance-btrfs-rolling-root = {
+      description = "Archiving existing BTRFS root subvolume and creating a fresh one";
+      unitConfig.DefaultDependencies = false;
+      serviceConfig = {
+        Type = "oneshot";
+        # NOTE: to be able to see errors in your script do this
+        # StandardOutput = "journal+console";
+        # StandardError = "journal+console";
+      };
+      requiredBy = ["initrd.target"];
+      before = ["sysroot.mount"];
+      requires = ["initrd-root-device.target"];
+      after = [
+        "initrd-root-device.target"
+        "local-fs-pre.target"
+      ];
+      script = ''
+        mkdir /btrfs_tmp
+        mount -o noatime,compress-force=zstd:1,discard=async,space_cache=v2 /dev/disk/by-partlabel/disk-nvme0-root /btrfs_tmp
 
-    mkdir -p /btrfs_tmp/old_roots
+        mkdir -p /btrfs_tmp/old_roots
 
-    if [ -e /btrfs_tmp/@ ]; then
-        max_num=$(ls -1 /btrfs_tmp/old_roots 2>/dev/null | sort -n | tail -1)
-        if [ -z "$max_num" ]; then
-            next=1
-        else
-            next=$((max_num + 1))
+        if [ -e /btrfs_tmp/@ ]; then
+            max_num=$(ls -1 /btrfs_tmp/old_roots 2>/dev/null | sort -n | tail -1)
+            if [ -z "$max_num" ]; then
+                next=1
+            else
+                next=$((max_num + 1))
+            fi
+            mv /btrfs_tmp/@ "/btrfs_tmp/old_roots/$next"
         fi
-        mv /btrfs_tmp/@ "/btrfs_tmp/old_roots/$next"
-    fi
 
-    delete_subvolume_recursively() {
+        delete_subvolume_recursively() {
 
-        if [ $(stat -c %i "$1") -ne 256 ]; then return; fi
+            if [ $(stat -c %i "$1") -ne 256 ]; then return; fi
 
-        btrfs subvolume list -o "$1" | cut -f 9- -d ' ' |
-        while read i; do
-            delete_subvolume_recursively "/btrfs_tmp/$i"
-        done
-        btrfs subvolume delete "$1"
-    }
+            btrfs subvolume list -o "$1" | cut -f 9- -d ' ' |
+            while read i; do
+                delete_subvolume_recursively "/btrfs_tmp/$i"
+            done
+            btrfs subvolume delete "$1"
+        }
 
-    snapshots=$(ls -1 /btrfs_tmp/old_roots 2>/dev/null | sort -n)
-    count=$(echo "$snapshots" | wc -l)
-    if [ "$count" -gt 15 ]; then
-        echo "$snapshots" | head -n $((count - 15)) | while read num; do
-            delete_subvolume_recursively "/btrfs_tmp/old_roots/$num"
-        done
-    fi
+        snapshots=$(ls -1 /btrfs_tmp/old_roots 2>/dev/null | sort -n)
+        count=$(echo "$snapshots" | wc -l)
+        if [ "$count" -gt 15 ]; then
+            echo "$snapshots" | head -n $((count - 15)) | while read num; do
+                delete_subvolume_recursively "/btrfs_tmp/old_roots/$num"
+            done
+        fi
 
 
-    btrfs subvolume create /btrfs_tmp/@
+        btrfs subvolume create /btrfs_tmp/@
 
-    umount /btrfs_tmp
-  '';
+        umount /btrfs_tmp
+      '';
+    };
+
+    extraBin = {
+      "mkdir" = "${pkgs.coreutils}/bin/mkdir";
+      "ls" = "${pkgs.coreutils}/bin/ls";
+      "sort" = "${pkgs.coreutils}/bin/sort";
+      "tail" = "${pkgs.coreutils}/bin/tail";
+      "mv" = "${pkgs.coreutils}/bin/mv";
+      "stat" = "${pkgs.coreutils}/bin/stat";
+      "btrfs" = "${pkgs.btrfs-progs}/bin/btrfs";
+      "cut" = "${pkgs.coreutils}/bin/cut";
+      "wc" = "${pkgs.coreutils}/bin/wc";
+      "head" = "${pkgs.coreutils}/bin/head";
+      "echo" = "${pkgs.coreutils}/bin/echo";
+      # mount & umount already exist in the initrd
+    };
+  };
 
   fileSystems."/persist".neededForBoot = true;
 

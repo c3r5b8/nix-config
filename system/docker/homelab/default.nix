@@ -3,6 +3,7 @@
     ./containers/traefik
     ./containers/multi-scrobbler
     ./containers/qbittorrent
+    ./containers/vaultwarden
   ];
   systemd.services."podman-network-homelab_default" = {
     path = [pkgs.podman];

@@ -3,36 +3,28 @@ entryPoints:
     address: ":80"
   websecure:
     address: ":443"
-    http3: 
-      advertisedPort: 443
     http:
       tls:
-        certResolver: cloudflare
+        certResolver: letsencrypt
         domains:
-          - main: "c3r5b8.dev"
+          - main: c3r5b8.dev
             sans:
               - "*.c3r5b8.dev"
-
+    http3:
+      advertisedPort: 443
 providers:
   file:
     directory: "/etc/traefik/dynamic_conf"
     watch: true
   docker:
     exposedByDefault: false
-
-
 api:
   insecure: true
-
-log:
-  level: "DEBUG"
-
-
 certificatesResolvers:
-  cloudflare:
+  letsencrypt:
     acme:
+      storage: /etc/traefik/acme/acme.json
       email: olespid@gmail.com
-      storage: /etc/traefik/acme.json
       dnsChallenge:
         provider: cloudflare
         resolvers:

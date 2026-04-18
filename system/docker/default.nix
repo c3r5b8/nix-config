@@ -1,47 +1,24 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
-  virtualisation.docker = {
+{config, ...}: {
+  imports = [./homelab];
+  virtualisation.podman = {
     enable = true;
-    storageDriver = "btrfs";
-    enableOnBoot = true;
     autoPrune.enable = true;
-    autoPrune.dates = "weekly";
+    dockerCompat = true;
+    dockerSocket.enable = true;
   };
 
-  environment.etc."stacks/homelab/compose.yaml".source = ./docker-compose.yaml;
-  systemd.services.homelab-docker-compose = {
-    description = "My plain old docker-compose stack";
-    wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket" "network-online.target"];
-    requires = ["docker.service" "network-online.target"];
-    path = [pkgs.docker];
-
-    restartTriggers = [config.environment.etc."stacks/homelab/compose.yaml".source];
-    preStart = ''
-      mkdir -p /var/lib/homelab/traefik
-      touch /var/lib/homelab/traefik/acme.json
-      chmod 600 /var/lib/homelab/traefik/acme.json
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.docker}/bin/docker compose -f /etc/stacks/homelab/compose.yaml --env-file ${config.sops.secrets.homelab.path} up -d --remove-orphans";
-      ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/stacks/homelab/compose.yaml down";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
+  networking.firewall.interfaces = let
+    matchAll =
+      if !config.networking.nftables.enable
+      then "podman+"
+      else "podman*";
+  in {
+    "${matchAll}".allowedUDPPorts = [53];
   };
 
-  networking.firewall = {
-    allowedTCPPorts = [53 80 443 8080];
-    allowedUDPPorts = [53 443];
-  };
-
+  virtualisation.oci-containers.backend = "podman";
   environment.persistence."/persist/system".directories = [
-    "/var/lib/docker"
+    "/var/lib/containers"
     "/var/lib/homelab"
   ];
 }

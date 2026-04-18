@@ -4,12 +4,4 @@
   sops.secrets.userPassword = {};
   sops.secrets.tailscaleKey = {};
   sops.secrets.userPassword.neededForUsers = true;
-  sops.secrets.homelab = {
-    sopsFile = ../docker/secrets.env;
-    key = "";
-    format = "dotenv";
-    owner = "root";
-    group = "root";
-    mode = "0666";
-  };
 }

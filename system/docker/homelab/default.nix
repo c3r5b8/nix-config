@@ -3,6 +3,7 @@
     ./containers/audiobookshelf
     ./containers/jellyfin
     ./containers/traefik
+    ./containers/technitium
     ./containers/multi-scrobbler
     ./containers/qbittorrent
     ./containers/vaultwarden

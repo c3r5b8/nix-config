@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./containers/audiobookshelf
+    ./containers/jellyfin
     ./containers/traefik
     ./containers/multi-scrobbler
     ./containers/qbittorrent

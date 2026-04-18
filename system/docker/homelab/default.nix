@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./containers/audiobookshelf
     ./containers/traefik
     ./containers/multi-scrobbler
     ./containers/qbittorrent

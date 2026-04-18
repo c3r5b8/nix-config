@@ -50,4 +50,8 @@ in {
         variant = "mocha";
       })
   ];
+  qt = {
+    enable = true;
+    platformTheme = "gtk3";
+  };
 }

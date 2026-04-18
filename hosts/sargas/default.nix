@@ -9,7 +9,7 @@
     ./disko.nix
 
     ../../system
-    ../../system/docker
+    # ../../system/docker
     ../../system/users/c3r5b8.nix
   ];
   home-manager = {

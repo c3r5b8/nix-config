@@ -1,5 +1,9 @@
 {pkgs, ...}: {
-  imports = [./containers/traefik];
+  imports = [
+    ./containers/traefik
+    ./containers/multi-scrobbler
+    ./containers/qbittorrent
+  ];
   systemd.services."podman-network-homelab_default" = {
     path = [pkgs.podman];
     serviceConfig = {

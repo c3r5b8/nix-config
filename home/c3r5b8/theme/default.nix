@@ -1,8 +1,4 @@
-{
-  pkgs,
-  theme,
-  ...
-}: let
+{pkgs, ...}: let
   mkCatppuccinPapirus = {
     flavor,
     accent ? "green",
@@ -52,6 +48,6 @@ in {
   ];
   qt = {
     enable = true;
-    platformTheme = "gtk3";
+    platformTheme.name = "gtk3";
   };
 }

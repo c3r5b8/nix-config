@@ -14,6 +14,7 @@
     ./ssh
     #     ./sunshine
     ./tailscale
+    ./updates
     # ./theme
     # ./thunar
     ./zram

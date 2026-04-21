@@ -52,6 +52,7 @@
       };
   in {
     nixosConfigurations = {
+      acrab = mkHost {hostname = "acrab";};
       shaula = mkHost {hostname = "shaula";};
       sargas = mkHost {hostname = "sargas";};
     };

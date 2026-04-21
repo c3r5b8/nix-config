@@ -24,6 +24,7 @@
       "traefik.enable" = "true";
       "traefik.http.routers.qbittorent.rule" = "Host(`qb.c3r5b8.dev`)";
       "traefik.http.services.qbittorent.loadbalancer.server.port" = "8080";
+      "traefik.http.routers.qbittorent.middlewares" = "localOnly@file";
     };
     log-driver = "journald";
     extraOptions = [

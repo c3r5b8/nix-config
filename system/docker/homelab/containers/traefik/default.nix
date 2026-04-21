@@ -26,21 +26,23 @@
       "/var/lib/homelab/traefik/acme:/etc/traefik/acme:rw,U"
       "/var/run/docker.sock:/var/run/docker.sock:ro"
     ];
-    ports = [
-      "80:80/tcp"
-      "443:443/tcp"
-      "443:443/udp"
-    ];
+    # ports = [
+    #   "80:80/tcp"
+    #   "443:443/tcp"
+    #   "443:443/udp"
+    # ];
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.traefik.rule" = "Host(`proxy.c3r5b8.dev`)";
       "traefik.http.services.traefik.loadbalancer.server.port" = "8080";
+      "traefik.http.routers.traefik.middlewares" = "localOnly@file";
     };
     log-driver = "journald";
     extraOptions = [
       "--group-add=991"
-      "--network-alias=traefik"
-      "--network=homelab_default"
+      # "--network-alias=traefik"
+      # "--network=homelab_default"
+      "--network=host"
       "--cap-add=NET_BIND_SERVICE"
     ];
   };

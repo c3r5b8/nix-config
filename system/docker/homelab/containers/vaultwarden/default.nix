@@ -17,6 +17,7 @@
       "traefik.enable" = "true";
       "traefik.http.routers.vaultwarden.rule" = "Host(`pass.c3r5b8.dev`)";
       "traefik.http.services.vaultwarden.loadbalancer.server.port" = "8080";
+      "traefik.http.routers.vaultwarden.middlewares" = "localOnly@file";
     };
     user = "1000:1000";
     log-driver = "journald";

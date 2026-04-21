@@ -34,6 +34,7 @@
       "traefik.enable" = "true";
       "traefik.http.routers.technitium.rule" = "Host(`dns.c3r5b8.dev`)";
       "traefik.http.services.technitium.loadbalancer.server.url" = "http://192.168.1.2:5380";
+      "traefik.http.routers.technitium.middlewares" = "localOnly@file";
     };
     log-driver = "journald";
     extraOptions = [

@@ -36,6 +36,7 @@
       "traefik.enable" = "true";
       "traefik.http.routers.multi-scrobbler.rule" = "Host(`multiscrobbler.c3r5b8.dev`)";
       "traefik.http.services.multi-scrobbler.loadbalancer.server.port" = "9078";
+      "traefik.http.routers.multi-scrobbler.middlewares" = "localOnly@file";
     };
     log-driver = "journald";
     extraOptions = [

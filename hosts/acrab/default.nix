@@ -12,12 +12,12 @@
     ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
 
-#     ../../system/bluetooth
+    #     ../../system/bluetooth
   ];
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
-#       theme = config.custom.theme;
+      #       theme = config.custom.theme;
     };
     useGlobalPkgs = true;
     backupFileExtension = "backup";
@@ -30,7 +30,7 @@
   ];
   networking = {
     hostName = "acrab";
-#     networkmanager.wifi.powersave = false;
+    #     networkmanager.wifi.powersave = false;
   };
   programs.nh = {
     enable = true;
@@ -39,6 +39,9 @@
     flake = "/home/c3r5b8/dev/nix-config/";
   };
   services.logind.settings.Login.HandlePowerKey = "suspend";
+
+  hardware.i2c.enable = true;
+
   programs.sway.enable = true;
   nixpkgs = {
     config = {

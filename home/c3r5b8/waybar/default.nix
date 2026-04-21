@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  config,
+  ...
+}: {
   xdg.configFile."waybar/light".source = ./light.css;
   xdg.configFile."waybar/dark".source = ./dark.css;
   programs.waybar = {
@@ -30,69 +34,90 @@
           "backlight"
         ];
         "sway/workspaces" = {
-          persistent-workspaces = {
-            "1" = [
-              "eDP-1"
-            ];
-            "2" = [
-              "eDP-1"
-            ];
-            "3" = [
-              "eDP-1"
-            ];
-            "4" = [
-              "eDP-1"
-            ];
-            "5" = [
-              "eDP-1"
-            ];
-            "6" = [
-              "eDP-1"
-            ];
-            "7" = [
-              "eDP-1"
-            ];
-            "8" = [
-              "eDP-1"
-            ];
-            "9" = [
-              "eDP-1"
-            ];
-            "10" = [
-              "eDP-1"
-            ];
-            "11" = [
-              "HEADLESS-1"
-            ];
-            "12" = [
-              "HEADLESS-1"
-            ];
-            "13" = [
-              "HEADLESS-1"
-            ];
-            "14" = [
-              "HEADLESS-1"
-            ];
-            "15" = [
-              "HEADLESS-1"
-            ];
-            "16" = [
-              "HEADLESS-1"
-            ];
-            "17" = [
-              "HEADLESS-1"
-            ];
-            "18" = [
-              "HEADLESS-1"
-            ];
-            "19" = [
-              "HEADLESS-1"
-            ];
-            "20" = [
-              "HEADLESS-1"
-            ];
-          };
+          persistent-workspaces = let
+            mkPersistentWorkspaces = outputToBase:
+              lib.listToAttrs (
+                lib.concatLists (
+                  lib.mapAttrsToList (
+                    output: base:
+                      lib.genList (
+                        i: let
+                          wsNum = toString (base + i + 1);
+                        in
+                          lib.nameValuePair wsNum [output]
+                      )
+                      10 # 10 workspaces per output
+                  )
+                  outputToBase
+                )
+              );
+          in
+            mkPersistentWorkspaces config.custom.sway.outputToBase;
         };
+        # "sway/workspaces" = {
+        #   persistent-workspaces = {
+        #     "1" = [
+        #       "eDP-1"
+        #     ];
+        #     "2" = [
+        #       "eDP-1"
+        #     ];
+        #     "3" = [
+        #       "eDP-1"
+        #     ];
+        #     "4" = [
+        #       "eDP-1"
+        #     ];
+        #     "5" = [
+        #       "eDP-1"
+        #     ];
+        #     "6" = [
+        #       "eDP-1"
+        #     ];
+        #     "7" = [
+        #       "eDP-1"
+        #     ];
+        #     "8" = [
+        #       "eDP-1"
+        #     ];
+        #     "9" = [
+        #       "eDP-1"
+        #     ];
+        #     "10" = [
+        #       "eDP-1"
+        #     ];
+        #     "11" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "12" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "13" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "14" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "15" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "16" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "17" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "18" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "19" = [
+        #       "HEADLESS-1"
+        #     ];
+        #     "20" = [
+        #       "HEADLESS-1"
+        #     ];
+        #   };
+        # };
         "network#net2" = {
           tooltip = false;
           format = " {ifname}";

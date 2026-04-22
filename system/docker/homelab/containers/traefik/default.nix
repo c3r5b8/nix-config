@@ -3,6 +3,8 @@
   config,
   ...
 }: {
+  networking.firewall.allowedTCPPorts = [80 443];
+  networking.firewall.allowedUDPPorts = [443];
   sops.secrets.cloudflareApiKey = {};
   sops.templates."traefik.env" = {
     content = ''

@@ -7,6 +7,7 @@
     ./sway
     ./swayidle
     ./theme
+    ./thunderbird
     ./waybar
     ./xdg
   ];

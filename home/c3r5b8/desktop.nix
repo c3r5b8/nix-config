@@ -15,5 +15,6 @@
     telegram-desktop
     obsidian
     android-tools
+    rocketchat-desktop
   ];
 }

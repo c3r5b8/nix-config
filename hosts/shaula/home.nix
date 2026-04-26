@@ -10,6 +10,9 @@
 
     inputs.iio-sway.homeManagerModules.default
   ];
+  home.packages = with pkgs; [
+    nvtopPackages.intel
+  ];
   custom.sway.startup = let
     lisgd = pkgs.lisgd.override {
       conf = ./lisgd_conf.h;

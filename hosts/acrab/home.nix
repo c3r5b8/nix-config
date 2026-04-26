@@ -1,7 +1,10 @@
-{
+{pkgs, ...}: {
   imports = [
     ../../home/c3r5b8
     ../../home/c3r5b8/desktop.nix
+  ];
+  home.packages = with pkgs; [
+    nvtopPackages.amd
   ];
   custom.sway.outputToBase = {
     "HDMI-A-1" = 0;

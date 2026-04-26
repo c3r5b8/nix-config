@@ -22,5 +22,9 @@
     gzip
     bzip2
     xz
+
+    iperf3
+    nmap
+    xxd
   ];
 }

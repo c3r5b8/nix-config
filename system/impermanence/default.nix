@@ -129,6 +129,23 @@
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
       "/home/c3r5b8/.config/Rocket.Chat"
+      "/home/c3r5b8/.config/sh.cider.genten"
+      "/home/c3r5b8/.config/inkscape"
+      "/home/c3r5b8/.config/qBittorrent"
+      "/home/c3r5b8/.local/share/krita"
+      "/home/c3r5b8/.config/sdrpp"
+      "/home/c3r5b8/.config/wireshark"
+      "/home/c3r5b8/.config/GIMP"
+      "/home/c3r5b8/.local/share/jellyfin-desktop"
+      "/home/c3r5b8/.local/share/MikroTik"
+      "/home/c3r5b8/.config/Moonlight Game Streaming Project"
+      "/home/c3r5b8/.config/heroic"
+      "/home/c3r5b8/games"
+      "/home/c3r5b8/.config/Signal"
+    ];
+    files = [
+      "/home/c3r5b8/.config/kritarc"
+      "/home/c3r5b8/.config/kritadisplayrc"
     ];
   };
   system.activationScripts.bootstrapPersistHome.text = ''

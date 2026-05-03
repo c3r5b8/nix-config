@@ -29,5 +29,6 @@
     moonlight-qt
     heroic
     signal-desktop
+    remmina
   ];
 }

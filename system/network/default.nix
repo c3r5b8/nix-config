@@ -52,5 +52,7 @@
   };
   imports = [
     ./profiles/work.nix
+    ./profiles/home.nix
+    ./profiles/university.nix
   ];
 }

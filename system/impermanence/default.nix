@@ -132,6 +132,7 @@
       "/home/c3r5b8/.config/sh.cider.genten"
       "/home/c3r5b8/.config/inkscape"
       "/home/c3r5b8/.config/qBittorrent"
+      "/home/c3r5b8/.config/mozilla"
       "/home/c3r5b8/.local/share/krita"
       "/home/c3r5b8/.config/sdrpp"
       "/home/c3r5b8/.config/wireshark"

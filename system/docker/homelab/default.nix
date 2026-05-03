@@ -6,7 +6,9 @@
     ./containers/technitium
     ./containers/multi-scrobbler
     ./containers/qbittorrent
+    ./containers/redis
     ./containers/vaultwarden
+    ./containers/yamtrack
   ];
   systemd.services."podman-network-homelab_default" = {
     path = [pkgs.podman];

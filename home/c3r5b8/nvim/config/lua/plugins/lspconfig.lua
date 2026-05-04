@@ -187,7 +187,20 @@ return {
 				-- ts_ls = {},
 				--
 
-				nixd = {},
+				nixd = {
+					settings = {
+						nixd = {
+							options = {
+								nixos = {
+									expr = '(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings ["\\n"] [""] (builtins.readFile /etc/hostname)}.options',
+								},
+								home_manager = {
+									expr = '(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings ["\\n"] [""] (builtins.readFile /etc/hostname)}.options.home-manager.users.type.getSubOptions []',
+								},
+							},
+						},
+					},
+				},
 				lua_ls = {
 					-- cmd = { ... },
 					-- filetypes = { ... },

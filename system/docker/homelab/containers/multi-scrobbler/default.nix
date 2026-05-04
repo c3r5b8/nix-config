@@ -21,7 +21,7 @@
     "d /var/lib/homelab/multi-scrobbler 0700 1000 1000 -"
   ];
   virtualisation.oci-containers.containers."multi-scrobbler" = {
-    image = "foxxmd/multi-scrobbler";
+    image = "docker.io/foxxmd/multi-scrobbler";
     environmentFiles = [config.sops.templates."multi-scrobbler.env".path];
     environment = {
       "BASE_URL" = "https://multiscrobbler.c3r5b8.dev:443";
@@ -44,6 +44,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

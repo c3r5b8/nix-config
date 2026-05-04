@@ -3,12 +3,14 @@
     "d /var/lib/homelab/redis 0700 1000 1000 -"
   ];
   virtualisation.oci-containers.containers."redis" = {
-    image = "redis:8-alpine";
+    image = "docker.io/library/redis:8-alpine";
     volumes = [
       "/var/lib/homelab/redis:/data:rw"
     ];
     labels = {
       "glance.hide" = "true";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

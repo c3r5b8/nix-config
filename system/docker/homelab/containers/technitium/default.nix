@@ -18,7 +18,7 @@
   ];
 
   virtualisation.oci-containers.containers."technitium" = {
-    image = "technitium/dns-server:latest";
+    image = "docker.io/technitium/dns-server:latest";
     environmentFiles = [config.sops.templates."technitium.env".path];
     environment = {
       "DNS_SERVER_DOMAIN" = "technitium";
@@ -42,6 +42,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

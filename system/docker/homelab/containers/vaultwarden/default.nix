@@ -4,7 +4,7 @@
   ];
 
   virtualisation.oci-containers.containers."vaultwarden" = {
-    image = "vaultwarden/server:latest";
+    image = "docker.io/vaultwarden/server:latest";
     environment = {
       "DOMAIN" = "https://pass.c3r5b8.dev";
       "WEBSOCKET_ENABLED" = "true";
@@ -25,6 +25,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     user = "1000:1000";
     log-driver = "journald";

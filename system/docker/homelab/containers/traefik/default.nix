@@ -20,7 +20,7 @@
     "d /var/lib/homelab/traefik/acme 0700 1000 1000 -"
   ];
   virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:latest";
+    image = "docker.io/library/traefik:latest";
     environmentFiles = [config.sops.templates."traefik.env".path];
     volumes = [
       "/etc/homelab/traefik/dynamic_conf:/etc/traefik/dynamic_conf:ro"
@@ -45,6 +45,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

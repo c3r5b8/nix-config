@@ -26,6 +26,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

@@ -16,6 +16,9 @@
     "${matchAll}".allowedUDPPorts = [53];
   };
 
+  # enable autoupdates
+  systemd.timers."podman-auto-update".wantedBy = ["timers.target"];
+
   virtualisation.oci-containers.backend = "podman";
   environment.persistence."/persist/system".directories = [
     "/var/lib/containers"

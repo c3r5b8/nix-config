@@ -15,7 +15,7 @@
   };
 
   virtualisation.oci-containers.containers."glance" = {
-    image = "glanceapp/glance:latest";
+    image = "docker.io/glanceapp/glance:latest";
     environmentFiles = [config.sops.templates."glance.env".path];
     volumes = [
       "/etc/homelab/glance/config:/app/config:ro"
@@ -33,6 +33,8 @@
       "glance.same-tab" = "true";
       "glance.description" = "";
       "glance.hide" = "false";
+
+      "io.containers.autoupdate" = "registry";
     };
     log-driver = "journald";
     extraOptions = [

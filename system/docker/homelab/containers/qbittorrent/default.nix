@@ -25,6 +25,13 @@
       "traefik.http.routers.qbittorent.rule" = "Host(`qb.c3r5b8.dev`)";
       "traefik.http.services.qbittorent.loadbalancer.server.port" = "8080";
       "traefik.http.routers.qbittorent.middlewares" = "localOnly@file";
+
+      "glance.name" = "qbittorent";
+      "glance.icon" = "si:qbittorrent";
+      "glance.url" = "https://qb.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

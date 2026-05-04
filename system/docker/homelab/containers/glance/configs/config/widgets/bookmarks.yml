@@ -1,0 +1,36 @@
+- type: bookmarks
+  hide-header: true
+  groups:
+    - same-tab: true
+      hide-arrow: false
+      links:
+        - title: grok
+          url: https://grok.com
+        - title: github
+          url: https://github.com/
+        - title: ip info
+          url: https://bgp.he.net/
+        - title: onedrive
+          url: https://onedrive.live.com/
+    - same-tab: true
+      hide-arrow: false
+      links:
+        - title: tailscale
+          url: https://login.tailscale.com/admin
+        - title: cloudflare
+          url: https://dash.cloudflare.com/
+        - title: speedtest
+          url: https://speed.cloudflare.com/
+        - title: temp
+          url: https://glance.c3r5b8.dev/
+    - same-tab: true
+      hide-arrow: false
+      links:
+        - title: reddit
+          url: https://reddit.com/
+        - title: media
+          url: https://glance.c3r5b8.dev/media
+        - title: toloka
+          url: https://toloka.to/
+        - title: ext
+          url: https://ext.to/

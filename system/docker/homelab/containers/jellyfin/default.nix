@@ -17,6 +17,13 @@
       "traefik.enable" = "true";
       "traefik.http.routers.jellyfin.rule" = "Host(`jellyfin.c3r5b8.dev`)";
       "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
+
+      "glance.name" = "jellyfin";
+      "glance.icon" = "si:jellyfin";
+      "glance.url" = "https://jellyfin.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

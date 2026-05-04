@@ -1,0 +1,8 @@
+- type: group
+  widgets:
+    - type: reddit
+      subreddit: technology
+      show-thumbnails: true
+    - type: reddit
+      subreddit: selfhosted
+      show-thumbnails: true

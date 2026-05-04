@@ -1,0 +1,6 @@
+- type: weather
+  hide-header: true
+  location: Zhytomyr, Ukraine
+  hide-location: true
+  units: metric
+  hour-format: 24h

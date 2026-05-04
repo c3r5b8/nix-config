@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./containers/audiobookshelf
+    ./containers/glance
     ./containers/jellyfin
     ./containers/traefik
     ./containers/technitium

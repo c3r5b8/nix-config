@@ -7,6 +7,9 @@
     volumes = [
       "/var/lib/homelab/redis:/data:rw"
     ];
+    labels = {
+      "glance.hide" = "true";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=redis"

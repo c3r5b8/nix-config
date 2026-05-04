@@ -1,0 +1,23 @@
+@media (prefers-color-scheme: light) {
+    :root {
+        --scheme: 100% -;
+        --bgh: 220;
+        --bgs: 23%;
+        --bgl: 95%;
+        --cm: 1.0;
+        --tsm: 1;
+        --color-primary: hsl(109, 58%, 40%);
+        --color-positive: hsl(109, 58%, 40%);
+        --color-negative: hsl(347, 87%, 44%);
+    }
+}
+
+.flat-icon {
+  filter: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .flat-icon {
+    filter: invert(1) !important;
+  }
+}

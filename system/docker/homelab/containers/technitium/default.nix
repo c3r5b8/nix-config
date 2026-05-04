@@ -35,6 +35,13 @@
       "traefik.http.routers.technitium.rule" = "Host(`dns.c3r5b8.dev`)";
       "traefik.http.services.technitium.loadbalancer.server.url" = "http://192.168.1.2:5380";
       "traefik.http.routers.technitium.middlewares" = "localOnly@file";
+
+      "glance.name" = "technitium";
+      "glance.icon" = "si:nextdns";
+      "glance.url" = "https://dns.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

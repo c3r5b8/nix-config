@@ -1,0 +1,36 @@
+- name: Home
+  slug: home
+  center-vertically: true
+  show-mobile-header: true
+  hide-desktop-navigation: true
+  columns:
+    - size: small
+      # widgets:
+        # - $include: widgets/clock.yml
+        # - $include: widgets/day.yml
+        # - $include: widgets/calendar.yml
+
+    - size: full
+      widgets:
+
+        # - type: split-column
+        #   max-columns: 2
+        #   widgets:
+        #     - $include: widgets/weather.yml
+        #     - type: split-column
+        #       max-columns: 1
+        #       widgets:
+        #         - $include: widgets/clock.yml
+        #         - $include: widgets/day.yml
+        #         - $include: widgets/day.yml
+        - $include: widgets/bookmarks.yml
+        - $include: widgets/docker.yml
+        # - $include: widgets/news.yml
+        # - $include: widgets/videos.yml
+        # - $include: widgets/reddit.yml
+
+
+    - size: small
+      # widgets:
+      #   - $include: widgets/weather.yml
+      #   - $include: widgets/releases.yml

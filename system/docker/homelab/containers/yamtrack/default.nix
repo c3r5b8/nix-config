@@ -33,6 +33,13 @@
       "traefik.http.routers.yamtrack.rule" = "Host(`yamtrack.c3r5b8.dev`)";
       "traefik.http.services.yamtrack.loadbalancer.server.port" = "8000";
       "traefik.http.routers.yamtrack.middlewares" = "localOnly@file";
+
+      "glance.name" = "yamtrack";
+      "glance.icon" = "si:trakt";
+      "glance.url" = "https://yamtrack.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

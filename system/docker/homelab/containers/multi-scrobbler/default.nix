@@ -37,6 +37,13 @@
       "traefik.http.routers.multi-scrobbler.rule" = "Host(`multiscrobbler.c3r5b8.dev`)";
       "traefik.http.services.multi-scrobbler.loadbalancer.server.port" = "9078";
       "traefik.http.routers.multi-scrobbler.middlewares" = "localOnly@file";
+
+      "glance.name" = "multi-scrobbler";
+      "glance.icon" = "si:lastdotfm";
+      "glance.url" = "https://multiscrobbler.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

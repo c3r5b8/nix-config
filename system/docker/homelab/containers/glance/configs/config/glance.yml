@@ -1,0 +1,24 @@
+auth:
+  secret-key: ${GLANCE_SECRET_KEY}
+  users:
+    c3r5b8:
+      password-hash: $2a$10$7eo7041urJSJl.7.0BVhxespzAaxbmPLt0UYswN.fBzwk/qniz5eW
+
+server:
+  proxied: true
+  assets-path: /app/assets
+
+branding:
+  hide-footer: true
+
+theme:
+  background-color: 240 21 15
+  contrast-multiplier: 1.2
+  primary-color: 115 54 76
+  positive-color: 115 54 76
+  negative-color: 347 70 65
+  disable-picker: true
+  custom-css-file: /assets/user.css
+
+pages:
+  - $include: home.yml

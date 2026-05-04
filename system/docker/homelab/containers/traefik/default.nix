@@ -38,6 +38,13 @@
       "traefik.http.routers.traefik.rule" = "Host(`proxy.c3r5b8.dev`)";
       "traefik.http.services.traefik.loadbalancer.server.port" = "8080";
       "traefik.http.routers.traefik.middlewares" = "localOnly@file";
+
+      "glance.name" = "traefik";
+      "glance.icon" = "si:traefikproxy";
+      "glance.url" = "https://proxy.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

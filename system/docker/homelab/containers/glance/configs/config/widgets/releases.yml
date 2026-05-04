@@ -1,0 +1,8 @@
+- type: releases
+  hide-header: true
+  cache: 1d
+  repositories:
+    - glanceapp/glance
+    - go-gitea/gitea
+    - immich-app/immich
+    - syncthing/syncthing

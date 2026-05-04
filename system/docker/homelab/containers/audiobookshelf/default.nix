@@ -19,6 +19,13 @@
       "traefik.enable" = "true";
       "traefik.http.routers.audiobookshelf.rule" = "Host(`audiobooks.c3r5b8.dev`)";
       "traefik.http.services.audiobookshelf.loadbalancer.server.port" = "80";
+
+      "glance.name" = "audiobookshelf";
+      "glance.icon" = "si:audiobookshelf";
+      "glance.url" = "https://audiobooks.c3r5b8.dev";
+      "glance.same-tab" = "true";
+      "glance.description" = "";
+      "glance.hide" = "false";
     };
     log-driver = "journald";
     extraOptions = [

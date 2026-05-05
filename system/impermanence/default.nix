@@ -134,6 +134,7 @@
       "/home/c3r5b8/.config/obsidian"
       "/home/c3r5b8/.config/qBittorrent"
       "/home/c3r5b8/.config/mozilla"
+      "/home/c3r5b8/.config/superProductivity"
       "/home/c3r5b8/.local/share/krita"
       "/home/c3r5b8/.config/sdrpp"
       "/home/c3r5b8/.config/wireshark"

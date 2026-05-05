@@ -16,6 +16,7 @@
     obsidian
     android-tools
     rocketchat-desktop
+    super-productivity
 
     cider-2
     inkscape

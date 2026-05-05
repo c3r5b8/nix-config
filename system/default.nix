@@ -12,6 +12,7 @@
     ./security
     ./sops
     ./ssh
+    ./syncthing
     #     ./sunshine
     ./tailscale
     ./updates

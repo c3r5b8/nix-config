@@ -55,6 +55,7 @@
           stylus
           darkreader
           tampermonkey
+          new-tab-override
         ];
       };
       search = {

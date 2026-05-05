@@ -61,7 +61,7 @@ endstep
 for host in $HOSTS; do
   step "Building current $host"
   nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-before-$host" || true
+    -o "result-before-$host"
   endstep
 done
 
@@ -97,7 +97,7 @@ UNCHANGED_HOSTS=""
 for host in $HOSTS; do
   step "Building updated $host"
   nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-after-$host" || true
+    -o "result-after-$host"
   endstep
 
   if [ -e "result-before-$host" ] && [ -e "result-after-$host" ]; then

@@ -131,6 +131,7 @@
       "/home/c3r5b8/.config/Rocket.Chat"
       "/home/c3r5b8/.config/sh.cider.genten"
       "/home/c3r5b8/.config/inkscape"
+      "/home/c3r5b8/.config/obsidian"
       "/home/c3r5b8/.config/qBittorrent"
       "/home/c3r5b8/.config/mozilla"
       "/home/c3r5b8/.local/share/krita"

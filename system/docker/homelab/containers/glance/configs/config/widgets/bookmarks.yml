@@ -21,8 +21,8 @@
           url: https://dash.cloudflare.com/
         - title: speedtest
           url: https://speed.cloudflare.com/
-        - title: temp
-          url: https://glance.c3r5b8.dev/
+        - title: youtube
+          url: https://youtube.com
     - same-tab: true
       hide-arrow: false
       links:

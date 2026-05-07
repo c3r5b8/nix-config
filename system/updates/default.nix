@@ -24,10 +24,10 @@
         LOCAL_REPO="/home/c3r5b8/dev/nix-config"
 
         if [ -d "$LOCAL_REPO/.git" ]; then
-          if su -s /bin/sh -c "cd '$LOCAL_REPO' && git status --porcelain | grep -q . " c3r5b8; then
+          if ${pkgs.su}/bin/su -s /bin/sh -c "cd '$LOCAL_REPO' && git status --porcelain | grep -q . " c3r5b8; then
             echo "nixos-upgrade: Local repo at $LOCAL_REPO is DIRTY"
             echo "               (you have uncommitted changes)"
-            exit 0
+            exit 1
           fi
         else
           echo "nixos-upgrade: No git repo found at $LOCAL_REPO"

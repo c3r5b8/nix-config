@@ -1,5 +1,6 @@
 {
   imports = [
+    ./backup
     ./boot
     # ./fonts
     ./impermanence

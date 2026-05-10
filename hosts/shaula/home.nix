@@ -62,6 +62,12 @@
       "backlight"
       "custom/close"
     ];
+    "battery#bat2" = {
+      bat = "BAT0";
+    };
+    "battery" = {
+      bat = "BAT0";
+    };
     "custom/launcher" = {
       format = " 󰊠 ";
       tooltip = false;

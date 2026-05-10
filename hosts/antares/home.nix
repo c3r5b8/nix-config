@@ -17,22 +17,13 @@
       pos = "0 0";
       scale = "1.5";
     };
-
   };
-#   programs.waybar.settings.mainBar = {
-#     modules-left = [
-#       "clock"
-#       "idle_inhibitor"
-#       "custom/label_bt"
-#       "bluetooth"
-#       "network#net2"
-#       "network"
-#     ];
-#     modules-right = [
-#       "custom/label_language"
-#       "sway/language"
-#       "custom/label_pulseaudio"
-#       "pulseaudio"
-#     ];
-#   };
+  programs.waybar.settings.mainBar = {
+    "battery#bat2" = {
+      bat = "BAT0";
+    };
+    "battery" = {
+      bat = "BAT0";
+    };
+  };
 }

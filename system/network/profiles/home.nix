@@ -22,9 +22,10 @@
   };
   networking.networkmanager.ensureProfiles.profiles."homeWifi5" = {
     connection = {
-      id = "Home WiFi";
+      id = "Home WiFi5";
       type = "802-11-wireless";
       autoconnect = true;
+      autoconnect-priority = 100;
     };
 
     "802-11-wireless" = {

@@ -25,7 +25,7 @@
     sdrpp
     wireshark
     gimp3
-    jellyfin-desktop
+    # jellyfin-desktop
     winbox
     moonlight-qt
     heroic

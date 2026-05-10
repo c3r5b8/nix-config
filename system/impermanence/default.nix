@@ -95,6 +95,7 @@
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
       "/var/log"
+      "/var/lib/flatpak"
     ];
     files = [
       "/etc/machine-id"
@@ -145,6 +146,8 @@
       "/home/c3r5b8/.config/heroic"
       "/home/c3r5b8/games"
       "/home/c3r5b8/.config/Signal"
+      "/home/c3r5b8/.var/app"
+      "/home/c3r5b8/.local/share/flatpak"
     ];
     files = [
       "/home/c3r5b8/.config/kritarc"

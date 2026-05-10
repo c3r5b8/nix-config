@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  config,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
@@ -11,13 +6,10 @@
     ../../system
     ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
-
-    #     ../../system/bluetooth
   ];
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
-      #       theme = config.custom.theme;
     };
     useGlobalPkgs = true;
     backupFileExtension = "backup";
@@ -30,7 +22,6 @@
   ];
   networking = {
     hostName = "acrab";
-    #     networkmanager.wifi.powersave = false;
   };
   programs.nh = {
     enable = true;

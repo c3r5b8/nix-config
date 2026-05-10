@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  config,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
@@ -27,12 +22,6 @@
     hostName = "sargas";
     nameservers = ["1.1.1.1" "8.8.8.8"];
   };
-  # hardware.graphics = {
-  #   enable = true;
-  #   extraPackages = with pkgs; [
-  #     intel-media-driver
-  #   ];
-  # };
   programs.nh = {
     enable = true;
     clean.enable = true;

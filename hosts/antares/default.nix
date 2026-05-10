@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  config,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
@@ -12,12 +7,11 @@
     ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
 
-        ../../system/bluetooth
+    ../../system/bluetooth
   ];
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
-      #       theme = config.custom.theme;
     };
     useGlobalPkgs = true;
     backupFileExtension = "backup";
@@ -30,7 +24,6 @@
   ];
   networking = {
     hostName = "antares";
-    #     networkmanager.wifi.powersave = false;
   };
   programs.nh = {
     enable = true;
@@ -39,8 +32,6 @@
     flake = "/home/c3r5b8/dev/nix-config/";
   };
   services.logind.settings.Login.HandlePowerKey = "suspend";
-
-  hardware.i2c.enable = true;
 
   programs.sway.enable = true;
   nixpkgs = {

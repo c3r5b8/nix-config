@@ -4,7 +4,7 @@
     ../../home/c3r5b8/desktop.nix
   ];
   home.packages = with pkgs; [
-    nvtopPackages.amd
+    nvtopPackages.intel
   ];
   custom.sway.outputToBase = {
     "eDP-1" = 0;

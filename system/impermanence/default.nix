@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   boot.initrd.systemd = {
     services.impermance-btrfs-rolling-root = {
       description = "Archiving existing BTRFS root subvolume and creating a fresh one";

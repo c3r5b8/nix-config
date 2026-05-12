@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
@@ -26,6 +30,15 @@
     hostName = "antares";
   };
   services.logind.settings.Login.HandlePowerKey = "suspend";
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-vaapi-driver
+      intel-media-driver
+      vpl-gpu-rt
+    ];
+  };
 
   programs.sway.enable = true;
   nixpkgs = {

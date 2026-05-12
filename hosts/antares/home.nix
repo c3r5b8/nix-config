@@ -17,6 +17,10 @@
       pos = "0 0";
       scale = "1.5";
     };
+    "HEADLESS-1" = {
+      resolution = "1920x1200@60Hz";
+      pos = "0 1280 ";
+    };
   };
   programs.waybar.settings.mainBar = {
     "battery#bat2" = {

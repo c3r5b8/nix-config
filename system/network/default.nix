@@ -50,6 +50,8 @@
       environmentFiles = [config.sops.templates."networkmanager.env".path];
     };
   };
+  networking.firewall.allowedTCPPorts = [5201];
+  networking.firewall.allowedUDPPorts = [5201];
   imports = [
     ./profiles/work.nix
     ./profiles/home.nix

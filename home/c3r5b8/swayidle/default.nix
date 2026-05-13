@@ -21,7 +21,11 @@
       }
       {
         timeout = 300;
-        command = ''bash -c 'if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Discharging" ]; then ${lib.getExe' pkgs.systemd "systemctl"} suspend; fi' '';
+        command = lib.getExe (pkgs.writeShellScriptBin "battery-suspend" ''
+          if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Discharging" ]; then
+            ${lib.getExe' pkgs.systemd "systemctl"} suspend
+          fi
+        '');
       }
     ];
   };

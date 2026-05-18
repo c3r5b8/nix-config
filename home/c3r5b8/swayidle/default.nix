@@ -22,7 +22,7 @@
       {
         timeout = 300;
         command = lib.getExe (pkgs.writeShellScriptBin "battery-suspend" ''
-          if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Discharging" ]; then
+          if ! ${lib.getExe' pkgs.systemd "systemd-ac-power"}; then
             ${lib.getExe' pkgs.systemd "systemctl"} suspend
           fi
         '');

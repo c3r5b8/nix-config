@@ -1,7 +1,6 @@
 {
   services.blueman = {
     enable = true;
-    withApplet = false;
   };
   hardware = {
     bluetooth = {

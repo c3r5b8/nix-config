@@ -13,6 +13,7 @@
     ../../system/users/c3r5b8.nix
 
     ../../system/bluetooth
+    ../../system/steam
   ];
   home-manager = {
     extraSpecialArgs = {

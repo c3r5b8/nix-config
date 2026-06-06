@@ -6,6 +6,7 @@
     ./sunshine
     ./thunar
     ./gtklock
+    ./xdg
   ];
   # HACK
   services.flatpak.enable = true;

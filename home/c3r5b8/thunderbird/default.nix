@@ -71,29 +71,5 @@
         };
       };
     };
-    tangram = {
-      realName = "Oles Pidkaura";
-      address = "oles.pidkaura@tangramltd.com";
-      userName = "oles.pidkaura@tangramltd.com";
-
-      imap = {
-        host = "mail.tanhost.com";
-        port = 993;
-        tls.enable = true;
-      };
-
-      smtp = {
-        host = "mail.tanhost.com";
-        port = 587;
-        tls = {
-          enable = true;
-          useStartTls = true;
-        };
-      };
-
-      thunderbird = {
-        enable = true;
-      };
-    };
   };
 }

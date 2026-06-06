@@ -2,47 +2,46 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "ax3200 proxmox" = {
-        user = "root";
+        User = "root";
       };
-
       "sargas acrab shaula antares" = {
-        user = "c3r5b8";
+        User = "c3r5b8";
       };
 
       "rose vm-traefik" = {
-        user = "sas";
+        User = "sas";
       };
 
       "vm-moodle" = {
-        hostname = "10.4.0.21";
-        user = "sas";
-        proxyJump = "vm-traefik";
+        HostName = "10.4.0.21";
+        User = "sas";
+        ProxyJump = "vm-traefik";
       };
 
       "vm-monitoring" = {
-        hostname = "10.4.0.23";
-        user = "sas";
-        proxyJump = "vm-traefik";
+        HostName = "10.4.0.23";
+        User = "sas";
+        ProxyJump = "vm-traefik";
       };
 
       "vm-eprints" = {
-        hostname = "10.4.0.24";
-        user = "sas";
-        proxyJump = "vm-traefik";
+        HostName = "10.4.0.24";
+        User = "sas";
+        ProxyJump = "vm-traefik";
       };
 
       "vm-testing" = {
-        hostname = "10.4.0.26";
-        user = "c3r5b8";
-        proxyJump = "vm-traefik";
+        HostName = "10.4.0.26";
+        User = "c3r5b8";
+        ProxyJump = "vm-traefik";
       };
 
       "vm-koha" = {
-        hostname = "10.4.0.27";
-        user = "koha";
-        proxyJump = "vm-traefik";
+        HostName = "10.4.0.27";
+        User = "koha";
+        ProxyJump = "vm-traefik";
       };
     };
   };

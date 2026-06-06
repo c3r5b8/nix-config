@@ -7,7 +7,7 @@
   sops.secrets.resticPass = {};
   services.restic.backups.persist = {
     initialize = true;
-    repository = "rclone:onedrive:Backups/restic/${config.networking.hostName}";
+    repository = "rclone:gdrive:Backups/restic/${config.networking.hostName}";
     rcloneConfigFile = config.sops.secrets.rcloneConfig.path;
     passwordFile = config.sops.secrets.resticPass.path;
     paths = ["/persist"];

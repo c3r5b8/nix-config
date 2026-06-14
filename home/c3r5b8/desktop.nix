@@ -15,7 +15,6 @@
     telegram-desktop
     obsidian
     android-tools
-    rocketchat-desktop
     super-productivity
 
     cider-2

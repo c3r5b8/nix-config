@@ -25,6 +25,11 @@
 
     iperf3
     nmap
+    dig
+    mtr
+
+    fastfetch
+
     xxd
   ];
 }

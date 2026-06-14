@@ -14,6 +14,26 @@ sudo chmod 400 /mnt/persist/c3r5b8/home/c3r5b8/.ssh/id_ed25519
 sudo nixos-install --flake .#_host_
 ```
 
+<details>
+
+<summary>First boot setup</summary>
+
+- Setup firefox
+  - Log In
+  - Setup DarkReader
+  - Setup Bitwarden
+  - Add css to vimium
+  - Add script to tampermonkey
+  - Import config in stylus [Catppuccin Userstyles Customizer](https://catppuccin-userstyles-customizer.uncenter.dev)
+- Setup telegram
+  - Log in
+  - Install themes:
+    - [Dark](https://t.me/addtheme/ctp_mocha)
+    - [Light](https://t.me/addtheme/ctp_latte)
+  - Enable qt feame and hw video decoding, disable "Draw attention to the window"
+
+</details>
+
 ## Hosts
 
 ### Antares (RedmiBook Pro 16 2024)

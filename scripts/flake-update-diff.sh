@@ -5,9 +5,9 @@
 #
 # Exit codes:
 # 0 — success + at least one host has closure changes
-# 1 — build failure (or other unexpected error)
-# 2 — flake.lock did not change after update
-# 3 — flake.lock changed but no host closures differ
+# 1 — build failure (or other error)
+# 2 — flake.lock did not change
+# 3 — flake.lock changed but no closures differ
 
 set -euo pipefail
 
@@ -19,9 +19,7 @@ for arg in "$@"; do
   esac
 done
 
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
 log() { echo " $*" >&2; }
 ok() { echo " ✓ $*" >&2; }
 fail() { echo " ✗ $*" >&2; }
@@ -34,9 +32,7 @@ else
   endstep() { :; }
 fi
 
-# ---------------------------------------------------------------------------
 # 1. Discover hosts
-# ---------------------------------------------------------------------------
 step "Discovering hosts"
 HOSTS=$(nix eval .#nixosConfigurations \
   --apply 'cs: builtins.filter (n: builtins.match ".*-minimal" n == null) (builtins.attrNames cs)' \
@@ -51,9 +47,7 @@ HOST_COUNT=$(echo "$HOSTS" | wc -w | tr -d ' ')
 log "Found $HOST_COUNT host(s): $(echo "$HOSTS" | tr '\n' ' ')"
 endstep
 
-# ---------------------------------------------------------------------------
-# 2. Build current (before-update) configurations
-# ---------------------------------------------------------------------------
+# 2. Build current configurations
 for host in $HOSTS; do
   step "Building current $host"
   if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
@@ -64,30 +58,24 @@ for host in $HOSTS; do
   endstep
 done
 
-# ---------------------------------------------------------------------------
-# 3. Update flake inputs
-# ---------------------------------------------------------------------------
+# 3. Update flake
 if [ "$SKIP_UPDATE" = false ]; then
   step "Updating flake inputs"
   nix flake update
   endstep
 fi
 
-# ---------------------------------------------------------------------------
 # 4. Check flake.lock
-# ---------------------------------------------------------------------------
 step "Checking for flake.lock changes"
 if git diff --quiet flake.lock 2>/dev/null; then
   ok "No changes — nothing to do."
   endstep
   exit 2
 fi
-ok "flake.lock has changed, rebuilding hosts."
+ok "flake.lock changed, rebuilding hosts."
 endstep
 
-# ---------------------------------------------------------------------------
-# 5. Build updated configurations + diffs
-# ---------------------------------------------------------------------------
+# 5. Build updated + diffs
 DIFF_REPORT=""
 HAS_CHANGES=false
 CHANGED_HOSTS=""
@@ -118,16 +106,10 @@ for host in $HOSTS; do
   fi
 done
 
-# ---------------------------------------------------------------------------
 # 6. Summary
-# ---------------------------------------------------------------------------
 step "Summary"
-if [ -n "$CHANGED_HOSTS" ]; then
-  ok "Changed: $CHANGED_HOSTS"
-fi
-if [ -n "$UNCHANGED_HOSTS" ]; then
-  log "Unchanged: $UNCHANGED_HOSTS"
-fi
+if [ -n "$CHANGED_HOSTS" ]; then ok "Changed: $CHANGED_HOSTS"; fi
+if [ -n "$UNCHANGED_HOSTS" ]; then log "Unchanged: $UNCHANGED_HOSTS"; fi
 
 if [ "$HAS_CHANGES" = false ]; then
   fail "flake.lock changed but no host closures differ."

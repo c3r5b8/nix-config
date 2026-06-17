@@ -4,15 +4,11 @@
 # then report per-host package diffs via nvd.
 #
 # Exit codes:
-#   0 — at least one host has closure changes (diff report on stdout)
-#   1 — unexpected error
-#   2 — flake.lock did not change after update
-#   3 — flake.lock changed but no host closures differ
-#
-# Options:
-#   --skip-update   Skip 'nix flake update' (useful when flake.lock is
-#                   already updated and you just want to diff)
-#
+# 0 — success + at least one host has closure changes
+# 1 — build failure (or other unexpected error)
+# 2 — flake.lock did not change after update
+# 3 — flake.lock changed but no host closures differ
+
 set -euo pipefail
 
 SKIP_UPDATE=false
@@ -26,21 +22,20 @@ done
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
-log()   { echo "  $*" >&2; }
-ok()    { echo "  ✓ $*" >&2; }
-fail()  { echo "  ✗ $*" >&2; }
-# In CI: use ::group::/::endgroup:: for collapsible sections.
-# Locally: print readable section headers instead.
+log() { echo " $*" >&2; }
+ok() { echo " ✓ $*" >&2; }
+fail() { echo " ✗ $*" >&2; }
+
 if [ -n "${CI:-}" ]; then
-  step()     { echo "::group::$1" >&2; }
-  endstep()  { echo "::endgroup::" >&2; }
+  step() { echo "::group::$1" >&2; }
+  endstep() { echo "::endgroup::" >&2; }
 else
-  step()     { echo >&2; echo "── $1 ──" >&2; }
-  endstep()  { :; }
+  step() { echo >&2; echo "── $1 ──" >&2; }
+  endstep() { :; }
 fi
 
 # ---------------------------------------------------------------------------
-# 1. Discover full (non-minimal) host configurations
+# 1. Discover hosts
 # ---------------------------------------------------------------------------
 step "Discovering hosts"
 HOSTS=$(nix eval .#nixosConfigurations \
@@ -51,6 +46,7 @@ if [ -z "$HOSTS" ]; then
   fail "No host configurations found."
   exit 1
 fi
+
 HOST_COUNT=$(echo "$HOSTS" | wc -w | tr -d ' ')
 log "Found $HOST_COUNT host(s): $(echo "$HOSTS" | tr '\n' ' ')"
 endstep
@@ -60,8 +56,11 @@ endstep
 # ---------------------------------------------------------------------------
 for host in $HOSTS; do
   step "Building current $host"
-  nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-before-$host"
+  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+       -o "result-before-$host" 2>&1 | tee "build-before-$host.log"; then
+    fail "Failed to build current $host"
+    exit 1
+  fi
   endstep
 done
 
@@ -75,7 +74,7 @@ if [ "$SKIP_UPDATE" = false ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# 4. Check whether flake.lock actually changed
+# 4. Check flake.lock
 # ---------------------------------------------------------------------------
 step "Checking for flake.lock changes"
 if git diff --quiet flake.lock 2>/dev/null; then
@@ -87,7 +86,7 @@ ok "flake.lock has changed, rebuilding hosts."
 endstep
 
 # ---------------------------------------------------------------------------
-# 5. Build updated configurations and generate per-host diffs
+# 5. Build updated configurations + diffs
 # ---------------------------------------------------------------------------
 DIFF_REPORT=""
 HAS_CHANGES=false
@@ -96,8 +95,11 @@ UNCHANGED_HOSTS=""
 
 for host in $HOSTS; do
   step "Building updated $host"
-  nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-after-$host"
+  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+       -o "result-after-$host" 2>&1 | tee "build-after-$host.log"; then
+    fail "Failed to build updated $host"
+    exit 1
+  fi
   endstep
 
   if [ -e "result-before-$host" ] && [ -e "result-after-$host" ]; then
@@ -109,7 +111,7 @@ for host in $HOSTS; do
     if [ "$(readlink "result-before-$host")" != "$(readlink "result-after-$host")" ]; then
       HAS_CHANGES=true
       CHANGED_HOSTS="$CHANGED_HOSTS $host"
-      DIFF_REPORT="${DIFF_REPORT}### ${host}"$'\n'"\`\`\`"$'\n'"${HOST_DIFF}"$'\n'"\`\`\`"$'\n\n'
+      DIFF_REPORT="${DIFF_REPORT}### ${host}\n\`\`\`\n${HOST_DIFF}\n\`\`\`\n\n"
     else
       UNCHANGED_HOSTS="$UNCHANGED_HOSTS $host"
     fi
@@ -117,14 +119,14 @@ for host in $HOSTS; do
 done
 
 # ---------------------------------------------------------------------------
-# 6. Report results
+# 6. Summary
 # ---------------------------------------------------------------------------
 step "Summary"
 if [ -n "$CHANGED_HOSTS" ]; then
-  ok "Changed:  $CHANGED_HOSTS"
+  ok "Changed: $CHANGED_HOSTS"
 fi
 if [ -n "$UNCHANGED_HOSTS" ]; then
-  log "Unchanged:$UNCHANGED_HOSTS"
+  log "Unchanged: $UNCHANGED_HOSTS"
 fi
 
 if [ "$HAS_CHANGES" = false ]; then
@@ -136,5 +138,4 @@ fi
 ok "Done — diff report ready."
 endstep
 
-# Print the diff report to stdout for consumers (CI, local review, etc.)
 printf '%s' "$DIFF_REPORT"

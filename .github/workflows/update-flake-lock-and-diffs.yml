@@ -71,20 +71,21 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create Failure Issue
-        uses: peter-evans/create-issue@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "❌ Flake Update Failed — build error on ${{ github.run_id }}"
-          body: |
-            **Automated flake update failed.**
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > failure-report.md << 'EOF'
+          **Automated flake update failed.**
 
-            **Date:** ${{ steps.date.outputs.DATE || 'Unknown' }}  
-            **Host that failed:** `acrab` (or whichever failed)
+          **Date:** ${{ steps.date.outputs.DATE || 'Unknown' }}  
+          **Workflow run:** [View logs here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
-            **Workflow run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          The build failed (most recently on host `acrab` according to your report).
 
-            Check the logs in the "Update flake inputs..." step for the full build output.
-          labels: |
-            bug
-            flake-update
-            automated
+          Check the **"Update flake inputs..."** step for the exact error and full build logs.
+          EOF
+
+          gh issue create \
+            --title "❌ Flake Update Failed — ${{ github.run_id }} — $(date +%Y-%m-%d)" \
+            --body-file failure-report.md \
+            --label bug,flake-update,automated

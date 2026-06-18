@@ -54,17 +54,14 @@ build_host() {
     {
       echo "### ❌ Build failed for host: \`$host\` (${phase})"
       echo ""
-      echo "**stderr (last 80 lines):**"
+      echo "**Error log (stderr only):**"
       echo '```'
-      tail -n 80 "$err_log" 2>/dev/null || cat "$err_log"
-      echo '```'
-      echo ""
-      echo "**stdout (last 30 lines):**"
-      echo '```'
-      tail -n 30 "$out_log" 2>/dev/null || true
+      if ! grep -Ei 'error|failed|failure|fatal|cannot|could not|denied' "$err_log" 2>/dev/null; then
+        tail -n 80 "$err_log" 2>/dev/null || cat "$err_log"
+      fi
       echo '```'
       echo ""
-      echo "Full logs are available as workflow artifacts."
+      echo "Full workflow logs may include additional context."
     } > error-report.md
 
     exit 1

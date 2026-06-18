@@ -43,6 +43,14 @@ jobs:
         id: diff
         run: ./scripts/flake-update-diff.sh
 
+      - name: Upload error report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flake-update-error-report
+          path: error-report.md
+          if-no-files-found: ignore
+
       - name: Create Pull Request
         if: success()
         uses: peter-evans/create-pull-request@v7
@@ -68,7 +76,16 @@ jobs:
     needs: update
     if: failure() && needs.update.result == 'failure'
     steps:
-      - uses: actions/checkout@v4
+      - name: Download error report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: flake-update-error-report
+          path: .
+        continue-on-error: true
+
+      - name: Get current date
+        id: date
+        run: echo "DATE=$(TZ='Europe/Kyiv' date +%Y-%m-%d)" >> $GITHUB_OUTPUT
 
       - name: Create Failure Issue
         env:
@@ -77,10 +94,17 @@ jobs:
           if [ -f error-report.md ]; then
             BODY=$(cat error-report.md)
           else
-            BODY="Build failed. Check workflow logs for details."
+            BODY="### ❌ Build failed\n\nError report file was not generated."
           fi
 
+          BODY="${BODY}
+
+          ---
+          [Failed workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
           gh issue create \
-            --title "Flake Update Failed — $(date +%Y-%m-%d) — ${{ github.run_id }}" \
+            --title "Flake update failed - ${{ steps.date.outputs.DATE }}" \
             --body "$BODY" \
-            --label "bug,flake-update,automated"
+            --label "bug" \
+            --label "flake-update" \
+            --label "automated"

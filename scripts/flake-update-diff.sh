@@ -32,6 +32,47 @@ else
   endstep() { :; }
 fi
 
+# ---------------------------------------------------------------------------
+# Build helper with separate stdout/stderr + clean error reporting
+# ---------------------------------------------------------------------------
+build_host() {
+  local phase="$1"     # "current" or "updated"
+  local host="$2"
+
+  local out_log="build-${phase}-${host}.stdout.log"
+  local err_log="build-${phase}-${host}.stderr.log"
+
+  step "Building ${phase} $host"
+
+  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+       -o "result-${phase}-$host" \
+       > >(tee "$out_log") 2> >(tee "$err_log" >&2); then
+
+    fail "Failed to build ${phase} $host"
+
+    # Create clean error report for GitHub Issue
+    {
+      echo "### ❌ Build failed for host: \`$host\` (${phase})"
+      echo ""
+      echo "**stderr (last 80 lines):**"
+      echo '```'
+      tail -n 80 "$err_log" 2>/dev/null || cat "$err_log"
+      echo '```'
+      echo ""
+      echo "**stdout (last 30 lines):**"
+      echo '```'
+      tail -n 30 "$out_log" 2>/dev/null || true
+      echo '```'
+      echo ""
+      echo "Full logs are available as workflow artifacts."
+    } > error-report.md
+
+    exit 1
+  fi
+
+  endstep
+}
+
 # 1. Discover hosts
 step "Discovering hosts"
 HOSTS=$(nix eval .#nixosConfigurations \
@@ -49,13 +90,7 @@ endstep
 
 # 2. Build current configurations
 for host in $HOSTS; do
-  step "Building current $host"
-  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-       -o "result-before-$host" 2>&1 | tee "build-before-$host.log"; then
-    fail "Failed to build current $host"
-    exit 1
-  fi
-  endstep
+  build_host "current" "$host"
 done
 
 # 3. Update flake
@@ -82,21 +117,15 @@ CHANGED_HOSTS=""
 UNCHANGED_HOSTS=""
 
 for host in $HOSTS; do
-  step "Building updated $host"
-  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-       -o "result-after-$host" 2>&1 | tee "build-after-$host.log"; then
-    fail "Failed to build updated $host"
-    exit 1
-  fi
-  endstep
+  build_host "updated" "$host"
 
-  if [ -e "result-before-$host" ] && [ -e "result-after-$host" ]; then
+  if [ -e "result-current-$host" ] && [ -e "result-updated-$host" ]; then
     step "Package diff for $host"
-    HOST_DIFF=$(nix run nixpkgs#nvd -- diff "result-before-$host" "result-after-$host" 2>&1 || true)
+    HOST_DIFF=$(nix run nixpkgs#nvd -- diff "result-current-$host" "result-updated-$host" 2>&1 || true)
     echo "$HOST_DIFF" >&2
     endstep
 
-    if [ "$(readlink "result-before-$host")" != "$(readlink "result-after-$host")" ]; then
+    if [ "$(readlink "result-current-$host")" != "$(readlink "result-updated-$host")" ]; then
       HAS_CHANGES=true
       CHANGED_HOSTS="$CHANGED_HOSTS $host"
       DIFF_REPORT="${DIFF_REPORT}### ${host}\n\`\`\`\n${HOST_DIFF}\n\`\`\`\n\n"

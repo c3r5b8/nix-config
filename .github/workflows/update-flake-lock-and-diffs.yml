@@ -77,15 +77,10 @@ jobs:
           cat > failure-report.md << 'EOF'
           **Automated flake update failed.**
 
-          **Date:** ${{ steps.date.outputs.DATE || 'Unknown' }}  
           **Workflow run:** [View logs here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-          The build failed (most recently on host `acrab` according to your report).
-
-          Check the **"Update flake inputs..."** step for the exact error and full build logs.
           EOF
 
           gh issue create \
-            --title "❌ Flake Update Failed — ${{ github.run_id }} — $(date +%Y-%m-%d)" \
+            --title "Flake Update Failed — ${{ github.run_id }} — $(date +%Y-%m-%d)" \
             --body-file failure-report.md \
             --label bug

@@ -88,4 +88,4 @@ jobs:
           gh issue create \
             --title "❌ Flake Update Failed — ${{ github.run_id }} — $(date +%Y-%m-%d)" \
             --body-file failure-report.md \
-            --label bug,flake-update,automated
+            --label bug

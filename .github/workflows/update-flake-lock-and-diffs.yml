@@ -8,7 +8,9 @@ on:
 
 permissions:
   contents: write
+  id-token: write
   pull-requests: write
+  issues: write
 
 jobs:
   update:
@@ -18,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+      - uses: wimpysworld/nothing-but-nix@main
       - uses: DeterminateSystems/nix-installer-action@v13
       - uses: DeterminateSystems/flakehub-cache-action@v1
       - name: Force Google DNS
@@ -28,7 +30,7 @@ jobs:
           echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
           echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
           sudo chattr +i /etc/resolv.conf
-    
+
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
@@ -52,6 +54,47 @@ jobs:
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Upload error logs as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nix-build-errors-${{ steps.date.outputs.DATE }}
+          path: errors-*.log
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Create Failure Issue
+        if: always() && env.BUILD_FAILED == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Creating failure issue..."
+
+          # Create the issue body
+          {
+            echo "# Nix Build Failure Report"
+            echo ""
+            echo "**Date:** ${{ steps.date.outputs.DATE }}"
+            echo "**Workflow Run:** [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo ""
+            echo "### Last 100 lines of error log:"
+            echo ""
+            echo '```log'
+            tail -n 100 errors-*.log 2>/dev/null || echo "No error logs found."
+            echo '```'
+            echo ""
+            echo "---"
+            echo "*Auto-generated from flake update workflow.*"
+          } > /tmp/issue-body.md
+
+          # Create the issue using --body-file (avoids argument limit)
+          gh issue create \
+            --title "Flake update / Nix build failed - ${{ steps.date.outputs.DATE }}" \
+            --body-file /tmp/issue-body.md \
+            --label "bug"
+          exit 1
+
 
       - name: Create Pull Request
         if: steps.diff.outputs.has_changes == 'true'

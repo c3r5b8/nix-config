@@ -58,11 +58,17 @@ endstep
 # ---------------------------------------------------------------------------
 # 2. Build current (before-update) configurations
 # ---------------------------------------------------------------------------
+
 for host in $HOSTS; do
-  step "Building current $host"
-  nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-before-$host"
-  endstep
+   step "Building current $host"
+  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+       -o "result-before-$host" \
+       2> >(tee "errors-before-$host.log" >&2); then
+    echo "BUILD_FAILED=1" >> $GITHUB_ENV
+    fail "Failed to build before version for $host"
+    endstep
+    exit 1
+  fi
 done
 
 # ---------------------------------------------------------------------------
@@ -96,9 +102,14 @@ UNCHANGED_HOSTS=""
 
 for host in $HOSTS; do
   step "Building updated $host"
-  nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-    -o "result-after-$host"
-  endstep
+  if ! nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+       -o "result-after-$host" \
+       2> >(tee "errors-after-$host.log" >&2); then
+    echo "BUILD_FAILED=1" >> $GITHUB_ENV
+    fail "Failed to build after version for $host"
+    endstep
+    exit 1
+  fi
 
   if [ -e "result-before-$host" ] && [ -e "result-after-$host" ]; then
     step "Package diff for $host"

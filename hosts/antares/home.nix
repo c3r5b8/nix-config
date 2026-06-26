@@ -7,10 +7,16 @@
     nvtopPackages.amd
   ];
   custom.sway.outputToBase = {
-    "HDMI-A-1" = 0;
+    "DP-2" = 0;
     "HEADLESS-1" = 10;
   };
 
+  wayland.windowManager.sway.config.output = {
+    "DP-2" = {
+      resolution = "3440x1440@240Hz";
+      pos = "0 0";
+    };
+  };
   programs.waybar.settings.mainBar = {
     modules-left = [
       "clock"

@@ -12,6 +12,7 @@
     ../../system/users/c3r5b8.nix
 
     ../../system/bluetooth
+    ../../system/steam
   ];
   home-manager = {
     extraSpecialArgs = {
@@ -29,15 +30,10 @@
   networking = {
     hostName = "antares";
   };
-  services.logind.settings.Login.HandlePowerKey = "suspend";
 
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
-      intel-vaapi-driver
-      intel-media-driver
-      vpl-gpu-rt
-    ];
+    enable32Bit = true;
   };
 
   programs.sway.enable = true;

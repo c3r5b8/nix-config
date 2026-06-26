@@ -36,11 +36,12 @@ sudo nixos-install --flake .#_host_
 
 ## Hosts
 
-### Antares (RedmiBook Pro 16 2024)
+### Antares (ASUS TUF Gaming B550M-Plus)
 
-- Main laptop
-- Intel Core Ultra 7 155H
-- 32GB LPDDR5X 7467 MT/s
+- Main desktop
+- AMD Ryzen 7 5700X3D
+- AMD Radeon RX 7700 XT
+- 32GB DDR4
 
 ### Shaula (Yoga 7 2-in-1 14ILL10)
 

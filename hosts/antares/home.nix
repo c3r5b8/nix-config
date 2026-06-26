@@ -4,30 +4,27 @@
     ../../home/c3r5b8/desktop.nix
   ];
   home.packages = with pkgs; [
-    nvtopPackages.intel
+    nvtopPackages.amd
   ];
   custom.sway.outputToBase = {
-    "eDP-1" = 0;
+    "HDMI-A-1" = 0;
     "HEADLESS-1" = 10;
   };
 
-  wayland.windowManager.sway.config.output = {
-    "eDP-1" = {
-      resolution = "3072x1920@120Hz";
-      pos = "0 0";
-      scale = "1.5";
-    };
-    "HEADLESS-1" = {
-      resolution = "1920x1200@60Hz";
-      pos = "0 1280 ";
-    };
-  };
   programs.waybar.settings.mainBar = {
-    "battery#bat2" = {
-      bat = "BAT0";
-    };
-    "battery" = {
-      bat = "BAT0";
-    };
+    modules-left = [
+      "clock"
+      "idle_inhibitor"
+      "custom/label_bt"
+      "bluetooth"
+      "network#net2"
+      "network"
+    ];
+    modules-right = [
+      "custom/label_language"
+      "sway/language"
+      "custom/label_pulseaudio"
+      "pulseaudio"
+    ];
   };
 }

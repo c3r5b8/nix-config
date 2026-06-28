@@ -5,7 +5,7 @@
     thunar-archive-plugin
     thunar-volman
   ];
-  environment.systemPackages = [pkgs.xarchiver];
+  environment.systemPackages = [pkgs.engrampa];
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 }

@@ -28,6 +28,9 @@
     dig
     mtr
 
+    lm_sensors
+    pciutils
+    usbutils
     fastfetch
 
     xxd

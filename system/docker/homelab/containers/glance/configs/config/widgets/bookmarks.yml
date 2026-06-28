@@ -15,21 +15,21 @@
     - same-tab: true
       hide-arrow: false
       links:
+        - title: router
+          url: https://router.c3r5b8.dev/
         - title: tailscale
           url: https://login.tailscale.com/admin
         - title: cloudflare
           url: https://dash.cloudflare.com/
         - title: speedtest
           url: https://speed.cloudflare.com/
-        - title: youtube
-          url: https://youtube.com
     - same-tab: true
       hide-arrow: false
       links:
+        - title: youtube
+          url: https://youtube.com
         - title: reddit
           url: https://reddit.com/
-        - title: media
-          url: https://glance.c3r5b8.dev/media
         - title: toloka
           url: https://toloka.to/
         - title: ext

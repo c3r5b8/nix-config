@@ -251,7 +251,7 @@ in {
       startup =
         [
           {command = "${lib.getExe pkgs.dunst}";}
-          {command = "${lib.getExe pkgs.inhibridge}";}
+          # {command = "${lib.getExe pkgs.inhibridge}";}
           {command = "${lib.getExe pkgs.autotiling}";}
           {command = "${lib.getExe pkgs.swaykbdd}";}
           {command = "${lib.getExe pkgs.gtklock} -d";}

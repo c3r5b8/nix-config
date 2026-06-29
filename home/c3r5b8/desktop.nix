@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./cliphist
     ./dunst
     ./firefox
     ./foot

@@ -140,6 +140,7 @@
       "/home/c3r5b8/.local/share/MikroTik"
       "/home/c3r5b8/.config/Moonlight Game Streaming Project"
       "/home/c3r5b8/.config/heroic"
+      "/home/c3r5b8/.cache/cliphist"
       "/home/c3r5b8/games"
       "/home/c3r5b8/.config/Signal"
       "/home/c3r5b8/.var/app"

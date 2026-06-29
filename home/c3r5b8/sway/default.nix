@@ -251,7 +251,6 @@ in {
       startup =
         [
           {command = "${lib.getExe pkgs.dunst}";}
-          # {command = "${lib.getExe pkgs.inhibridge}";}
           {command = "${lib.getExe pkgs.autotiling}";}
           {command = "${lib.getExe pkgs.swaykbdd}";}
           {command = "${lib.getExe pkgs.gtklock} -d";}
@@ -303,6 +302,7 @@ in {
           "Mod4+space" = "exec ${lib.getExe' pkgs.foot "footclient"}";
           "Mod4+Shift+q" = "kill";
           "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel}";
+          "Mod4+c" = "exec ${lib.getExe pkgs.cliphist} list | ${lib.getExe pkgs.fuzzel} --dmenu --with-nth 2 -w 100 -l 20 | ${lib.getExe pkgs.cliphist} decode | ${lib.getExe' pkgs.wl-clipboard "wl-copy"}";
           "Mod4+Shift+c" = "reload";
           "Mod4+Shift+e" = "exec swaymsg exit";
           "Mod4+Shift+t" = "exec ${lib.getExe themeSwitch} toggle";

@@ -3,12 +3,12 @@
   pkgs,
   ...
 }: {
-  sops.secrets.resticEnv = {};
+  sops.secrets.rcloneConfig = {};
   sops.secrets.resticPass = {};
   services.restic.backups.persist = {
     initialize = true;
-    repository = "s3:s3.eu-central-003.backblazeb2.com/nixos-backup-c3r5b8/${config.networking.hostName}";
-    environmentFile = config.sops.secrets.resticEnv.path;
+    repository = "rclone:gdrive:backup/${config.networking.hostName}";
+    rcloneConfigFile = config.sops.secrets.rcloneConfig.path;
     passwordFile = config.sops.secrets.resticPass.path;
     paths = ["/persist"];
     pruneOpts = [

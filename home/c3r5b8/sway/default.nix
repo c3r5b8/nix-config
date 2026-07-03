@@ -321,20 +321,20 @@ in {
           "Mod4+Shift+k" = "move up";
           "Mod4+Shift+l" = "move right";
 
-          "XF86AudioPlay" = "exec ${lib.getExe pkgs.playerctl} play-pause";
-          "XF86AudioStop" = "exec ${lib.getExe pkgs.playerctl} stop";
+          "--locked XF86AudioPlay" = "exec ${lib.getExe pkgs.playerctl} play-pause";
+          "--locked XF86AudioStop" = "exec ${lib.getExe pkgs.playerctl} stop";
 
-          "XF86AudioNext" = "exec ${lib.getExe pkgs.playerctl} next";
-          "XF86AudioPause" = "exec ${lib.getExe pkgs.playerctl} pause";
-          "XF86AudioPrev" = "exec ${lib.getExe pkgs.playerctl} previous";
+          "--locked XF86AudioNext" = "exec ${lib.getExe pkgs.playerctl} next";
+          "--locked XF86AudioPause" = "exec ${lib.getExe pkgs.playerctl} pause";
+          "--locked XF86AudioPrev" = "exec ${lib.getExe pkgs.playerctl} previous";
 
           "Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} copy anything";
           "Ctrl+Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} savecopy anything";
 
-          "XF86AudioRaiseVolume" = "exec ${lib.getExe volumeHelper} --increase 5";
-          "XF86AudioLowerVolume" = "exec ${lib.getExe volumeHelper} --decrease 5";
-          "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ${lib.getExe volumeHelper}";
-          "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "--locked XF86AudioRaiseVolume" = "exec ${lib.getExe volumeHelper} --increase 5";
+          "--locked XF86AudioLowerVolume" = "exec ${lib.getExe volumeHelper} --decrease 5";
+          "--locked XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ${lib.getExe volumeHelper}";
+          "--locked XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
         }
         // (let
           keys = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];

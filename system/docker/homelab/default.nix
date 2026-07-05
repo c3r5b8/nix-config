@@ -5,6 +5,7 @@
     ./containers/jellyfin
     ./containers/traefik
     ./containers/technitium
+    ./containers/upsnap
     ./containers/multi-scrobbler
     ./containers/qbittorrent
     ./containers/redis

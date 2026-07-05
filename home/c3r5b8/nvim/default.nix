@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    clang-tools
     gcc
     tree-sitter
     libgcc

@@ -32,6 +32,8 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				nix = { "alejandra" },
+				c = { "clang_format" },
+				cpp = { "clang_format" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--

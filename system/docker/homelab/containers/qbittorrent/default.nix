@@ -2,13 +2,15 @@
   systemd.tmpfiles.rules = [
     "d /var/lib/homelab/qbittorrent 0700 1000 1000 -"
   ];
+  networking.firewall.allowedTCPPorts = [14014];
+  networking.firewall.allowedUDPPorts = [14014];
   virtualisation.oci-containers.containers."qbittorrent" = {
     image = "lscr.io/linuxserver/qbittorrent:latest";
     environment = {
       "DOCKER_MODS" = "ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest";
       "PGID" = "1000";
       "PUID" = "1000";
-      "TORRENTING_PORT" = "6881";
+      "TORRENTING_PORT" = "14014";
       "TZ" = "Europe/Kyiv";
       "WEBUI_PORT" = "8080";
     };
@@ -17,8 +19,8 @@
       "/mnt/media:/downloads:rw"
     ];
     ports = [
-      "6881:6881/udp"
-      "6881:6881/tcp"
+      "14014:14014/udp"
+      "14014:14014/tcp"
     ];
     labels = {
       "traefik.enable" = "true";

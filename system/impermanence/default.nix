@@ -82,7 +82,6 @@
     directories = [
       "/root/.cache/nix"
       "/var/lib/nixos"
-      "/var/lib/howdy"
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/backlight"
       "/var/lib/systemd/timers"

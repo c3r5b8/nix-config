@@ -144,6 +144,7 @@
       "/home/c3r5b8/.config/Signal"
       "/home/c3r5b8/.var/app"
       "/home/c3r5b8/.local/share/flatpak"
+      "/home/c3r5b8/.cache/fuzzel"
     ];
     files = [
       "/home/c3r5b8/.config/kritarc"

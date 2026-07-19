@@ -6,6 +6,8 @@
     ../../system
     ../../system/desktop.nix
     ../../system/users/c3r5b8.nix
+
+    ../../system/steam
   ];
   home-manager = {
     extraSpecialArgs = {

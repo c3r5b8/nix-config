@@ -122,6 +122,7 @@
       "/home/c3r5b8/.local/share/TelegramDesktop/tdata"
       "/home/c3r5b8/.local/share/fish"
       "/home/c3r5b8/.local/share/nvim"
+      "/home/c3r5b8/.local/share/PrismLauncher"
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
       "/home/c3r5b8/.config/sh.cider.genten"

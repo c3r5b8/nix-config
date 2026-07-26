@@ -12,4 +12,5 @@
       "paradiseenhanced-s1.battleye.com"
     ];
   };
+  environment.systemPackages = [pkgs.prismlauncher];
 }

@@ -5,7 +5,7 @@
     ./containers/jellyfin
     ./containers/traefik
     ./containers/technitium
-    ./containers/upsnap
+    ./containers/radicale
     ./containers/multi-scrobbler
     ./containers/qbittorrent
     ./containers/vaultwarden

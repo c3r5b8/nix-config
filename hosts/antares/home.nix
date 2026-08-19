@@ -1,10 +1,17 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ../../home/c3r5b8
     ../../home/c3r5b8/desktop.nix
   ];
   home.packages = with pkgs; [
     nvtopPackages.amd
+  ];
+  custom.sway.startup = [
+    {command = "${lib.getExe' pkgs.sway "swaymsg"} create_output";}
   ];
   custom.sway.outputToBase = {
     "DP-2" = 0;
@@ -15,6 +22,10 @@
     "DP-2" = {
       resolution = "3440x1440@240Hz";
       pos = "0 0";
+    };
+    "HEADLESS-1" = {
+      resolution = "1920x1200@60Hz";
+      pos = "760 1440";
     };
   };
   programs.waybar.settings.mainBar = {

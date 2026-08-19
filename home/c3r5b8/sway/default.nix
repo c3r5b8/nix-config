@@ -378,6 +378,8 @@ in {
 
       bindsym --locked XF86MonBrightnessDown exec ${lib.getExe pkgs.brightnessctl} -q set 5%- -n && $brightness_notification_cmd
       bindsym --locked XF86MonBrightnessUp exec ${lib.getExe pkgs.brightnessctl} -q set +5% && $brightness_notification_cmd
+
+      output HEADLESS-1 disable
     '';
   };
 }

@@ -17,7 +17,7 @@
       keyboard = "disabled";
       mouse = "disabled";
       stream_audio = "disabled";
-      output_name = 1;
+      output_name = "HEADLESS-1";
       capture = "wlr";
     };
     applications.apps = [

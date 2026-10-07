@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  gtklockCmd = "${lib.getExe pkgs.gtklock} -d";
+  gtklockCmd = "gtklock -d";
   swaymsg = lib.getExe' pkgs.sway "swaymsg";
   pidof = lib.getExe' pkgs.procps "pidof";
 

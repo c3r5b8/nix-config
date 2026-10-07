@@ -253,7 +253,7 @@ in {
           {command = "${lib.getExe pkgs.dunst}";}
           {command = "${lib.getExe pkgs.autotiling}";}
           {command = "${lib.getExe pkgs.swaykbdd}";}
-          {command = "${lib.getExe pkgs.gtklock} -d";}
+          {command = "gtklock -d";}
           {command = "${lib.getExe themeSwitch} load";}
           {command = "${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1";}
           {
@@ -307,7 +307,7 @@ in {
           "Mod4+Shift+c" = "reload";
           "Mod4+Shift+e" = "exec swaymsg exit";
           "Mod4+Shift+t" = "exec ${lib.getExe themeSwitch} toggle";
-          "Mod4+Escape" = "exec ${lib.getExe pkgs.gtklock} -d";
+          "Mod4+Escape" = "exec gtklock -d";
           "Mod4+f" = "fullscreen";
           "Mod4+Shift+space" = "floating toggle";
 

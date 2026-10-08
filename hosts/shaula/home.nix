@@ -71,7 +71,7 @@
     "custom/launcher" = {
       format = " 󰊠 ";
       tooltip = false;
-      on-click = "${lib.getExe pkgs.fuzzel}";
+      on-click = "${lib.getExe pkgs.fuzzel} --cache=/home/c3r5b8/.cache/fuzzel/fuzzel";
     };
     "custom/keyboard" = {
       format = "  󰌌  ";

@@ -301,7 +301,7 @@ in {
         {
           "Mod4+space" = "exec ${lib.getExe' pkgs.foot "footclient"}";
           "Mod4+Shift+q" = "kill";
-          "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel}";
+          "Mod4+d" = "exec ${lib.getExe pkgs.fuzzel} --cache=/home/c3r5b8/.cache/fuzzel/fuzzel";
           "Mod4+v" = "exec ${lib.getExe pkgs.cliphist} list | ${lib.getExe pkgs.fuzzel} --dmenu --with-nth 2 -w 100 -l 20 | ${lib.getExe pkgs.cliphist} decode | ${lib.getExe' pkgs.wl-clipboard "wl-copy"}";
           "Mod4+c" = "exec ${lib.getExe pkgs.hyprpicker} | ${lib.getExe' pkgs.wl-clipboard "wl-copy"}";
           "Mod4+Shift+c" = "reload";

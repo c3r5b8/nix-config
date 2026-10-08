@@ -10,7 +10,7 @@
         terminal = "footclient -a '{cmd}' -T '{cmd}' {cmd}";
         vertical-pad = 40;
         include = "~/.config/fuzzel/theme.ini";
-        cache = "/home/c3r5b8/.cache/fuzzel/fuzzel";
+        cache = "/dev/null";
       };
       border = {
         width = 4;

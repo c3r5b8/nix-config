@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   sops.templates."networkmanager.env" = {
     content = ''
       HOME_WIFI_PASSWORD=${config.sops.placeholder."wifiPassword"}
@@ -15,6 +19,7 @@
 
   networking.networkmanager = {
     enable = true;
+    plugins = with pkgs; [networkmanager-openconnect];
     ensureProfiles = {
       environmentFiles = [config.sops.templates."networkmanager.env".path];
     };
@@ -23,6 +28,7 @@
   networking.firewall.allowedUDPPorts = [5201];
   imports = [
     ./profiles/home.nix
+    ./profiles/work.nix
     ./profiles/university.nix
   ];
 }

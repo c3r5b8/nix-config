@@ -1,0 +1,212 @@
+#!/usr/bin/env bash
+set -euo pipefail
+fuzzel_args=("$@")
+
+menu() {
+  fuzzel --dmenu --placeholder "$1" "${fuzzel_args[@]}"
+}
+
+unescape() {
+  local s=$1
+  s=${s//\\:/:}
+  s=${s//\\\\/\\}
+  printf '%s' "$s"
+}
+
+field() {
+  nmcli -g "$2" connection show uuid "$1" 2>/dev/null || true
+}
+
+fmt_duration() {
+  local secs=$1 d h m s
+  (( secs < 0 )) && secs=0
+  d=$((secs / 86400))
+  h=$((secs % 86400 / 3600))
+  m=$((secs % 3600 / 60))
+  s=$((secs % 60))
+  if (( d > 0 )); then
+    printf '%dd %dh %dm' "$d" "$h" "$m"
+  elif (( h > 0 )); then
+    printf '%dh %dm' "$h" "$m"
+  else
+    printf '%dm %ds' "$m" "$s"
+  fi
+}
+
+fmt_bytes() {
+  local b=$1
+  if (( b >= 1073741824 )); then
+    awk -v b="$b" 'BEGIN { printf "%.1f GiB", b / 1073741824 }'
+  elif (( b >= 1048576 )); then
+    awk -v b="$b" 'BEGIN { printf "%.1f MiB", b / 1048576 }'
+  elif (( b >= 1024 )); then
+    awk -v b="$b" 'BEGIN { printf "%.1f KiB", b / 1024 }'
+  else
+    printf '%s B' "$b"
+  fi
+}
+
+subnet_of() {
+  local cidr=$1 addr prefix ip n mask i octet
+  [[ $cidr == */* ]] || return 0
+  addr=${cidr%%/*}
+  prefix=${cidr#*/}
+  prefix=${prefix%% *}
+  [[ $addr =~ ^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$ ]] || return 0
+  [[ $prefix =~ ^[0-9]+$ && $prefix -le 32 ]] || return 0
+  ip=0
+  for octet in ${addr//./ }; do
+    (( octet <= 255 )) || return 0
+    ip=$(( (ip << 8) | octet ))
+  done
+  if (( prefix == 0 )); then
+    mask=0
+  else
+    mask=$(( (0xffffffff << (32 - prefix)) & 0xffffffff ))
+  fi
+  n=$(( ip & mask ))
+  printf '%d.%d.%d.%d/%s\n' \
+    $(( (n >> 24) & 255 )) \
+    $(( (n >> 16) & 255 )) \
+    $(( (n >> 8) & 255 )) \
+    $(( n & 255 )) \
+    "$prefix"
+}
+
+copy() {
+  local text=$1
+  if command -v wl-copy >/dev/null; then
+    printf '%s' "$text" | wl-copy
+  elif command -v xclip >/dev/null; then
+    printf '%s' "$text" | xclip -selection clipboard
+  else
+    printf '%s\n' "$text"
+  fi
+}
+
+detail_menu() {
+  local uuid=$1
+  local active id type iface autoconnect ts
+  local dev ip4 gw4 dns4 vpn_state vpn_remote
+  local subnet="" rx="" tx="" since="" upfor="" state="" addr="" choice=""
+
+  active=$(nmcli -g UUID connection show --active 2>/dev/null || true)
+  id=$(unescape "$(field "$uuid" connection.id | head -n1)")
+  type=$(field "$uuid" connection.type | head -n1)
+  iface=$(field "$uuid" connection.interface-name | head -n1)
+  autoconnect=$(field "$uuid" connection.autoconnect | head -n1)
+  ts=$(field "$uuid" connection.timestamp | head -n1)
+
+  if grep -qx "$uuid" <<< "$active"; then
+    state=up
+  else
+    state=down
+  fi
+
+  dev=$(field "$uuid" GENERAL.DEVICES | head -n1)
+  ip4=$(field "$uuid" IP4.ADDRESS | paste -sd ', ' -)
+  gw4=$(field "$uuid" IP4.GATEWAY | paste -sd ', ' -)
+  dns4=$(field "$uuid" IP4.DNS | paste -sd ', ' -)
+  vpn_state=$(field "$uuid" VPN.VPN-STATE | head -n1)
+  vpn_remote=$(field "$uuid" VPN.REMOTE | head -n1)
+
+  [[ -z $dev || $dev == -- ]] && dev=$iface
+  dev=${dev%%,*}
+  dev=${dev%% *}
+
+  if [[ $ip4 == */* ]]; then
+    subnet=$(subnet_of "${ip4%%,*}")
+    subnet=${subnet%% *}
+  fi
+  if [[ -n $dev && -r /sys/class/net/$dev/statistics/rx_bytes ]]; then
+    rx=$(fmt_bytes "$(< "/sys/class/net/$dev/statistics/rx_bytes")")
+    tx=$(fmt_bytes "$(< "/sys/class/net/$dev/statistics/tx_bytes")")
+  fi
+  if [[ $ts =~ ^[0-9]+$ && $ts != 0 ]]; then
+    since=$(date -d "@$ts" '+%Y-%m-%d %H:%M:%S')
+    if [[ $state == up ]]; then
+      upfor=$(fmt_duration $(( $(date +%s) - ts )))
+    fi
+  fi
+
+  local -a lines=()
+  if [[ $state == up ]]; then
+    lines+=("disconnect")
+  else
+    lines+=("connect")
+  fi
+  [[ -n $ip4 && $ip4 != -- ]] && lines+=("copy ipv4")
+  lines+=("copy uuid")
+  lines+=("---")
+  lines+=("name        $id")
+  lines+=("type        $type")
+  [[ -n $dev && $dev != -- ]] && lines+=("device      $dev")
+  [[ -n $ip4 && $ip4 != -- ]] && lines+=("ipv4        $ip4")
+  [[ -n $subnet ]] && lines+=("subnet      $subnet")
+  [[ -n $gw4 && $gw4 != -- ]] && lines+=("gateway     $gw4")
+  [[ -n $dns4 && $dns4 != -- ]] && lines+=("dns         $dns4")
+  [[ -n $vpn_remote && $vpn_remote != -- ]] && lines+=("remote      $vpn_remote")
+  [[ -n $vpn_state && $vpn_state != -- && $vpn_state != 0 ]] && lines+=("vpn state   $vpn_state")
+  [[ -n $autoconnect ]] && lines+=("autoconnect $autoconnect")
+  [[ -n $since ]] && lines+=("last up     $since")
+  [[ -n $upfor ]] && lines+=("up for      $upfor")
+  [[ -n $rx ]] && lines+=("rx          $rx")
+  [[ -n $tx ]] && lines+=("tx          $tx")
+
+  choice=$(printf '%s\n' "${lines[@]}" | menu "$id") || return 0
+  case $choice in
+    connect)
+      nmcli connection up uuid "$uuid"
+      detail_menu "$uuid" || return $?
+      ;;
+    disconnect)
+      nmcli connection down uuid "$uuid"
+      detail_menu "$uuid" || return $?
+      ;;
+    "copy ipv4")
+      addr=${ip4%%/*}
+      addr=${addr%%,*}
+      copy "$addr"
+      ;;
+    ---)
+      return 2
+      ;;
+    name*|type*|device*|ipv4*|subnet*|gateway*|dns*|remote*|"vpn state"*|autoconnect*|"last up"*|"up for"*|rx*|tx*)
+      detail_menu "$uuid" || return $?
+      ;;
+  esac
+}
+
+main() {
+  local -a items=()
+  local -A uuid_of=()
+  local row uuid rest type name mark label choice active status
+
+  while true; do
+    items=()
+    uuid_of=()
+    active=$(nmcli -g UUID connection show --active 2>/dev/null || true)
+    while IFS= read -r row; do
+      [[ -z $row ]] && continue
+      uuid=${row%%:*}
+      rest=${row#*:}
+      type=${rest%%:*}
+      name=$(unescape "${rest#*:}")
+      mark=down
+      grep -qx "$uuid" <<< "$active" && mark=up
+      label=$(printf '%-4s  %s  [%s]' "$mark" "$name" "$type")
+      items+=("$label")
+      uuid_of["$label"]=$uuid
+    done < <(nmcli -g UUID,TYPE,NAME connection show)
+
+    (( ${#items[@]} )) || exit 1
+    choice=$(printf '%s\n' "${items[@]}" | menu "connections") || exit 0
+    [[ -n ${uuid_of[$choice]+x} ]] || exit 0
+    status=0
+    detail_menu "${uuid_of[$choice]}" || status=$?
+    (( status == 2 )) && continue
+    break
+  done
+}
+
+main "$@"

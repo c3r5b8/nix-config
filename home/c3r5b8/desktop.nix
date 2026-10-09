@@ -6,6 +6,7 @@
     ./foot
     ./fuzzel
     ./hypridle
+    ./nm-menu
     ./sway
     ./theme
     ./thunderbird

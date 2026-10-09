@@ -60,6 +60,7 @@
           format-wifi = " wifi:";
           format-ethernet = " {ifname}:";
           format-disconnected = " net:";
+          on-click = "nm-menu --anchor bottom-left --width 40";
           max-length = 50;
         };
         network = {
@@ -68,6 +69,7 @@
           format-wifi = "{ipaddr}";
           format-ethernet = "{ipaddr}/{cidr}";
           format-disconnected = "disconnected";
+          on-click = "nm-menu --anchor bottom-left --width 40";
           max-length = 50;
         };
         "custom/label_bt" = {

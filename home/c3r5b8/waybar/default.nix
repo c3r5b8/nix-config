@@ -76,11 +76,13 @@
         "custom/label_bt" = {
           tooltip = false;
           format = " bt:";
+          on-click = "${lib.getExe pkgs.bzmenu} -l custom --launcher-command \"fuzzel -d --placeholder '{hint}' --anchor bottom-left\"";
         };
         bluetooth = {
           format = "on";
           format-disabled = "off";
           format-connected = "on({num_connections})";
+          on-click = "${lib.getExe pkgs.bzmenu} -l custom --launcher-command \"fuzzel -d --placeholder '{hint}' --anchor bottom-left\"";
           tooltip = false;
         };
         idle_inhibitor = {

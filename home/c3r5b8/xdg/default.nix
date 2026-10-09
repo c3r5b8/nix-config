@@ -63,6 +63,13 @@
     icon = "audio-volume-high";
     terminal = false;
     categories = ["AudioVideo" "Audio"];
-    # keywords = ["pipewire" "volume" "sink"];
+  };
+  xdg.desktopEntries.bzmenu = {
+    name = "Bluetooth";
+    comment = "Bluetooth menu";
+    exec = ''${lib.getExe pkgs.bzmenu} -l fuzzel'';
+    icon = "bluetooth";
+    terminal = false;
+    categories = ["Settings" "HardwareSettings"];
   };
 }

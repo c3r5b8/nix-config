@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   xdg.configFile."waybar/light".source = ./light.css;
@@ -101,11 +102,13 @@
         "custom/label_pulseaudio" = {
           tooltip = false;
           format = " vol:";
+          on-click = "${lib.getExe pkgs.pwmenu} -l custom --launcher-command \"fuzzel -d --placeholder '{hint}' --anchor bottom-right\"";
         };
         pulseaudio = {
           tooltip = false;
           format = "{volume}%";
           format-muted = "muted";
+          on-click = "${lib.getExe pkgs.pwmenu} -l custom --launcher-command \"fuzzel -d --placeholder '{hint}' --anchor bottom-right\"";
         };
         "battery#bat2" = {
           tooltip = false;

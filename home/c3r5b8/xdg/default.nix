@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   xdg.userDirs = {
     enable = true;
 
@@ -52,4 +56,13 @@
     sftp://c3r5b8@shaula/ shaula
     sftp://c3r5b8@acrab/ acrab
   '';
+  xdg.desktopEntries.pwmenu = {
+    name = "Audio";
+    comment = "PipeWire volume menu";
+    exec = ''${lib.getExe pkgs.pwmenu} -l fuzzel'';
+    icon = "audio-volume-high";
+    terminal = false;
+    categories = ["AudioVideo" "Audio"];
+    # keywords = ["pipewire" "volume" "sink"];
+  };
 }

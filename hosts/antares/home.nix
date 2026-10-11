@@ -42,6 +42,39 @@
       "sway/language"
       "custom/label_pulseaudio"
       "pulseaudio"
+      "custom/label_backlight"
+      "custom/brightness"
     ];
+    "custom/brightness" = let
+      ddcutil = "${pkgs.ddcutil}/bin/ddcutil";
+
+      brightnessCommand = pkgs.writeShellScript "ddcutil-rate-limited" ''
+        lock_file="''${XDG_RUNTIME_DIR:-/tmp}/ddcutil-brightness.lock"
+
+        exec 9>"$lock_file"
+
+        ${pkgs.util-linux}/bin/flock --nonblock 9 || exit 0
+
+        ${pkgs.ddcutil}/bin/ddcutil "$@"
+        result=$?
+        ${pkgs.coreutils}/bin/sleep 0.2
+
+        exit "$result"
+      '';
+    in {
+      format = "{percentage}%";
+      interval = "once";
+      return-type = "json";
+      exec = ''
+        ${ddcutil} getvcp 10 | ${pkgs.sd}/bin/sd '^.*current value =\s+(\d+).*' '$1' | {
+          read -r x
+          printf '{"percentage":%s}\n' "$x"
+        }
+      '';
+      on-scroll-up = "${brightnessCommand} setvcp 10 + 5";
+      on-scroll-down = "${brightnessCommand} setvcp 10 - 5";
+      tooltip = false;
+      exec-on-event = true;
+    };
   };
 }

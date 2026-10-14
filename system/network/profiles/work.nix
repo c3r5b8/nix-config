@@ -27,6 +27,14 @@ in {
           --script=${pkgs.vpnc-scripts}/bin/vpnc-script \
           "$gateway"
       '';
+      ExecStartPost = pkgs.writeShellScript "fortivpn-dns" ''
+        for i in {1..20}; do
+          resolvectl status fortivpn &>/dev/null && break
+          sleep 0.5
+        done
+        resolvectl domain fortivpn '~colobridge.net'
+        resolvectl default-route fortivpn no
+      '';
       StandardInput = "file:${password}";
       Restart = "on-failure";
     };

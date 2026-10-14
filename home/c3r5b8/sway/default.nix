@@ -330,6 +330,7 @@ in {
 
           "Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} copy anything";
           "Ctrl+Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} savecopy anything";
+          "Shift+Print" = "exec ${lib.getExe pkgs.sway-contrib.grimshot} save anything - | ${lib.getExe pkgs.swappy} -f -";
 
           "--locked XF86AudioRaiseVolume" = "exec ${lib.getExe volumeHelper} --increase 5";
           "--locked XF86AudioLowerVolume" = "exec ${lib.getExe volumeHelper} --decrease 5";

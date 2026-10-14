@@ -8,6 +8,7 @@
     ./hypridle
     ./nm-menu
     ./sway
+    ./swappy
     ./theme
     ./thunderbird
     ./waybar

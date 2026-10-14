@@ -64,6 +64,26 @@
     terminal = false;
     categories = ["AudioVideo" "Audio"];
   };
+  xdg.desktopEntries.workRdp = let
+    workRdp = pkgs.writeShellScriptBin "work-rdp" ''
+      exec ${lib.getExe' pkgs.freerdp "xfreerdp"} \
+        /v:10.2.4.20 \
+        /u:"$(cat /run/secrets/workRdp/user)" \
+        /d:"$(cat /run/secrets/workRdp/domain)" \
+        /auth-pkg-list:!kerberos \
+        +clipboard \
+        /cert:ignore \
+        /dynamic-resolution \
+        /sound \
+        /p:"$(cat /run/secrets/workRdp/password)"
+    '';
+  in {
+    name = "Work RDP";
+    exec = lib.getExe workRdp;
+    icon = "windows95";
+    terminal = false;
+    categories = ["Settings" "RemoteAccess"];
+  };
   xdg.desktopEntries.bzmenu = {
     name = "Bluetooth";
     comment = "Bluetooth menu";

@@ -20,7 +20,7 @@
 
   wayland.windowManager.sway.config.output = {
     "DP-2" = {
-      resolution = "3440x1440@240Hz";
+      resolution = "3440x1440@120Hz";
       pos = "0 0";
     };
     "HEADLESS-1" = {

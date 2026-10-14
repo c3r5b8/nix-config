@@ -55,6 +55,9 @@
           in
             mkPersistentWorkspaces config.custom.sway.outputToBase;
         };
+        clock = {
+          format = "{:%R %d/%m/%Y}";
+        };
         "network#net2" = {
           tooltip = false;
           format = " {ifname}";

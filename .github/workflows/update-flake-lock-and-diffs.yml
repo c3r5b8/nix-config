@@ -44,7 +44,7 @@ jobs:
         id: diff
         run: |
           set -euo pipefail
-          if DIFF_REPORT=$(./scripts/flake-update-diff.sh); then
+          if DIFF_REPORT=$(./files/flake-update-diff.sh); then
             echo "has_changes=true" >> $GITHUB_OUTPUT
             {
               echo 'report<<DIFF_EOF'

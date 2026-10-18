@@ -9,6 +9,8 @@
   ];
   home.packages = with pkgs; [
     nvtopPackages.amd
+    eden
+    nsz
   ];
   custom.sway.startup = [
     {command = "${lib.getExe' pkgs.sway "swaymsg"} create_output";}
@@ -76,5 +78,20 @@
       tooltip = false;
       exec-on-event = true;
     };
+  };
+  xdg.desktopEntries.eden = let
+    eden-portable = pkgs.writeShellScriptBin "eden-portable" ''
+      mkdir -p /games/Switch/eden/user
+      cd /games/Switch/eden
+      exec ${pkgs.eden}/bin/eden "$@"
+    '';
+  in {
+    name = "Eden (portable)";
+    comment = "Nintendo Switch Emulator (portable)";
+    exec = "${eden-portable}/bin/eden-portable %u";
+    categories = ["Game" "Emulator"];
+    terminal = false;
+    startupNotify = true;
+    icon = "eden";
   };
 }

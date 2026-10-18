@@ -1,4 +1,5 @@
 [global]
+follow = mouse
 frame_color = "#40a02b"
 separator_color= frame
 highlight = "#40a02b"

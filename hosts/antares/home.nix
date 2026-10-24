@@ -17,14 +17,21 @@
   ];
   custom.sway.outputToBase = {
     "DP-2" = 0;
-    "HEADLESS-1" = 10;
+    "HDMI-A-1" = 10;
+    "HEADLESS-1" = 20;
   };
 
   wayland.windowManager.sway.config.output = {
     "DP-2" = {
-      resolution = "3440x1440@120Hz";
-      pos = "0 0";
+      resolution = "3440x1440@240Hz";
+      pos = "1080 240";
     };
+    "HDMI-A-1" = {
+      resolution = "1920x1080@75Hz";
+      pos = "0 0";
+      transform = "270";
+    };
+
     "HEADLESS-1" = {
       resolution = "1920x1200@60Hz";
       pos = "760 1440";

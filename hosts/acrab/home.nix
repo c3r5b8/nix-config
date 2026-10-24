@@ -7,20 +7,14 @@
     nvtopPackages.amd
   ];
   custom.sway.outputToBase = {
-    "HDMI-A-1" = 0;
-    "DP-1" = 10;
-    "HEADLESS-1" = 20;
+    "DP-1" = 0;
+    "HEADLESS-1" = 10;
   };
 
   wayland.windowManager.sway.config.output = {
-    "HDMI-A-1" = {
-      resolution = "1920x1080@75Hz";
-      pos = "0 0";
-    };
-
     "DP-1" = {
       "resolution" = "1920x1080@60Hz";
-      pos = "1920 0";
+      pos = "0 0";
     };
   };
   programs.waybar.settings.mainBar = {

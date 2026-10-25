@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: let
   ddc-wrapper = pkgs.writeShellScriptBin "ddc-wrapper" ''
@@ -110,7 +111,22 @@ in {
       pos = "1840 1680";
     };
   };
+  programs.waybar.settings.secondaryBar = {
+    output = "!DP-2";
+    position = "bottom";
+    height = 30;
+    spacing = 0;
+    modules-left = [
+      "clock"
+    ];
+    modules-center = [
+      "sway/workspaces"
+    ];
+    "sway/workspaces" = config.programs.waybar.settings.mainBar."sway/workspaces";
+    "clock" = config.programs.waybar.settings.mainBar."clock";
+  };
   programs.waybar.settings.mainBar = {
+    output = "DP-2";
     modules-left = [
       "clock"
       "idle_inhibitor"

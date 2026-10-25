@@ -90,7 +90,6 @@
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
       "/var/log"
-      "/var/lib/flatpak"
     ];
     files = [
       "/etc/machine-id"
@@ -127,6 +126,7 @@
       "/home/c3r5b8/.local/share/PrismLauncher"
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
+      "/home/c3r5b8/.local/share/nl.jknaapen.fladder"
       "/home/c3r5b8/.config/sh.cider.genten"
       "/home/c3r5b8/.config/inkscape"
       "/home/c3r5b8/.config/obsidian"
@@ -146,7 +146,6 @@
       "/home/c3r5b8/games"
       "/home/c3r5b8/.config/Signal"
       "/home/c3r5b8/.var/app"
-      "/home/c3r5b8/.local/share/flatpak"
       "/home/c3r5b8/.cache/fuzzel"
     ];
     files = [

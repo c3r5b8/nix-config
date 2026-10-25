@@ -27,11 +27,11 @@
     sdrpp
     wireshark
     gimp3
-    # jellyfin-desktop
     winbox
     moonlight-qt
     heroic
     signal-desktop
     remmina
+    fladder
   ];
 }

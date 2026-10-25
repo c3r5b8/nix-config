@@ -9,7 +9,7 @@
     flags = ["--no-update-lock-file"];
     dates = "05:00";
     allowReboot = false;
-    operation = "switch";
+    operation = "boot";
 
     persistent = true;
   };

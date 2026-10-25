@@ -22,6 +22,5 @@
       "plymouth.use-simpledrm"
     ];
     consoleLogLevel = 0;
-    initrd.verbose = false;
   };
 }

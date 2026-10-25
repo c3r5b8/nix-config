@@ -2,7 +2,79 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  ddc-wrapper = pkgs.writeShellScriptBin "ddc-wrapper" ''
+    set -euo pipefail
+
+    BUS="$1"
+    ACTION="$2"
+    STEP=''${3:-5}
+
+    if [[ -z "$BUS" || -z "$ACTION" ]]; then
+      echo "Usage: ddc-wrapper <bus> <init|get|up|down> [step]" >&2
+      exit 1
+    fi
+
+    STATE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}"
+    mkdir -p "$STATE_DIR"
+    STATE_FILE="$STATE_DIR/ddc_brightness_$BUS"
+    LOCK_FILE="$STATE_DIR/ddc_brightness_$BUS.lock"
+    PID_FILE="/tmp/ddc_applier_$BUS.pid"
+
+    # Simple flock-based lock for state updates
+    exec 9>"$LOCK_FILE"
+    flock -n 9 || exit 0
+
+    case "$ACTION" in
+      init)
+        if [[ -f "$STATE_FILE" ]]; then
+          VAL=$(<"$STATE_FILE")
+        else
+          VAL=$(${pkgs.ddcutil}/bin/ddcutil --bus "$BUS" getvcp 10 -t 2>/dev/null \
+            | ${pkgs.gawk}/bin/awk 'NF{print $4; exit}' || echo 50)
+          echo "$VAL" > "$STATE_FILE"
+        fi
+        ${pkgs.ddcutil}/bin/ddcutil --bus "$BUS" --noverify --sleep-multiplier 0.5 setvcp 10 "$VAL" || true
+        exit 0
+        ;;
+      get)
+        cat "$STATE_FILE" 2>/dev/null || echo 50
+        exit 0
+        ;;
+    esac
+
+    # up / down
+    VAL=$(cat "$STATE_FILE" 2>/dev/null || echo 50)
+    case "$ACTION" in
+      up)   VAL=$(( VAL + STEP )); (( VAL > 100 )) && VAL=100 ;;
+      down) VAL=$(( VAL - STEP )); (( VAL < 0   )) && VAL=0   ;;
+      *) exit 1 ;;
+    esac
+    echo "$VAL" > "$STATE_FILE"
+    flock -u 9
+
+    # Instant feedback
+    ${pkgs.libnotify}/bin/notify-send -e \
+      -h "string:x-canonical-private-synchronous:brightness-$BUS" \
+      -h "int:value:$VAL" \
+      -t 800 "Brightness (Bus $BUS): $VAL%"
+
+
+    # Debounced apply
+    if [[ -f "$PID_FILE" ]]; then
+      kill -TERM "$(cat "$PID_FILE")" 2>/dev/null || true
+      rm -f "$PID_FILE"
+    fi
+
+    (
+      sleep 0.35
+      ${pkgs.ddcutil}/bin/ddcutil --bus "$BUS" --noverify --sleep-multiplier 0.5 setvcp 10 "$VAL" || true
+      rm -f "$PID_FILE"
+    ) &
+    echo $! > "$PID_FILE"
+    disown
+  '';
+in {
   imports = [
     ../../home/c3r5b8
     ../../home/c3r5b8/desktop.nix
@@ -11,6 +83,7 @@
     nvtopPackages.amd
     eden
     nsz
+    ddc-wrapper
   ];
   custom.sway.startup = [
     {command = "${lib.getExe' pkgs.sway "swaymsg"} create_output";}
@@ -53,35 +126,26 @@
       "pulseaudio"
       "custom/label_backlight"
       "custom/brightness"
+      "custom/label_backlight2"
+      "custom/brightness2"
     ];
-    "custom/brightness" = let
-      ddcutil = "${pkgs.ddcutil}/bin/ddcutil";
-
-      brightnessCommand = pkgs.writeShellScript "ddcutil-rate-limited" ''
-        lock_file="''${XDG_RUNTIME_DIR:-/tmp}/ddcutil-brightness.lock"
-
-        exec 9>"$lock_file"
-
-        ${pkgs.util-linux}/bin/flock --nonblock 9 || exit 0
-
-        ${pkgs.ddcutil}/bin/ddcutil "$@"
-        result=$?
-        ${pkgs.coreutils}/bin/sleep 0.2
-
-        exit "$result"
-      '';
-    in {
-      format = "{percentage}%";
+    "custom/brightness" = {
+      format = "{}%";
       interval = "once";
-      return-type = "json";
-      exec = ''
-        ${ddcutil} getvcp 10 | ${pkgs.sd}/bin/sd '^.*current value =\s+(\d+).*' '$1' | {
-          read -r x
-          printf '{"percentage":%s}\n' "$x"
-        }
-      '';
-      on-scroll-up = "${brightnessCommand} setvcp 10 + 5";
-      on-scroll-down = "${brightnessCommand} setvcp 10 - 5";
+      signal = 8;
+      exec = "ddc-wrapper 11 get";
+      on-scroll-up = "ddc-wrapper 11 up";
+      on-scroll-down = "ddc-wrapper 11 down";
+      tooltip = false;
+      exec-on-event = true;
+    };
+    "custom/brightness2" = {
+      format = "{}%";
+      interval = "once";
+      signal = 8;
+      exec = "ddc-wrapper 7 get";
+      on-scroll-up = "ddc-wrapper 7 up";
+      on-scroll-down = "ddc-wrapper 7 down";
       tooltip = false;
       exec-on-event = true;
     };

@@ -34,7 +34,7 @@
 
     "HEADLESS-1" = {
       resolution = "1920x1200@60Hz";
-      pos = "760 1440";
+      pos = "1840 1680";
     };
   };
   programs.waybar.settings.mainBar = {

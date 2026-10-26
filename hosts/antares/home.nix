@@ -16,7 +16,7 @@
       exit 1
     fi
 
-    STATE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}"
+    STATE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}/ddc-wrapper"
     mkdir -p "$STATE_DIR"
     STATE_FILE="$STATE_DIR/ddc_brightness_$BUS"
     LOCK_FILE="$STATE_DIR/ddc_brightness_$BUS.lock"

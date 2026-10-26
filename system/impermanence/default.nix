@@ -127,6 +127,7 @@
       "/home/c3r5b8/.local/state/nvim"
       "/home/c3r5b8/.local/state/wireplumber"
       "/home/c3r5b8/.local/share/nl.jknaapen.fladder"
+      "/home/c3r5b8/.local/state/ddc-wrapper"
       "/home/c3r5b8/.config/sh.cider.genten"
       "/home/c3r5b8/.config/inkscape"
       "/home/c3r5b8/.config/obsidian"

@@ -28,7 +28,7 @@ in {
         "sargas" = {id = "BWOM2WU-ZRTTBHK-XOP4L4W-SFKKH7W-JMZGCR3-VQANVTU-QKHRWVQ-G2OMZQQ";};
         "antares" = {id = "DARR3YD-Z3FLLZI-6DLRNKW-AZZHC6C-GZNVNUC-WGX7S4V-OGQ356A-BUXRKA3";};
         "acrab" = {id = "QH3E5AJ-KS6U7QT-SGTVYOA-SQKVTKB-IV26TWG-WKUXQFT-WAAKG7K-SUBEKAU";};
-        "husky" = {id = "BF6Q5ZI-7YR64WX-OSA4YYG-YG36GLC-M5N4I5L-NUFYW5L-MT2AA3G-L7ZMXQD";};
+        "mustang" = {id = "BF6Q5ZI-7YR64WX-OSA4YYG-YG36GLC-M5N4I5L-NUFYW5L-MT2AA3G-L7ZMXQD";};
       };
       options = {
         localAnnounceEnabled = true;
@@ -38,7 +38,7 @@ in {
       folders = {
         "notes" = {
           path = "/home/c3r5b8/docs/notes";
-          devices = ["shaula" "sargas" "antares" "acrab" "husky"];
+          devices = ["shaula" "sargas" "antares" "acrab" "mustang"];
         };
       };
     };

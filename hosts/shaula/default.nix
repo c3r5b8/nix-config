@@ -21,6 +21,7 @@
       theme = config.custom.theme;
     };
     useGlobalPkgs = true;
+    useUserPackages = true;
     backupFileExtension = "backup";
     users = {
       c3r5b8 = import ./home.nix;
